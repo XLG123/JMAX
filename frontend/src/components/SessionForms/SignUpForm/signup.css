@@ -1,0 +1,78 @@
+.session-form{
+    /* background-color: antiquewhite; */
+    width: 100%;
+    /* height:100vh; */
+
+}
+.sign{
+    margin: auto;
+/* margin-top: 10%; */
+    width: 30%;
+    background: linear-gradient(to bottom, #031926 0%, #77ACA2 50%, #031926 100%);
+    /* background-color: rgba(119, 172, 162, 1); */
+    /* border-radius: 1rem; */
+    padding: 2rem;
+    text-align: center;
+}
+.sign-up-title{
+    width: 39%;
+padding-bottom: 1rem;
+    /* padding-top: 5rem; */
+    /* background-color: aqua; */
+    text-align: center;
+    margin: auto;
+    font-size: xx-large;
+  color: #F4E9CD;
+
+}
+.errors{
+    /* background-color: #F4E9CD; */
+}
+.signup-input{
+    padding: 1rem;
+    background-color: #9DBEBB;
+    margin-bottom:1rem ;
+    width: 70%;
+    border-radius: .5rem;
+    border: none;
+    font-size: large;
+    color:black;
+    font-weight: bold;
+}
+input::placeholder {
+    color: #666; /* Replace 'red' with your desired color */
+  }
+.sign-up-btn{
+    /* padding: .7rem; */
+    width: 35%;
+    background-color: white;
+    border-radius: 1rem;
+    color: black;
+    font-size: xx-large;
+    font-family: 'Rakkas', cursive;
+    border: none;
+}
+.sign-in-title{
+    width: 30%;
+padding-bottom: 1rem;
+    /* padding-top: 9rem; */
+    /* background-color: aqua; */
+    text-align: center;
+    margin: auto;
+    font-size: xx-large;
+  color: #F4E9CD;
+
+}
+.title{
+    padding: 2rem;
+    font-size: x-large;
+}
+.regiser{
+    color: rgba(255, 255, 255, 0.5);   
+     text-decoration: none;
+}
+.logo{
+    width: 4.5rem;
+    height: 4.5rem;
+    /* margin-bottom: -1rem; */
+}
