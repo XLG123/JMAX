@@ -5,6 +5,10 @@
   text-align: center;
 }
 
+#light-bulb {
+  display: none;
+}
+
 .title-container {
   position: absolute;
   top: 24vw;
@@ -12,97 +16,70 @@
   font-size: 4.5vw;
   font-family: "Sporty Pro Shadow Inline XP", 'Times New Roman', Times, serif;
   color: white;
-  word-spacing: 0.5em;
+  /* word-spacing: 0.5em; */
 }
 
-.title-P {
+.drop-title {
+  display: flex;
+  justify-content: center;
+}
+
+.title-letter {
+  color: inherit;
   opacity: 0;
   animation: drop 0.4s linear forwards;
-  color: white;
 }
 
-.title-R {
-  opacity: 0;
-  animation: drop 0.4s linear forwards 0.2s;
-  color: white;
+.letter-1 {
+  animation-delay: 0.2s;
 }
 
-.title-O {
-  opacity: 0;
-  animation: drop 0.4s linear forwards 0.4s;
-  color: white;
+.letter-2 {
+  animation-delay: 0.4s;
 }
 
-.title-B {
-  opacity: 0;
-  animation: drop 0.4s linear forwards 0.8s;
-  color: white;
+.letter-3 {
+  animation-delay: 0.6s;
 }
 
-.title-L {
-  opacity: 0;
-  animation: drop 0.4s linear forwards 1.0s;
-  color: white;
+.letter-4 {
+  animation-delay: 0.8s;
 }
 
-.title-E {
-  opacity: 0;
-  animation: drop 0.4s linear forwards 1.2s;
-  color: white;
+.letter-5 {
+  animation-delay: 1.0s;
 }
 
-.title-M {
-  opacity: 0;
-  animation: drop 0.4s linear forwards 1.4s;
-  color: white;
+.letter-6 {
+  animation-delay: 1.2s;
 }
 
-.title-space {
-  opacity: 0;
-  animation: drop 0.4s linear forwards 1.6s;
-  color: white;
+.letter-7 {
+  animation-delay: 1.4s;
 }
 
-.title-S {
-  opacity: 0;
-  animation: drop 0.4s linear forwards 1.8s;
-  color: white;
+.letter-9 {
+  animation-delay: 2.0s;
 }
 
-.title-O {
-  opacity: 0;
-  animation: drop 0.4s linear forwards 2.0s;
-  color: white;
+.letter-10 {
+  animation-delay: 2.2s;
 }
 
-.title-L {
-  opacity: 0;
-  animation: drop 0.4s linear forwards 2.2s;
-  color: white;
+.letter-11 {
+  animation-delay: 2.4s;
 }
 
-.title-V {
-  opacity: 0;
-  animation: drop 0.4s linear forwards 2.4s;
-  color: white;
+.letter-12{
+  animation-delay: 2.6s;
 }
 
-.title-E {
-  opacity: 0;
-  animation: drop 0.4s linear forwards 2.6s;
-  color: white;
+.letter-13{
+  animation-delay: 2.8s;
 }
 
-.title-E {
-  opacity: 0;
-  animation: drop 0.4s linear forwards 2.8s;
-  color: white;
-}
-
-.title-R {
-  opacity: 0;
-  animation: drop 0.4s linear forwards 3.0s;
-  color: white;
+.letter-14{
+  animation-delay: 3.0s;
 }
 
 @keyframes drop {
@@ -138,7 +115,7 @@
   top: 35vw;
   width: 100%;
   word-spacing: 1.5em;
-  animation: fadeIn 6s;
+  animation: fadeIn 7s;
   cursor: default;
 }
 
@@ -152,8 +129,8 @@
   filter: brightness(0.8);
 }
 
-.main-pg-quote p:hover span:nth-child(8),
-.main-pg-quote p:hover span:last-child {
+.main-pg-quote p:hover span,
+.main-pg-quote p:hover span {
   filter: brightness(1);
   text-shadow: 0 0 18px #fff, 0 0 35px #fff, 0 0 70px #fff;
 }
