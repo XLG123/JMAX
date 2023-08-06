@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 // import './SessionForm.css';
+import logo from "../SignUpForm/Vector.png"
 
 import { login, clearSessionErrors } from '../../store/session';
+import { Link, useHistory } from 'react-router-dom';
 
 function LoginForm() {
+  const history=useHistory()
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const errors = useSelector(state => state.errors.session);
@@ -24,34 +27,39 @@ function LoginForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(login({ email, password }));
+    history.push("/home")
   }
 
   return (
     <form className="session-form" onSubmit={handleSubmit}>
-      <h2>Log In Form</h2>
+      <h2 className='sign-in-title'> <img src={logo} className="logo"/>Log In to Problem  Solver</h2>
+      <div className='sign'>
+        <h1 className='title'>New  to  Problem  Solver? <Link to="signup" className='regiser'> Register </Link></h1>
       <div className="errors">{errors?.email}</div>
-      <label>
-        <span>Email</span>
+   
         <input type="text"
+        className='signup-input'
           value={email}
           onChange={update('email')}
           placeholder="Email"
         />
-      </label>
+     
       <div className="errors">{errors?.password}</div>
-      <label>
-        <span>Password</span>
+    
         <input type="password"
+          className='signup-input'
           value={password}
           onChange={update('password')}
           placeholder="Password"
         />
-      </label>
+     
       <input
+        className='sign-up-btn'
         type="submit"
         value="Log In"
         disabled={!email || !password}
       />
+      </div>
     </form>
   );
 }
