@@ -8,7 +8,7 @@ const csurf = require("csurf");
 const { isProduction } = require("./config/keys");
 
 const usersRouter = require("./routes/api/users");
-const tweetsRouter = require("./routes/api/tweets");
+const problemsRouter = require("./routes/api/problems");
 const csrfRouter = require("./routes/api/csrf");
 const testUserRouter = require("./routes/api/test");
 
@@ -48,7 +48,7 @@ app.use(
 
 // Attach Express routers
 app.use("/api/users", usersRouter);
-app.use("/api/tweets", tweetsRouter);
+app.use("/api/problems", problemsRouter);
 app.use("/api/csrf", csrfRouter);
 app.use("/api/test", testUserRouter);
 
