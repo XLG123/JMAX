@@ -31,10 +31,10 @@ const userSchema = new Schema(
 );
 
 userSchema.virtual('birthdateFormatted').get(function () {
-  return moment(this.birthdate).format('YYYY-MM-DD');  // returns "YYYY-MM-DD"
+  return moment(this.birthdate).format('MM-DD-YYYY');
 });
 
-// To include virtuals in toJSON() and toObject() output
+
 userSchema.set('toJSON', { virtuals: true });
 userSchema.set('toObject', { virtuals: true });
 
