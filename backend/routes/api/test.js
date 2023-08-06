@@ -8,7 +8,7 @@ router.get('/testUser/:id', async (req, res) => {
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
     }
-    res.json(user);
+    res.json(user.toSafeObject());
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Server error' });
