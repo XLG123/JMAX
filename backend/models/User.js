@@ -30,6 +30,12 @@ const userSchema = new Schema(
   }
 );
 
+userSchema.methods.toSafeObject = function() {
+  let user = this.toObject();
+  delete user.hashedPassword;
+  return user;
+};
+
 // userSchema.virtual('birthdateFormatted').get(function () {
 //   return moment(this.birthdate).format('MM-DD-YYYY');
 // });
