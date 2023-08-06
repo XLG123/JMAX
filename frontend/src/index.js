@@ -18,9 +18,20 @@ function Root() {
   );
 }
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <Root />
-  </React.StrictMode>
-);
+// const renderApplication = () => {
+  const root = ReactDOM.createRoot(document.getElementById('root'));
+  root.render(
+    <React.StrictMode>
+      <Root />
+    </React.StrictMode>
+  );
+// }
+
+// if (
+//   sessionStorage.getItem("currentUser") === null ||
+//   sessionStorage.getItem("X-CSRF-Token") === null
+// ) {
+//   // store.dispatch(sessionActions.restoreSession()).then(renderApplication);
+// } else {
+//   renderApplication();
+// }
