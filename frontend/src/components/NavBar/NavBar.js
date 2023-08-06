@@ -1,41 +1,61 @@
-import { Link } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import './NavBar.css';
 import { logout } from '../store/session';
+import webAppLogo from '../../assets/images/webAppLogo.jpg';
 
 function NavBar() {
   const loggedIn = useSelector(state => !!state.session.user);
   const dispatch = useDispatch();
+  let history = useHistory();
 
   const logoutUser = e => {
     e.preventDefault();
     dispatch(logout());
   }
 
+  const demoLogin = () => {
+    
+  }
+
+  const goToAbout = () => {
+    history.push('/about');
+  }
+
   const getLinks = () => {
     if (loggedIn) {
       return (
         <div className="links-nav">
-          <Link to={'/tweets'}>All Tweets</Link>
-          <Link to={'/profile'}>Profile</Link>
-          <Link to={'/tweets/new'}>Write a Tweet</Link>
+          <NavLink to='/tweets'>All Tweets</NavLink>
+          <NavLink to='/profile'>Profile</NavLink>
+          <NavLink to='/tweets/new'>Write a Tweet</NavLink>
           <button onClick={logoutUser}>Logout</button>
         </div>
       );
     } else {
       return (
-        <div className="links-auth">
-          <Link to={'/signup'}>Signup</Link>
-          <Link to={'/login'}>Login</Link>
-        </div>
+        <>
+          <div className="links-auth">
+            <div className='nav-btn' id="demo-login" onClick={demoLogin}>Demo
+            </div>
+            <NavLink to='/signup' className="nav-btn">Sign Up</NavLink>
+            <NavLink to='/login' className="nav-btn">Login</NavLink>
+          </div>
+        </>
       );
     }
   }
-
+  
   return (
     <>
-      <h1>Chirper</h1>
-      {getLinks()}
+      <div className='nav-bar-container'>
+        <div className='logo-container'>
+          <img src={webAppLogo} alt='web-logo' className='logo'/>
+        </div>
+        <div className="nav-btn" id="about-btn" onClick=
+        {goToAbout}>About</div>
+        {getLinks()}
+      </div>
     </>
   );
 }

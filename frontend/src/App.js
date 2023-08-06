@@ -10,6 +10,7 @@ import LoginForm from './components/SessionForms/LoginForm/LoginForm';
 import SignupForm from './components/SessionForms/SignUpForm/SignUpForm';
 
 import { getCurrentUser } from './components/store/session';
+import AboutPage from './components/About/AboutPage';
 
 // import Problems from './components/Problem/Problems';
 // import Profile from './components/Profile/Profile';
@@ -29,6 +30,7 @@ function App() {
         <AuthRoute exact path="/" component={MainPage} />
         <AuthRoute exact path="/login" component={LoginForm} />
         <AuthRoute exact path="/signup" component={SignupForm} />
+        <AuthRoute path="/about" component={AboutPage} />
 
         {/* <ProtectedRoute exact path="/problems" component={Problems} />
         <ProtectedRoute exact path="/profile" component={Profile} />
