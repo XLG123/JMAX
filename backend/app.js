@@ -10,6 +10,8 @@ const { isProduction } = require("./config/keys");
 const usersRouter = require("./routes/api/users");
 const tweetsRouter = require("./routes/api/tweets");
 const csrfRouter = require("./routes/api/csrf");
+require('./config/passport'); 
+const passport = require('passport');
 
 
 
@@ -28,6 +30,8 @@ if (!isProduction) {
   // will be served statically on the Express server.)
   app.use(cors());
 }
+
+app.use(passport.initialize());
 
 // CSRF token
 app.use(
