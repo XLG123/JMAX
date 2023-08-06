@@ -1,4 +1,7 @@
+import NavBar from "../NavBar/NavBar";
+
 const MainPage = () => {
+  console.log("hi");
   return (
     <>
       <p>A Twitter Clone</p>

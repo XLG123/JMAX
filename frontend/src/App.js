@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Route } from 'react';
 import { useDispatch } from 'react-redux';
 import { Switch } from 'react-router-dom';
 
@@ -11,20 +11,29 @@ import SignupForm from './components/SessionForms/SignUpForm/SignUpForm';
 
 import { getCurrentUser } from './components/store/session';
 
+// import Problems from './components/Problem/Problems';
+// import Profile from './components/Profile/Profile';
+// import ProblemCompose from './components/Problems/ProblemCompose';
+
 function App() {
   const [loaded, setLoaded] = useState(false);
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getCurrentUser()).then(() => setLoaded(true));
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(getCurrentUser()).then(() => setLoaded(true));
+  // }, [dispatch]);
 
-  return loaded && (
+  return (
     <>
       <NavBar />
       <Switch>
         <AuthRoute exact path="/" component={MainPage} />
         <AuthRoute exact path="/login" component={LoginForm} />
         <AuthRoute exact path="/signup" component={SignupForm} />
+
+        {/* <ProtectedRoute exact path="/problems" component={Problems} />
+        <ProtectedRoute exact path="/profile" component={Profile} />
+        <ProtectedRoute exact path="/problems/new" component={ProblemCompose} 
+        /> */}
       </Switch>
     </>
   );
