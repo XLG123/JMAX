@@ -25,10 +25,12 @@ const validateRegisterInput = [
       }
       return true;
     }),
-  check("address")
+    check("address")
     .exists({ checkFalsy: true })
+    .withMessage("Address is required"),
+  check("address")
     .isLength({ min: 2, max: 50 })
-    .withMessage("Address is not valid"),
+    .withMessage("Address must be between 2 and 50 characters"),
   check("password")
     .exists({ checkFalsy: true })
     .isLength({ min: 6, max: 30 })
