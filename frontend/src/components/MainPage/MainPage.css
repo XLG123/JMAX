@@ -1,0 +1,165 @@
+@import url(https://db.onlinewebfonts.com/c/12a61a1f47fbe7a8656996d5de888ca9?family=Sporty+Pro+Shadow+Inline+XP);
+
+.main-pg-container {
+  position: relative;
+  text-align: center;
+}
+
+.title-container {
+  position: absolute;
+  top: 24vw;
+  width: 100%;
+  font-size: 4.5vw;
+  font-family: "Sporty Pro Shadow Inline XP", 'Times New Roman', Times, serif;
+  color: white;
+  word-spacing: 0.5em;
+}
+
+.title-P {
+  opacity: 0;
+  animation: drop 0.4s linear forwards;
+  color: white;
+}
+
+.title-R {
+  opacity: 0;
+  animation: drop 0.4s linear forwards 0.2s;
+  color: white;
+}
+
+.title-O {
+  opacity: 0;
+  animation: drop 0.4s linear forwards 0.4s;
+  color: white;
+}
+
+.title-B {
+  opacity: 0;
+  animation: drop 0.4s linear forwards 0.8s;
+  color: white;
+}
+
+.title-L {
+  opacity: 0;
+  animation: drop 0.4s linear forwards 1.0s;
+  color: white;
+}
+
+.title-E {
+  opacity: 0;
+  animation: drop 0.4s linear forwards 1.2s;
+  color: white;
+}
+
+.title-M {
+  opacity: 0;
+  animation: drop 0.4s linear forwards 1.4s;
+  color: white;
+}
+
+.title-space {
+  opacity: 0;
+  animation: drop 0.4s linear forwards 1.6s;
+  color: white;
+}
+
+.title-S {
+  opacity: 0;
+  animation: drop 0.4s linear forwards 1.8s;
+  color: white;
+}
+
+.title-O {
+  opacity: 0;
+  animation: drop 0.4s linear forwards 2.0s;
+  color: white;
+}
+
+.title-L {
+  opacity: 0;
+  animation: drop 0.4s linear forwards 2.2s;
+  color: white;
+}
+
+.title-V {
+  opacity: 0;
+  animation: drop 0.4s linear forwards 2.4s;
+  color: white;
+}
+
+.title-E {
+  opacity: 0;
+  animation: drop 0.4s linear forwards 2.6s;
+  color: white;
+}
+
+.title-E {
+  opacity: 0;
+  animation: drop 0.4s linear forwards 2.8s;
+  color: white;
+}
+
+.title-R {
+  opacity: 0;
+  animation: drop 0.4s linear forwards 3.0s;
+  color: white;
+}
+
+@keyframes drop {
+  0% {
+    transform: translateY(-200px);
+    opacity: 0;
+  }
+
+  50% {
+    transform: translateY(0px);
+    opacity: 1;
+  }
+
+  65% {
+    transform: translateY(-17px);
+    opacity: 1;
+  }
+
+  75% {
+    transform: translateY(-22px);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(0px);
+    opacity: 1;
+  }
+}
+
+.main-pg-quote {
+  font-size: 3.2vw;
+  position: absolute;
+  top: 35vw;
+  width: 100%;
+  word-spacing: 1.5em;
+  animation: fadeIn 6s;
+  cursor: default;
+}
+
+.main-pg-container p span {
+  filter: brightness(0.6);
+  transition: 0.5s ease-in;
+}
+
+.main-pg-quote p:hover span{
+  word-spacing: 0.5em;
+  filter: brightness(0.8);
+}
+
+.main-pg-quote p:hover span:nth-child(8),
+.main-pg-quote p:hover span:last-child {
+  filter: brightness(1);
+  text-shadow: 0 0 18px #fff, 0 0 35px #fff, 0 0 70px #fff;
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  50% { opacity: 0; }
+  100% { opacity: 1; }
+}

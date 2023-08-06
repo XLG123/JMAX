@@ -1,9 +1,14 @@
+import webAppLogo from '../../assets/images/webAppLogo.jpg';
 import './AboutPage.css';
 
 const AboutPage = () => {
   return (
     <>
-      HI from JMAX DEVELOPER TEAM
+      <div className="splash-container">
+        <div className='image-container'>
+          <img src={webAppLogo} alt='app-logo' className='splash-logo' />
+        </div>
+      </div>
     </>
   );
 }

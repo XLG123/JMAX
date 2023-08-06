@@ -49,12 +49,18 @@ function NavBar() {
   return (
     <>
       <div className='nav-bar-container'>
-        <div className='logo-container'>
-          <img src={webAppLogo} alt='web-logo' className='logo'/>
-        </div>
+
+        <NavLink to='/'>
+          <div className='logo-container'>
+            <img src={webAppLogo} alt='app-logo' className='logo'/>
+          </div>
+        </NavLink>
+
         <div className="nav-btn" id="about-btn" onClick=
         {goToAbout}>About</div>
+
         {getLinks()}
+
       </div>
     </>
   );
