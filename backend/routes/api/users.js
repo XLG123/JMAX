@@ -19,7 +19,7 @@ router.post("/register", async (req, res, next) => {
   });
 
   if (user) {
-    // Throw a 400 error if the email address and/or username already exists
+    // Throw a 400 error if the email address and/or email already exists
     const err = new Error("Validation Error");
     err.statusCode = 400;
     const errors = {};
@@ -32,6 +32,28 @@ router.post("/register", async (req, res, next) => {
     err.errors = errors;
     return next(err);
   }
+
+  // Otherwise create a new user
+  const newUser = new User({
+    username: req.body.username,
+    email: req.body.email,
+    address: req.body.address,
+    birthdate: req.body.birthdate,
+  });
+
+  bcrypt.genSalt(10, (err, salt) => {
+    if (err) throw err;
+    bcrypt.hash(req.body.password, salt, async (err, hashedPassword) => {
+      if (err) throw err;
+      try {
+        newUser.hashedPassword = hashedPassword;
+        const user = await newUser.save();
+        return res.json({ user });
+      } catch (err) {
+        next(err);
+      }
+    });
+  });
 });
 
 module.exports = router;
