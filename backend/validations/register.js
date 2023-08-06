@@ -51,12 +51,16 @@ const validateRegisterInput = [
     }),
 
     //Birthday Validation
-  check("birthdate")
-    .exists({ checkFalsy: true })
-    .withMessage("Birthdate is required"),
-  check("birthdate")
-    .custom((value) => isValidDate(value))
-    .withMessage("Birthdate is not valid"),
+  // check("birthdate")
+  //   .exists({ checkFalsy: true })
+  //   .withMessage("Birthdate is required"),
+  // check("birthdate")
+  //   .custom((value) => isValidDate(value))
+  //   .withMessage("Birthdate is not valid"),
+  check("age")
+  .exists({ checkFalsy: true })
+  .isNumeric()
+  .withMessage("Age is required"),
   handleValidationErrors,
 ];
 

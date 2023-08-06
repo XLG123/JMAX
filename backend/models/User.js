@@ -20,8 +20,8 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
-    birthdate: {
-      type: Date,
+    age: {
+      type: Number,
       required: true,
     },
   },
@@ -30,12 +30,12 @@ const userSchema = new Schema(
   }
 );
 
-userSchema.virtual('birthdateFormatted').get(function () {
-  return moment(this.birthdate).format('MM-DD-YYYY');
-});
+// userSchema.virtual('birthdateFormatted').get(function () {
+//   return moment(this.birthdate).format('MM-DD-YYYY');
+// });
 
 
-userSchema.set('toJSON', { virtuals: true });
-userSchema.set('toObject', { virtuals: true });
+// userSchema.set('toJSON', { virtuals: true });
+// userSchema.set('toObject', { virtuals: true });
 
 module.exports = mongoose.model("User", userSchema);
