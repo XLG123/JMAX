@@ -1,0 +1,142 @@
+@import url(https://db.onlinewebfonts.com/c/12a61a1f47fbe7a8656996d5de888ca9?family=Sporty+Pro+Shadow+Inline+XP);
+
+.main-pg-container {
+  position: relative;
+  text-align: center;
+}
+
+#light-bulb {
+  display: none;
+}
+
+.title-container {
+  position: absolute;
+  top: 24vw;
+  width: 100%;
+  font-size: 4.5vw;
+  font-family: "Sporty Pro Shadow Inline XP", 'Times New Roman', Times, serif;
+  color: white;
+  /* word-spacing: 0.5em; */
+}
+
+.drop-title {
+  display: flex;
+  justify-content: center;
+}
+
+.title-letter {
+  color: inherit;
+  opacity: 0;
+  animation: drop 0.4s linear forwards;
+}
+
+.letter-1 {
+  animation-delay: 0.2s;
+}
+
+.letter-2 {
+  animation-delay: 0.4s;
+}
+
+.letter-3 {
+  animation-delay: 0.6s;
+}
+
+.letter-4 {
+  animation-delay: 0.8s;
+}
+
+.letter-5 {
+  animation-delay: 1.0s;
+}
+
+.letter-6 {
+  animation-delay: 1.2s;
+}
+
+.letter-7 {
+  animation-delay: 1.4s;
+}
+
+.letter-9 {
+  animation-delay: 2.0s;
+}
+
+.letter-10 {
+  animation-delay: 2.2s;
+}
+
+.letter-11 {
+  animation-delay: 2.4s;
+}
+
+.letter-12{
+  animation-delay: 2.6s;
+}
+
+.letter-13{
+  animation-delay: 2.8s;
+}
+
+.letter-14{
+  animation-delay: 3.0s;
+}
+
+@keyframes drop {
+  0% {
+    transform: translateY(-200px);
+    opacity: 0;
+  }
+
+  50% {
+    transform: translateY(0px);
+    opacity: 1;
+  }
+
+  65% {
+    transform: translateY(-17px);
+    opacity: 1;
+  }
+
+  75% {
+    transform: translateY(-22px);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(0px);
+    opacity: 1;
+  }
+}
+
+.main-pg-quote {
+  font-size: 3.2vw;
+  position: absolute;
+  top: 35vw;
+  width: 100%;
+  word-spacing: 1.5em;
+  animation: fadeIn 7s;
+  cursor: default;
+}
+
+.main-pg-container p span {
+  filter: brightness(0.6);
+  transition: 0.5s ease-in;
+}
+
+.main-pg-quote p:hover span{
+  word-spacing: 0.5em;
+  filter: brightness(0.8);
+}
+
+.main-pg-quote p:hover span,
+.main-pg-quote p:hover span {
+  filter: brightness(1);
+  text-shadow: 0 0 18px #fff, 0 0 35px #fff, 0 0 70px #fff;
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  50% { opacity: 0; }
+  100% { opacity: 1; }
+}
