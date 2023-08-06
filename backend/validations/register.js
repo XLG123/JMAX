@@ -11,10 +11,14 @@ function isValidDate(dateString) {
 }
 
 const validateRegisterInput = [
+
+  //Email Validation
   check("email")
     .exists({ checkFalsy: true })
     .isEmail()
     .withMessage("Email is invalid"),
+
+    //Username Validation
   check("username")
     .exists({ checkFalsy: true })
     .isLength({ min: 2, max: 30 })
@@ -25,10 +29,16 @@ const validateRegisterInput = [
       }
       return true;
     }),
+
+    //Address Validation
   check("address")
     .exists({ checkFalsy: true })
+    .withMessage("Address is required"),
+  check("address")
     .isLength({ min: 2, max: 50 })
-    .withMessage("Address is not valid"),
+    .withMessage("Address must be between 2 and 50 characters"),
+
+    //Password Validation
   check("password")
     .exists({ checkFalsy: true })
     .isLength({ min: 6, max: 30 })
@@ -39,10 +49,18 @@ const validateRegisterInput = [
       }
       return true;
     }),
-  check("birthdate")
-    .exists({ checkFalsy: true })
-    .custom((value) => isValidDate(value))
-    .withMessage("Birthdate is not valid"),
+
+    //Birthday Validation
+  // check("birthdate")
+  //   .exists({ checkFalsy: true })
+  //   .withMessage("Birthdate is required"),
+  // check("birthdate")
+  //   .custom((value) => isValidDate(value))
+  //   .withMessage("Birthdate is not valid"),
+  check("age")
+  .exists({ checkFalsy: true })
+  .isNumeric()
+  .withMessage("Age is required"),
   handleValidationErrors,
 ];
 
