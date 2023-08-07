@@ -19,9 +19,9 @@ import AboutPage from './components/About/AboutPage';
 function App() {
   const [loaded, setLoaded] = useState(false);
   const dispatch = useDispatch();
-  // useEffect(() => {
-  //   dispatch(getCurrentUser()).then(() => setLoaded(true));
-  // }, [dispatch]);
+  useEffect(() => {
+    dispatch(getCurrentUser()).then(() => setLoaded(true));
+  }, [dispatch]);
 
   return (
     <>
