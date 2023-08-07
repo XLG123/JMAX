@@ -23,8 +23,11 @@ function NavBar() {
     };
     dispatch(login(demoInformation))
     .then(() => {
-      history.push("/home"); 
+      history.push("/home");
     })
+    .catch((error) => {
+      console.error("Error logging in as demo user:", error);
+    });
 
 
 
