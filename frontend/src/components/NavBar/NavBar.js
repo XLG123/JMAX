@@ -1,9 +1,11 @@
 import { NavLink, useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import "./NavBar.css";
 import { logout, login } from "../store/session";
-
 import webAppLogo from "../../assets/images/webAppLogo.jpg";
+import SearchBar from "../SearchBar/SearchBar";
+import IconButton from '@mui/material/IconButton';
+import LogoutIcon from '@mui/icons-material/Logout';
+import "./NavBar.css";
 
 function NavBar() {
   const loggedIn = useSelector((state) => !!state.session.user);
@@ -22,7 +24,7 @@ function NavBar() {
     };
     dispatch(login(demoInformation))
       .then(() => {
-        history.push("/home");
+        history.push("/");
       })
       .catch((error) => {
         console.error("Error logging in as demo user:", error);
@@ -36,12 +38,46 @@ function NavBar() {
   const getLinks = () => {
     if (loggedIn) {
       return (
-        <div className="links-nav">
-          <NavLink to="/tweets">All Tweets</NavLink>
-          <NavLink to="/profile">Profile</NavLink>
-          <NavLink to="/tweets/new">Write a Tweet</NavLink>
-          <button onClick={logoutUser}>Logout</button>
-        </div>
+        <>
+          <div className="links-nav">
+            <NavLink to="/problems" className="nav-btn-gp2 all-requests-btn">
+              All Requests
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              {/* the empty spans are for css styling effects */}
+            </NavLink>
+
+            <NavLink to="/problems/new" 
+              className="nav-btn-gp2 new-request-btn">
+              Create
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              {/* the empty spans are for css styling effects */}
+            </NavLink>
+
+            <NavLink to="/profile" className="nav-btn-gp2 user-profile-btn">
+              Profile
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              {/* the empty spans are for css styling effects */}
+            </NavLink>
+
+            <IconButton onClick={logoutUser} className="logout-btn">
+              <LogoutIcon className="logout-icon" 
+                sx={{color: '#F4E9CD', fontSize: "2.5vw", position: "absolute", bottom: "0.2vw", borderRadius: '5px'}}
+              /> 
+            </IconButton>
+          </div>
+
+
+          <SearchBar />
+        </>
       );
     } else {
       return (
@@ -73,6 +109,16 @@ function NavBar() {
               <span></span>
               {/* the empty spans are for css styling effects */}
             </NavLink>
+
+            <div className="nav-btn" id="about-btn" onClick={goToAbout}>
+              About
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              {/* the empty spans are for css styling effects */}
+            </div>
+
           </div>
         </>
       );
@@ -87,15 +133,6 @@ function NavBar() {
             <img src={webAppLogo} alt="app-logo" className="main-pg-logo" />
           </div>
         </NavLink>
-
-        <div className="nav-btn" id="about-btn" onClick={goToAbout}>
-          About
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-          {/* the empty spans are for css styling effects */}
-        </div>
 
         {getLinks()}
       </div>

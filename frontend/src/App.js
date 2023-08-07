@@ -23,7 +23,7 @@ function App() {
     dispatch(getCurrentUser()).then(() => setLoaded(true));
   }, [dispatch]);
 
-  return (
+  return loaded && (
     <>
       <NavBar />
       <Switch>

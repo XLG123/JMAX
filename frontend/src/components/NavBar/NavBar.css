@@ -42,13 +42,18 @@
   position: relative;
   cursor: pointer;
   word-spacing: 0.3em;
+  letter-spacing: 0.05em;
 }
 
-.nav-btn:first-child, .nav-btn:nth-child(2) {
+.nav-btn:first-child, 
+.nav-btn:nth-child(2),
+.nav-btn-gp2:first-child, 
+.nav-btn-gp2:nth-child(2) {
   margin-right: 1vw;
 }
 
-.nav-btn span {
+.nav-btn span,
+.nav-btn-gp2 span {
   position: absolute;
   width: 52%;
   height: 100%;
@@ -61,33 +66,117 @@
   z-index: -1;
 }
 
-.nav-btn:hover, #about-btn:hover {
+.nav-btn:hover, 
+.nav-btn-gp2:hover, 
+#about-btn:hover {
   color: #031926;
 }
 
-.nav-btn:hover span {
+.nav-btn:hover span,
+.nav-btn-gp2:hover span {
   transform: translateY(0) scale(2);
 }
 
-.nav-btn span:nth-child(1) {
+.nav-btn span:first-child,
+.nav-btn-gp2 span:first-child {
   --n: 3;
 }
 
-.nav-btn span:nth-child(2) {
+.nav-btn span:nth-child(2),
+.nav-btn-gp2 span:nth-child(2) {
   --n: 2;
 }
 
-.nav-btn span:nth-child(3) {
+.nav-btn span:nth-child(3),
+.nav-btn-gp2 span:nth-child(3) {
   --n: 6;
 }
 
-.nav-btn span:nth-child(4) {
+.nav-btn span:nth-child(4),
+.nav-btn-gp2 span:nth-child(4) {
   --n: 1;
 }
 
 #about-btn {
   position: absolute;
   color: inherit;
-  left: 10vw;
+  right: 80vw;
+}
+
+.links-nav {
+  position: relative;
+  right: 1vw;
   top: 1vw;
+  color: inherit;
+}
+
+.nav-btn-gp2 {
+  --c: #9DBEBB;
+  text-decoration: none;
+  color: inherit;
+  display: inline-block;
+  border: 1px solid var(--c);
+  margin-top: 1vw;
+  font-size: 1.3vw;
+  padding: 0.5vw 0.7vw;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+  overflow: hidden;
+  word-spacing: 0.3em;
+  letter-spacing: 0.05em;
+}
+
+.all-requests-btn {
+  position: absolute;
+  right: 75vw;
+  width: 8vw;
+}
+
+.new-request-btn {
+  position: absolute;
+  right: 68vw;
+}
+
+.user-profile-btn {
+  position: absolute;
+  right: 6vw;
+}
+
+.logout-btn {
+  position: relative;
+  left: 94.5vw;
+  top: 2.4vw;
+}
+
+.logout-icon {
+  transition: box-shadow 2s;
+}
+
+.logout-icon:hover {
+  box-shadow: 0px 0px 5px 3px #fff;
+}
+
+@media screen and (width > 1440px) {
+  .logout-btn {
+    top: 2.8vw;
+  }
+}
+
+@media screen and (width < 1200px) {
+  .logout-btn {
+    top: 2vw;
+  }
+}
+
+@media screen and (width < 800px) {
+  .logout-btn {
+    top: 1vw;
+  }
+}
+
+@media screen and (width < 600px) {
+  .logout-btn {
+    top: 0.1vw;
+  }
 }
