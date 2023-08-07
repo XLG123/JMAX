@@ -29,7 +29,7 @@ router.post("/create", requireUser, async (req, res, next) => {
   }
 });
 
-router.get("/:id", async (req, res, next) => {
+router.get("/:id", requireUser, async (req, res, next) => {
   try {
     const problem = await Problem.findById(req.params.id).populate(
       "author",
@@ -43,4 +43,15 @@ router.get("/:id", async (req, res, next) => {
     return next(error);
   }
 });
+
+router.delete("/:id", requireUser, async (req, res, next) => {
+  try {
+    const problem = await Problem.findById(req.params.id)
+      .populate("author", "_id username email")
+      .then((problem) => problem.remove());
+  } catch (err) {
+    const error = new Error("Problem not found");
+  }
+});
+
 module.exports = router;
