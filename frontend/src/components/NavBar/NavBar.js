@@ -5,6 +5,9 @@ import { logout, login } from "../store/session";
 import Modal from "../context/model.js"
 import webAppLogo from "../../assets/images/webAppLogo.jpg";
 import * as problemActions from "../store/problems"
+import SearchBar from "../SearchBar/SearchBar";
+import IconButton from '@mui/material/IconButton';
+import LogoutIcon from '@mui/icons-material/Logout';
 import "./NavBar.css";
 
 function NavBar() {
@@ -42,12 +45,45 @@ function NavBar() {
   const getLinks = () => {
     if (loggedIn) {
       return (
-        <div className="links-nav">
-          <NavLink to="/tweets">All Tweets</NavLink>
-          <NavLink to="/profile">Profile</NavLink>
-          <button onClick={handelShowForm}>Write a Tweet</button>
-          <button onClick={logoutUser}>Logout</button>
-        </div>
+        <>
+          <div className="links-nav">
+            <NavLink to="/tweets" className="nav-btn-gp2 all-requests-btn">
+              All Requests
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              {/* the empty spans are for css styling effects */}
+            </NavLink>
+
+            <NavLink to="/profile" className="nav-btn-gp2 user-profile-btn">
+              Profile
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              {/* the empty spans are for css styling effects */}
+            </NavLink>
+
+            <div onClick={handelShowForm} 
+              className="nav-btn-gp2 new-request-btn">
+              Write a Request
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              {/* the empty spans are for css styling effects */}
+            </div>
+            
+            <IconButton onClick={logoutUser} className="logout-btn">
+              <LogoutIcon className="logout-icon"
+                sx={{ color: '#F4E9CD', fontSize: "2.5vw", position: "absolute", 
+                bottom: "0.2vw", borderRadius: '5px' }}
+              />
+            </IconButton>
+          </div>
+          <SearchBar/>
+        </>
       );
     } else {
       return (
