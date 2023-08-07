@@ -1,31 +1,21 @@
 import './MainPage.css';
-import EmojiObjectsIcon from '@mui/icons-material/EmojiObjects';
+import TungstenIcon from '@mui/icons-material/Tungsten';
 
 const MainPage = () => {
   
   const turnOnHoverEffect = () => {
     let mainTitle = document.getElementById('title-last-letter');
     mainTitle.innerHTML = "D";
-
-    let lightBulb = document.getElementById("light-bulb");
-    lightBulb.style.display = "";
   }
 
   const turnOffHoverEffect = () => {
     let mainTitle = document.getElementById("title-last-letter");
     mainTitle.innerHTML = "R";  
-
-    let lightBulb = document.getElementById("light-bulb");
-    lightBulb.style.display = "none";
   }
 
   return (
     <>
     <div className='main-pg-container'>
-
-      <div className='lightbulb-icon'>
-        <EmojiObjectsIcon id='light-bulb'/>
-      </div>
 
       <div className="title-container">
         <div className="drop-title">
@@ -51,9 +41,11 @@ const MainPage = () => {
 
       <div className='main-pg-quote' onMouseEnter={turnOnHoverEffect}
        onMouseLeave={turnOffHoverEffect}>
-        <p>
-          <span>Helpers are on the way you are not alone.</span>
-        </p>
+          <p>Helpers are on the way, you are not alone.</p>
+      </div>
+
+      <div className='main-pg-light-bulb-container'>
+        <TungstenIcon id='main-pg-light-bulb' />
       </div>
     </div>
     </>

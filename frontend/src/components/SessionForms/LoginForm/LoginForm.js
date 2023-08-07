@@ -32,33 +32,44 @@ function LoginForm() {
 
   return (
     <form className="session-form" onSubmit={handleSubmit}>
-      <h2 className='sign-in-title'> <img src={logo} className="logo"/>Log In to Problem  Solver</h2>
-      <div className='sign'>
-        <h1 className='title'>New  to  Problem  Solver? <Link to="signup" className='regiser'> Register </Link></h1>
-      <div className="errors">{errors?.email}</div>
-   
-        <input type="text"
-        className='signup-input'
-          value={email}
-          onChange={update('email')}
-          placeholder="Email"
-        />
-     
-      <div className="errors">{errors?.password}</div>
+      <div className='sign-in-form-container'>
+
+        <h2 className='sign-in-title'> 
+          {/* <img src={logo} alt="session-form-logo" className="logo"/> */}
+          Log In to Problem Solver
+        </h2>
+
+        <div className='sign'>
+
+          <h1 className='title'>New to Problem Solver? 
+            <Link to="signup" className='register'> Register </Link>
+          </h1>
+
+          <div className="errors">{errors?.email}</div>
     
-        <input type="password"
-          className='signup-input'
-          value={password}
-          onChange={update('password')}
-          placeholder="Password"
-        />
-     
-      <input
-        className='sign-up-btn'
-        type="submit"
-        value="Log In"
-        disabled={!email || !password}
-      />
+          <input type="text"
+            className='signup-input'
+            value={email}
+            onChange={update('email')}
+            placeholder="Email"
+          />
+      
+          <div className="errors">{errors?.password}</div>
+      
+          <input type="password"
+            className='signup-input'
+            value={password}
+            onChange={update('password')}
+            placeholder="Password"
+          />
+        
+          <input
+            className='sign-up-btn'
+            type="submit"
+            value="Log In"
+            disabled={!email || !password}
+          />
+        </div>
       </div>
     </form>
   );

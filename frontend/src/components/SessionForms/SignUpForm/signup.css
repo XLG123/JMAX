@@ -1,9 +1,15 @@
 .session-form{
     /* background-color: antiquewhite; */
-    width: 100%;
     /* height:100vh; */
-
+    position: relative;
 }
+
+.sign-up-form-container {
+    position: absolute;
+    width: 100%;
+    top: 5vw;
+}
+
 .sign{
     margin: auto;
 /* margin-top: 10%; */
@@ -14,65 +20,106 @@
     padding: 2rem;
     text-align: center;
 }
+
 .sign-up-title{
     width: 39%;
-padding-bottom: 1rem;
+    padding-bottom: 1rem;
     /* padding-top: 5rem; */
     /* background-color: aqua; */
     text-align: center;
     margin: auto;
-    font-size: xx-large;
-  color: #F4E9CD;
-
+    font-size: 2.5vw;
+    color: #F4E9CD;
+    word-spacing: 1vw;
 }
+
 .errors{
     /* background-color: #F4E9CD; */
 }
+
 .signup-input{
-    padding: 1rem;
+    padding: 0.8rem;
     background-color: #9DBEBB;
-    margin-bottom:1rem ;
+    margin-bottom: 1rem;
     width: 70%;
-    border-radius: .5rem;
+    border-radius: 5px;
     border: none;
     font-size: large;
     color:black;
     font-weight: bold;
+    font-family: 'Times New Roman', Times, serif;
 }
+
 input::placeholder {
-    color: #666; /* Replace 'red' with your desired color */
-  }
+    color: #666;
+    font-size: 1.3vw;
+}
+
+input[type='text'], 
+input[type='password'] {
+    outline: none;
+    transition: box-shadow 0.5s;
+}
+
+input[type='text']:focus,
+input[type='password']:focus {
+    box-shadow: 0px 0px 10px 5px rgba(255, 255, 255, 1);
+}
+
 .sign-up-btn{
     /* padding: .7rem; */
     width: 35%;
-    background-color: white;
-    border-radius: 1rem;
-    color: black;
-    font-size: xx-large;
+    border-radius: 5px;
+    color: #031926;
+    font-size: 2.2vw;
     font-family: 'Rakkas', cursive;
     border: none;
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.75);
+    transition: background-color 0.5s ease-in 100ms;
 }
+
+.sign-up-btn:hover {
+    background-color: white;
+    box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.9);
+}
+
+.sign-in-form-container {
+    position: absolute;
+    width: 100%;
+    top: 5vw;
+}
+
 .sign-in-title{
     width: 30%;
-padding-bottom: 1rem;
+    padding-bottom: 1rem;
     /* padding-top: 9rem; */
     /* background-color: aqua; */
     text-align: center;
     margin: auto;
-    font-size: xx-large;
-  color: #F4E9CD;
+    font-size: 2.5vw;
+    color: #F4E9CD;
+    word-spacing: 0.8vw;
+}
 
-}
 .title{
-    padding: 2rem;
-    font-size: x-large;
+    font-size: 2vw;
+    line-height: 1.2em;
+    margin-bottom: 1em;
 }
-.regiser{
+
+.register:hover {
+    color: white;
+}
+
+.register{
     color: rgba(255, 255, 255, 0.5);   
-     text-decoration: none;
+    text-decoration: none;
 }
+
 .logo{
-    width: 4.5rem;
-    height: 4.5rem;
+    width: 4.5vw;
+    height: 4.5vw;
+    position: absolute;
     /* margin-bottom: -1rem; */
 }

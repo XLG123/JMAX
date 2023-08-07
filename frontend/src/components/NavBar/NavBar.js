@@ -36,10 +36,24 @@ function NavBar() {
       return (
         <>
           <div className="links-auth">
+
             <div className='nav-btn' id="demo-login" onClick={demoLogin}>Demo
+              <span></span><span></span><span></span><span></span>
+              {/* the empty spans are for css styling effects */}
             </div>
-            <NavLink to='/signup' className="nav-btn">Sign Up</NavLink>
-            <NavLink to='/login' className="nav-btn">Login</NavLink>
+
+            <NavLink to='/signup' className="nav-btn">
+              Sign Up
+              <span></span><span></span><span></span><span></span>
+              {/* the empty spans are for css styling effects */}
+            </NavLink>
+
+            <NavLink to='/login' className="nav-btn">
+              Log In
+              <span></span><span></span><span></span><span></span>
+              {/* the empty spans are for css styling effects */}
+            </NavLink>
+
           </div>
         </>
       );
@@ -52,12 +66,16 @@ function NavBar() {
 
         <NavLink to='/'>
           <div className='logo-container'>
-            <img src={webAppLogo} alt='app-logo' className='logo'/>
+            <img src={webAppLogo} alt='app-logo' className='main-pg-logo'/>
           </div>
         </NavLink>
 
         <div className="nav-btn" id="about-btn" onClick=
-        {goToAbout}>About</div>
+        {goToAbout}>
+          About
+          <span></span><span></span><span></span><span></span>
+          {/* the empty spans are for css styling effects */}
+        </div>
 
         {getLinks()}
 

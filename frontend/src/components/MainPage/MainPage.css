@@ -5,8 +5,19 @@
   text-align: center;
 }
 
-#light-bulb {
-  display: none;
+.main-pg-light-bulb-container {
+  position: absolute;
+  top: 10vw;
+  left: 45%;
+  color: #031926;
+  transform: scale(-1);
+  transition: color 1.5s ease-out 100ms;
+}
+
+#main-pg-light-bulb {
+  font-size: 10vw;
+  color: inherit;
+  box-shadow: inherit;
 }
 
 .title-container {
@@ -15,8 +26,6 @@
   width: 100%;
   font-size: 4.5vw;
   font-family: "Sporty Pro Shadow Inline XP", 'Times New Roman', Times, serif;
-  color: white;
-  /* word-spacing: 0.5em; */
 }
 
 .drop-title {
@@ -119,20 +128,19 @@
   cursor: default;
 }
 
-.main-pg-container p span {
+.main-pg-container p {
   filter: brightness(0.6);
   transition: 0.5s ease-in;
 }
 
-.main-pg-quote p:hover span{
+.main-pg-quote:hover p {
   word-spacing: 0.5em;
-  filter: brightness(0.8);
+  filter: brightness(1);
+  text-shadow: 0 0 22px #fff, 0 0 45px #fff, 0 0 90px #fff;
 }
 
-.main-pg-quote p:hover span,
-.main-pg-quote p:hover span {
-  filter: brightness(1);
-  text-shadow: 0 0 18px #fff, 0 0 35px #fff, 0 0 70px #fff;
+.main-pg-quote:hover + .main-pg-light-bulb-container{
+  color: #F4E9CD;
 }
 
 @keyframes fadeIn {

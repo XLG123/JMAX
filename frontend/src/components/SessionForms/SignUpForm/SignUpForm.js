@@ -65,71 +65,83 @@ function SignupForm() {
 
   return (
     <form className="session-form" onSubmit={handleSubmit}>
-      <h1 className='sign-up-title'> <img src={logo} className="logo"/> Rigister for a new account on Problem  Solver</h1>
-      <div className='sign'>
-      <div className="errors">{errors?.email}</div>
-   
-        <input type="text"
-        className='signup-input'
-          value={email}
-          onChange={update('email')}
-          placeholder="Email"
-        />
-    
-      <div className="errors">{errors?.username}</div>
-     
-        <input type="text"
-         className='signup-input'
-          value={username}
-          onChange={update('username')}
-          placeholder="Username"
-        />
-     
-      <div className="errors">{errors?.password}</div>
+      <div className='sign-up-form-container'>
+
+        <h1 className='sign-up-title'> 
+          {/* <img src={logo} alt="session-form-logo" className="logo"/>  */}
+          Rigister for a new account on Problem Solver
+        </h1>
+
+        <div className='sign'>
+
+          <div className="errors">{errors?.email}</div>
       
-        <input type="password"
-         className='signup-input'
-          value={password}
-          onChange={update('password')}
-          placeholder="Password"
-        />
-     
-      <div className="errors">
-        {password !== password2 && 'Confirm Password field must match'}
-      </div>
-     
-        <input type="password"
-         className='signup-input'
-          value={password2}
-          onChange={update('password2')}
-          placeholder="Confirm Password"
-        />
-      <div className="errors">{errors?.age}</div>
+          <input type="text"
+            className='signup-input'
+            value={email}
+            onChange={update('email')}
+            placeholder="Email"
+          />
+        
+          <div className="errors">{errors?.username}</div>
+        
+          <input type="text"
+            className='signup-input'
+            value={username}
+            onChange={update('username')}
+            placeholder="Username"
+          />
+      
+          <div className="errors">{errors?.password}</div>
+          
+          <input type="password"
+            className='signup-input'
+            value={password}
+            onChange={update('password')}
+            placeholder="Password"
+          />
+      
+          <div className="errors">
+            {password !== password2 && 'Confirm Password field must match'}
+          </div>
+      
+          <input type="password"
+            className='signup-input'
+            value={password2}
+            onChange={update('password2')}
+            placeholder="Confirm Password"
+          />
+
+          <div className="errors">{errors?.age}</div>
 
           <input type="text"
-           className='signup-input'
-          // value={password2}
-          onChange={update('age')}
-          placeholder="Age"
-        />
-      <div className="errors">{errors?.address}</div>
-
-           <input type="text"
             className='signup-input'
-          // value={password2}
-          onChange={update('address')}
-          placeholder="Zip code"
-        />
-      <div className="errors">{errors?.address}</div>
-      
-      <input
-      className='sign-up-btn'
-        type="submit"
-        value="Register"
-        disabled={!email || !username || !password || password !== password2}
-      />
-    </div>
+            // value={password2}
+            onChange={update('age')}
+            placeholder="Age"
+          />
 
+          <div className="errors">{errors?.address}</div>
+
+          <input type="text"
+            className='signup-input'
+            // value={password2}
+            onChange={update('address')}
+            placeholder="Zip code"
+          />
+            
+          <div className="errors">{errors?.address}</div>
+        
+          <input
+            className='sign-up-btn'
+            type="submit"
+            value="Register"
+            disabled={!email || !username || !password || 
+              password !== password2}
+          />
+
+        </div>
+      </div>
     </form>
   );
 }
