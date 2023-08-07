@@ -44,33 +44,22 @@ router.get("/:id", requireUser, async (req, res, next) => {
   }
 });
 
-// router.delete("/:id", requireUser, async (req, res, next) => {
-//   try {
-//     const problem = await Problem.findById(req.params.id)
-//       .populate("author", "_id username email")
-//       .then((problem) => problem.remove());
-//   } catch (err) {
-//     const error = new Error("Error deleting problem");
-//     error.statusCode = 404;
-//     error.errors = { message: "Error deleting problem" };
-//     return next(error);
-//   }
-// });
 
-router.delete("/:id", requireUser, async (req, res) => {
+router.delete("/:id", requireUser, async (req, res, next) => {
   try {
     // Find the problem by ID
     const problem = await Problem.findById(req.params.id);
-    console.log(problem);
-    console.log(problem.author_id);
-
+    console.log("🚀 ~ file: problems.js:64 ~ router.delete ~ problem:", problem)
+    console.log(problem.author);
+    console.log(req.user._id);
+    console.log(problem.author.equals(req.user._id));
     // Check if the problem exists
     if (!problem) {
       return res.status(404).json({ message: "Problem not found" });
     }
 
     // Check if the user is the author of the problem
-    if (problem.author_id.toString() !== req.user._id.toString()) {
+    if (!problem.author.equals(req.user._id)) {
       return res
         .status(403)
         .json({ message: "You are not authorized to delete this problem" });
@@ -81,7 +70,6 @@ router.delete("/:id", requireUser, async (req, res) => {
 
     return res.json({ message: "Problem deleted successfully" });
   } catch (error) {
-    console.log(error);
     return res.status(500).json({ error: "Error deleting problem" });
   }
 });
