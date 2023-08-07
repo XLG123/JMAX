@@ -3,6 +3,10 @@ const router = express.Router();
 const mongoose = require("mongoose");
 const Problem = mongoose.model("Problem");
 const { requireUser } = require("../../config/passport");
+const {
+  multipleFilesUpload,
+  multipleMulterUpload,
+} = require("../../../backend/awsS3");
 
 router.get("/", function (req, res, next) {
   res.json({
@@ -10,24 +14,37 @@ router.get("/", function (req, res, next) {
   });
 });
 
-router.post("/create", requireUser, async (req, res, next) => {
-  const newProblem = new Problem({
-    category: req.body.category,
-    description: req.body.description,
-    address: req.body.address,
-    author: req.user._id,
-  });
-  try {
-    let savedProblem = await newProblem.save();
-    savedProblem = await savedProblem.populate("author", "_id username email");
-
-    return res.json(savedProblem);
-  } catch (error) {
-    return res.status(500).json({
-      error: error,
+router.post(
+  "/create",
+  multipleMulterUpload("images"),
+  requireUser,
+  async (req, res, next) => {
+    const imageUrls = await multipleFilesUpload({
+      files: req.files,
+      public: true,
     });
+    const newProblem = new Problem({
+      category: req.body.category,
+      description: req.body.description,
+      address: req.body.address,
+      imageUrls,
+      author: req.user._id,
+    });
+    try {
+      let savedProblem = await newProblem.save();
+      savedProblem = await savedProblem.populate(
+        "author",
+        "_id username email problemImageUrl"
+      );
+
+      return res.json(savedProblem);
+    } catch (error) {
+      return res.status(500).json({
+        error: error,
+      });
+    }
   }
-});
+);
 
 router.get("/:id", requireUser, async (req, res, next) => {
   try {

@@ -5,7 +5,7 @@ console.log('mongoURI:', db);
 // const User = require('../models/User');
 const Problem = require('../models/Problem');
 
-const DEFAULT_PROBLEM_IMAGE_URL = 'https://my-jmax.s3.us-east-2.amazonaws.com/public/blank-profile-picture-973460.svg'; // <- Insert the S3 URL that you copied above here
+const DEFAULT_PROBLEM_IMAGE_URL = 'https://my-jmax.s3.us-east-2.amazonaws.com/public/tools.svg'; // <- Insert the S3 URL that you copied above here
 
 // Connect to database
 mongoose
