@@ -50,8 +50,6 @@ router.patch("/:id", requireUser, async (req, res) => {
     if (!problem) {
       const error = new Error("Problem not found");
     }
-    console.log(problem.author);
-    console.log(req.user._id);
     if (!problem.author.equals(req.user._id)) {
       throw new Error("You are not authorized to edit this problem");
     }
