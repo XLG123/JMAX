@@ -1,7 +1,7 @@
 import { NavLink, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import './NavBar.css';
-import { logout, login } from '../store/session'; 
+import { logout, login } from '../store/session';
 
 import webAppLogo from '../../assets/images/webAppLogo.jpg';
 
@@ -15,9 +15,16 @@ function NavBar() {
     dispatch(logout());
   }
 
-  const demoLogin = () => {
 
-  }
+  const demoLogin = () => {
+    const demoInformation = {
+      email: "DEMO-USER@email.com",
+      password: "password"
+    };
+
+
+
+  };
 
   const goToAbout = () => {
     history.push('/about');
