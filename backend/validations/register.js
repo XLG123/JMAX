@@ -62,7 +62,11 @@ const validateRegisterInput = [
     if (value == null || value === undefined) {
       throw new Error("Age is required");
     }
-   
+    if (value == 0) {
+      throw new Error("Age cannot be zero");
+    }
+    
+
   }),
 
   handleValidationErrors,
