@@ -1,8 +1,67 @@
+.container{
+    /* background-color: blue; */
+    margin-top: 4rem;
+}
+.problems-container{
+    margin-top: 2rem;
+    width: 100%;
+    /* text-align: center; */
+/* background-color: antiquewhite; */
+}
 .box{
     width: 50%;
-    background-color: white;
+    background: linear-gradient(to bottom, #9dbebb 0%, #468189 50%, #9dbebb 100%);
+    /* box-shadow: 2px 2px 2px 2px #F3E9CD(0, 0, 0, 0.2);  */
+    background-color: #9dbebb;
+    padding: 1rem;
+    margin: auto;
+    border-radius: 1rem;
+    border: none;
+
 }
 .noproblem{
     width: 50%;
     margin: auto;
+}
+.catgory{
+    font-size: large;
+    color:#031926;
+    border-bottom: 3px #031926 solid;
+    padding-bottom: 1rem;
+}
+.add-offer-btn{
+    margin: auto;
+    padding: .5rem;
+    width: 15%;
+    border-radius: 5px;
+    color: #031926;
+    font-size: 1vw;
+    font-family: 'Rakkas', cursive;
+    border: none;
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.75);
+    transition: background-color 0.5s ease-in 100ms;
+}
+
+.add-offer-btn:hover {
+    background-color: white;
+    box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.9);
+}
+.des-box{
+    padding-top: 1rem;
+    padding-bottom: .5rem;
+    text-align: center;
+    font-size: x-large;
+    /* border-bottom: 3px #031926 solid; */
+
+}
+.title{
+    text-align: center;
+}
+.offer{
+    width: 100%;
+    /* background-color: aliceblue; */
+    display: flex;
+    justify-content: center;
+
 }

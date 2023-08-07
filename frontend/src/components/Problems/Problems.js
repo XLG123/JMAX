@@ -4,6 +4,7 @@ import * as problemActions from "../store/problems"
 import ProblemBox from './ProblemBox';
 
 const Problems = () => {
+  debugger
   const dispatch = useDispatch();
   const problems = useSelector(state => Object.values(state.problems.all));
 
@@ -15,12 +16,12 @@ const Problems = () => {
   if (problems.length === 0) return <div className='noproblem'>There are no Problems</div>;
 
   return (
-    <>
-      <h2>All Problems</h2>
+    <div className='container'>
+      <h2 className='title'>All Problems</h2>
       {problems.map(problem => (
         <ProblemBox key={problem._id} problem={problem} />
       ))}
-    </>
+    </div>
   );
 }
 

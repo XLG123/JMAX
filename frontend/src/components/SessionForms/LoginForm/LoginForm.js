@@ -27,7 +27,7 @@ function LoginForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(login({ email, password }));
-    history.push("/")
+    history.push("/requests")
   }
 
   return (

@@ -15,7 +15,7 @@ function NavBar() {
   const dispatch = useDispatch();
   const history = useHistory();
   const [showReq,setShowReqForm]=useState(false)
-  const [category, setCategory] = useState(null);
+  const [category, setCategory] = useState("Home Repair");
   const [description, setDescription] = useState('');
   const [zipCode,setZipCode]=useState('')
   const logoutUser = (e) => {
@@ -23,7 +23,6 @@ function NavBar() {
     dispatch(logout());
   };
 
-  console.log(category,description,zipCode)
     const demoLogin = () => {
       const demoInformation = {
         email: "DEMO-USER@email.com",
@@ -31,7 +30,7 @@ function NavBar() {
       };
       dispatch(login(demoInformation))
         .then(() => {
-          history.push("/");
+          history.push("/requests");
         })
         .catch((error) => {
           console.error("Error logging in as demo user:", error);
@@ -45,24 +44,9 @@ function NavBar() {
   const getLinks = () => {
     if (loggedIn) {
       return (
-<<<<<<< HEAD
-        <div className="links-nav">
-          <NavLink to="/requests" >All Requests</NavLink>
-          <NavLink to="/profile">Profile</NavLink>
-          <button onClick={handelShowForm}>Write a Tweet</button>
-          <button onClick={logoutUser}>Logout</button>
-        </div>
-||||||| 8da8b27
-        <div className="links-nav">
-          <NavLink to="/tweets">All Tweets</NavLink>
-          <NavLink to="/profile">Profile</NavLink>
-          <button onClick={handelShowForm}>Write a Tweet</button>
-          <button onClick={logoutUser}>Logout</button>
-        </div>
-=======
         <>
           <div className="links-nav">
-            <NavLink to="/tweets" className="nav-btn-gp2 all-requests-btn">
+            <NavLink to="/requests" className="nav-btn-gp2 all-requests-btn">
               All Requests
               <span></span>
               <span></span>
@@ -99,7 +83,6 @@ function NavBar() {
           </div>
           <SearchBar/>
         </>
->>>>>>> main
       );
     } else {
       return (
@@ -175,140 +158,57 @@ function NavBar() {
       </div>
       {showReq && <Modal onClose={handelClose}>
 
-<<<<<<< HEAD
-  <form onSubmit={handleSubmit}>
-      <label for="category" className="title space" >Select a Category:</label>
-      <br/>
-      <br/>
-      <select id="category" className="select signup-input selecr-font" name="category" onChange={(e)=> setCategory(e.target.value)}>
-        <option value="Home Repair">Home Repair</option>
-        <option value="Delivery">Delivery</option>
-        <option value="Driver">Driver</option>
-      </select>
-||||||| 8da8b27
-  <form onSubmit={handleSubmit}>
-      <label for="category" className="title space" >Select a Category:</label>
-      <br/>
-      <select id="category" className="select signup-input selecr-font" name="category" onChange={(e)=> setCategory(e.target.value)}>
-        <option  id="option"className="option" value="Home Repair">Home Repair</option>
-        <option value="Delivery">Delivery</option>
-        <option value="Driver">Driver</option>
-      </select>
-=======
-      <form onSubmit={handleSubmit}>
->>>>>>> main
+<form onSubmit={handleSubmit}>
 
-        <label for="category" className="title space" >Select a Category:</label>
+  <label htmlFor="category" className="title space" >Select a Category:</label>
 
-        <br/>
+  <br/>
 
-<<<<<<< HEAD
-            <input type="number"
-            onChange={(e)=> setZipCode(e.target.value)}
-            className='signup-input'
-            placeholder="Zip Code"
-            required
-           />
-           <br></br>
+  <select id="category" className="select signup-input selecr-font" name="category" onChange={(e)=> setCategory(e.target.value)}>
+    <option  value="Home Repair">Home Repair</option>
+    <option value="Delivery">Delivery</option>
+    <option value="Driver">Driver</option>
+  </select>
 
- 
+  <input type="number"
+    onChange={(e)=> setZipCode(e.target.value)}
+    className='signup-input'
+    placeholder="Zip Code"
+    required
+  />
+
+  {/* <br></br>
+<br></br>  */}
+<br />
+  <div className="errors"></div>
+
+  <textarea
+    className='signup-input'
+    placeholder="Description"
+    onChange={(e)=>setDescription(e.target.value)}
+    required
+  />
+<br></br>
+<br></br>
 
 
-          <div className="errors"></div>
-      
-          <textarea
-            className='signup-input'
-            placeholder="Description"
-            onChange={(e)=>setDescription(e.target.value)}
-            required
-||||||| 8da8b27
-            <input type="number"
-            onChange={(e)=> setZipCode(e.target.value)}
-            className='signup-input'
-            placeholder="Zip Code"
-            required
-           />
-      
-            <div className="signup-input"> 
-           <input type="file"
-           id="file"
-            // onChange={(e)=> setZipCode(e.target.value)}
-            className='signup-input'
-            placeholder="Add an image"
-            />
-           </div>
-      
-          <div className="errors"></div>
-      
-          <textarea
-            className='signup-input'
-            placeholder="Description"
-            onChange={(e)=>setDescription(e.target.value)}
-            required
-=======
-        <select id="category" className="select signup-input selecr-font" name="category" onChange={(e)=> setCategory(e.target.value)}>
-          <option  id="option"className="option" value="Home Repair">Home Repair</option>
-          <option value="Delivery">Delivery</option>
-          <option value="Driver">Driver</option>
-        </select>
+  <label className="img-input"> Add image
+  <input type="file"
+  id="file"
+    // onChange={(e)=> setZipCode(e.target.value)}
+    className='signup-input'
+    placeholder="Add an image"
+    />
+  </label>
+  <br></br>
+<br></br>
+<br></br>
 
-        <input type="number"
-          onChange={(e)=> setZipCode(e.target.value)}
-          className='signup-input'
-          placeholder="Zip Code"
-          required
-        />
-    
-        <div className="signup-input"> 
-        <input type="file"
-        id="file"
-          // onChange={(e)=> setZipCode(e.target.value)}
-          className='signup-input'
-          placeholder="Add an image"
->>>>>>> main
-          />
-<<<<<<< HEAD
-          <br/>
-          <br/>
-
-               <label className="img-input"> Add image
-                  <input
-                    type="file"
-                    placeholder="Add an image"
-                    className="signup-input"
-                  />
-                  </label>
-            <br/>
-            <br/>
-            <br/>
-
-        <button className="sign-up-btn ">Add Request</button>
-   </form>
-        </Modal>}
-    </>
-||||||| 8da8b27
-        
-        <button className="sign-up-btn btn">Add Request</button>
-   </form>
-        </Modal>}
-    </>
-=======
-        </div>
-    
-        <div className="errors"></div>
-    
-        <textarea
-          className='signup-input'
-          placeholder="Description"
-          onChange={(e)=>setDescription(e.target.value)}
-          required
-        />
-      
-        <button className="sign-up-btn btn">Add Request</button>
-      </form>
-    </Modal>}
+  <button className="sign-up-btn ">Add Request</button>
+</form>
+</Modal>}
   </>
->>>>>>> main
+
 
   );
 }

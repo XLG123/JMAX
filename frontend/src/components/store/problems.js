@@ -33,6 +33,7 @@ export const clearProblemErrors = errors => ({
 });
 
 export const fetchProblems = () => async dispatch => {
+  // debugger
   try {
     const res = await jwtFetch('/api/problems');
     const problems = await res.json();
@@ -66,6 +67,7 @@ export const composeProblem = data => async dispatch => {
     });
     const problem = await res.json();
     dispatch(receiveNewProblem(problem));
+    dispatch(fetchProblems())
   } catch (err) {
     const resBody = await err.json();
     if (resBody.statusCode === 400) {
