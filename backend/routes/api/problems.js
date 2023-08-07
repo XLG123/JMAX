@@ -44,15 +44,32 @@ router.get("/:id", requireUser, async (req, res, next) => {
   }
 });
 
+router.patch("/:id", requireUser, async (req, res) => {
+  try {
+    const problem = await Problem.findById(req.params.id);
+    if (!problem) {
+      const error = new Error("Problem not found");
+    }
+    console.log(problem.author);
+    console.log(req.user._id);
+    if (!problem.author.equals(req.user._id)) {
+      throw new Error("You are not authorized to edit this problem");
+    }
+    await Problem.updateOne({ _id: req.params.id }, { $set: req.body });
 
-router.delete("/:id", requireUser, async (req, res, next) => {
+    return res.json({ message: "Problem updated successfully" });
+  } catch (error) {
+    return res.status(500).json({
+      error: error.message,
+    });
+  }
+});
+
+router.delete("/:id", requireUser, async (req, res) => {
   try {
     // Find the problem by ID
     const problem = await Problem.findById(req.params.id);
-    console.log("🚀 ~ file: problems.js:64 ~ router.delete ~ problem:", problem)
-    console.log(problem.author);
-    console.log(req.user._id);
-    console.log(problem.author.equals(req.user._id));
+
     // Check if the problem exists
     if (!problem) {
       return res.status(404).json({ message: "Problem not found" });
