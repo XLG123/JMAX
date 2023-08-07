@@ -6,3 +6,27 @@ const NAME_OF_BUCKET = "my-jmax"; // <-- Use your bucket name here
 module.exports = {
   s3
 };
+
+const singleFileUpload = async ({ file, public = false }) => {
+    const { originalname, buffer } = file;
+    const path = require("path");
+
+    // Set the name of the file in your S3 bucket to the date in ms plus the
+    // extension name.
+    const Key = new Date().getTime().toString() + path.extname(originalname);
+    const uploadParams = {
+      Bucket: NAME_OF_BUCKET,
+      Key: public ? `public/${Key}` : Key,
+      Body: buffer
+    };
+    const result = await s3.upload(uploadParams).promise();
+
+    // Return the link if public. If private, return the name of the file in your
+    // S3 bucket as the key in your database for subsequent retrieval.
+    return public ? result.Location : result.Key;
+  };
+
+  module.exports = {
+    s3,
+    singleFileUpload
+  };
