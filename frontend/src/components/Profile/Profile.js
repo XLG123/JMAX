@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchUserProblems, clearProblemErrors } from '../../store/problems';
-import ProblemBox from '../Problems/ProblemBox';
+// import { fetchUserProblems, clearProblemErrors } from '../../store/problems';
+// import ProblemBox from '../Problems/ProblemBox';
+import "./Profile.css";
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -28,7 +29,26 @@ const Profile = () => {
   //     </>
   //   );
   // }
-  return (<></>);
+  return (
+    <>
+    {/* pg stands for profile page */}
+      <div className='pg-container'>
+
+        <div className='pg-left-side-bar'>
+          hi from left side bar
+        </div>
+
+        <div className="pg-middle-section">
+          hi from middle section
+        </div>
+
+        <div className="pg-right-side-bar">
+          hi from right side bar
+        </div>
+
+      </div>
+    </>
+  );
 }
 
 export default Profile;

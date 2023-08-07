@@ -1,0 +1,16 @@
+.pg-container {
+  display: relative;
+  top: 2vw;
+}
+
+.pg-left-side-bar {
+  display: absolute;
+}
+
+.pg-middle-section {
+  display: absolute;
+}
+
+.pg-right-side-bar {
+  display: absolute;
+}
