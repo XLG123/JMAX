@@ -32,6 +32,23 @@ const singleFileUpload = async ({ file, public = false }) => {
       })
     );
   };
+  const retrievePrivateFile = (key) => {
+    let fileUrl;
+    if (key) {
+      fileUrl = s3.getSignedUrl("getObject", {
+        Bucket: NAME_OF_BUCKET,
+        Key: key
+      });
+    }
+    return fileUrl || key;
+  };
+
+  module.exports = {
+    s3,
+    singleFileUpload,
+    multipleFilesUpload,
+    retrievePrivateFile
+  };
 
   module.exports = {
     s3,
