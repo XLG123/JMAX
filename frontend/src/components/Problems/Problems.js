@@ -12,7 +12,7 @@ const Problems = () => {
     return () => dispatch(problemActions.clearProblemErrors());
   }, [dispatch])
 
-  if (problems.length === 0) return <div>There are no Problems</div>;
+  if (problems.length === 0) return <div className='noproblem'>There are no Problems</div>;
 
   return (
     <>
