@@ -226,4 +226,40 @@ select,
 textarea {
   outline: none;
   transition: box-shadow 0.5s;
+  max-width: 100%;
 }
+.custom-file-input {
+  display: inline-block;
+  padding: 8px 12px;
+  background-color: #3498db;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.custom-file-input-label {
+  border: none;
+  outline: none;
+  /* You can add more styling here as needed */
+}
+
+.img-input {
+  padding: 1rem;
+  background-color: #9DBEBB;
+  width: 15rem;
+  border-radius: 5px;
+  border: none;
+  font-size: large;
+  font-weight: bold;
+  font-family: 'Times New Roman', Times, serif;
+  margin-bottom: 3rem;
+}
+
+/* Specific rule for input[type="file"] */
+input[type="file"] {
+  display: none;
+}
+
+
+
+
