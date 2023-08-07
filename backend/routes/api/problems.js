@@ -4,10 +4,9 @@ const mongoose = require("mongoose");
 const Problem = mongoose.model("Problem");
 const { requireUser } = require("../../config/passport");
 
-router.get("/", function (req, res, next) {
-  res.json({
-    message: "GET /api/problems",
-  });
+router.get("/", async (req, res)=>{
+  const problems = await Problem.find().populate("author", "_id username email");
+  return res.json(problems);
 });
 
 router.post("/create", requireUser, async (req, res, next) => {
