@@ -1,7 +1,8 @@
 import { NavLink, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import './NavBar.css';
-import { logout } from '../store/session';
+import { logout, login } from '../store/session'; 
+
 import webAppLogo from '../../assets/images/webAppLogo.jpg';
 
 function NavBar() {
@@ -15,7 +16,7 @@ function NavBar() {
   }
 
   const demoLogin = () => {
-    
+
   }
 
   const goToAbout = () => {
@@ -59,7 +60,7 @@ function NavBar() {
       );
     }
   }
-  
+
   return (
     <>
       <div className='nav-bar-container'>
