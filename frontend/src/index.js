@@ -5,7 +5,7 @@ import App from './App';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import configureStore from './components/store/store';
-
+import {ModalProvider} from "./components/context/model"
 let store = configureStore({});
 
 function Root() {
@@ -21,9 +21,11 @@ function Root() {
 // const renderApplication = () => {
   const root = ReactDOM.createRoot(document.getElementById('root'));
   root.render(
+    <ModalProvider>
     <React.StrictMode>
       <Root />
     </React.StrictMode>
+    </ModalProvider>
   );
 // }
 
