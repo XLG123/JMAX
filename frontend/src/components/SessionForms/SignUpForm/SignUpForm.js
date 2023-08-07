@@ -12,6 +12,7 @@ function SignupForm() {
   const [address,setAddress]=useState('')
   const [age,setAge]=useState('')
   const errors = useSelector(state => state.errors.session);
+  const year=Number(age)
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -55,7 +56,7 @@ function SignupForm() {
       email,
       username,
       password,
-      age,
+      age:year,
       address
     };
 

@@ -32,13 +32,11 @@ export const login = user => startSession(user, 'api/users/login');
 
 const startSession = (userInfo, route) => async dispatch => {
   try {
-    debugger
     const res = await jwtFetch(route, {
       method: "POST",
       body: JSON.stringify(userInfo)
     });
     const { user, token } = await res.json();
-    debugger
     localStorage.setItem('jwtToken', token);
     return dispatch(receiveCurrentUser(user));
   } catch (err) {
