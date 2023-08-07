@@ -1,16 +1,16 @@
-import { useEffect, useState, Route } from 'react';
-import { useDispatch } from 'react-redux';
-import { Switch } from 'react-router-dom';
+import { useEffect, useState, Route } from "react";
+import { useDispatch } from "react-redux";
+import { Switch } from "react-router-dom";
 
-import { AuthRoute, ProtectedRoute } from './components/Routes/Routes';
-import NavBar from './components/NavBar/NavBar';
+import { AuthRoute, ProtectedRoute } from "./components/Routes/Routes";
+import NavBar from "./components/NavBar/NavBar";
 
-import MainPage from './components/MainPage/MainPage';
-import LoginForm from './components/SessionForms/LoginForm/LoginForm';
-import SignupForm from './components/SessionForms/SignUpForm/SignUpForm';
+import MainPage from "./components/MainPage/MainPage";
+import LoginForm from "./components/SessionForms/LoginForm/LoginForm";
+import SignupForm from "./components/SessionForms/SignUpForm/SignUpForm";
 
-import { getCurrentUser } from './components/store/session';
-import AboutPage from './components/About/AboutPage';
+import { getCurrentUser } from "./components/store/session";
+import AboutPage from "./components/About/AboutPage";
 
 // import Problems from './components/Problem/Problems';
 // import Profile from './components/Profile/Profile';
@@ -19,9 +19,9 @@ import AboutPage from './components/About/AboutPage';
 function App() {
   const [loaded, setLoaded] = useState(false);
   const dispatch = useDispatch();
-  // useEffect(() => {
-  //   dispatch(getCurrentUser()).then(() => setLoaded(true));
-  // }, [dispatch]);
+  useEffect(() => {
+    dispatch(getCurrentUser()).then(() => setLoaded(true));
+  }, [dispatch]);
 
   return (
     <>
