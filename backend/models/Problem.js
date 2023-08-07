@@ -20,3 +20,5 @@ const problemSchema = new Schema(
     timestamps: true,
   }
 );
+
+module.exports = mongoose.model("Problem", problemSchema);
