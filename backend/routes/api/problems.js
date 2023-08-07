@@ -44,13 +44,50 @@ router.get("/:id", requireUser, async (req, res, next) => {
   }
 });
 
-router.delete("/:id", requireUser, async (req, res, next) => {
+router.patch("/:id", requireUser, async (req, res) => {
   try {
-    const problem = await Problem.findById(req.params.id)
-      .populate("author", "_id username email")
-      .then((problem) => problem.remove());
-  } catch (err) {
-    const error = new Error("Problem not found");
+    const problem = await Problem.findById(req.params.id);
+    if (!problem) {
+      const error = new Error("Problem not found");
+    }
+    console.log(problem.author);
+    console.log(req.user._id);
+    if (!problem.author.equals(req.user._id)) {
+      throw new Error("You are not authorized to edit this problem");
+    }
+    await Problem.updateOne({ _id: req.params.id }, { $set: req.body });
+
+    return res.json({ message: "Problem updated successfully" });
+  } catch (error) {
+    return res.status(500).json({
+      error: error.message,
+    });
+  }
+});
+
+router.delete("/:id", requireUser, async (req, res) => {
+  try {
+    // Find the problem by ID
+    const problem = await Problem.findById(req.params.id);
+
+    // Check if the problem exists
+    if (!problem) {
+      return res.status(404).json({ message: "Problem not found" });
+    }
+
+    // Check if the user is the author of the problem
+    if (!problem.author.equals(req.user._id)) {
+      return res
+        .status(403)
+        .json({ message: "You are not authorized to delete this problem" });
+    }
+
+    // Delete the problem
+    await Problem.deleteOne({ _id: problem._id });
+
+    return res.json({ message: "Problem deleted successfully" });
+  } catch (error) {
+    return res.status(500).json({ error: "Error deleting problem" });
   }
 });
 

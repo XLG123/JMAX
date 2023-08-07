@@ -123,3 +123,6 @@ input[type='password']:focus {
     position: absolute;
     /* margin-bottom: -1rem; */
 }
+.btn{
+    font-size: x-large;
+}
