@@ -65,7 +65,11 @@ const validateRegisterInput = [
     if (value == 0) {
       throw new Error("Age cannot be zero");
     }
-    
+    if (isNaN(value) || value < 12 || value > 99) {
+      throw new Error("Age should be between 12 and 99 years");
+    }
+    return true;
+
 
   }),
 
