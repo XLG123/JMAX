@@ -2,10 +2,12 @@ const express = require("express");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const debug = require('debug');
+require('./models/Problem')
 require('./models/User');
 const cors = require("cors");
 const csurf = require("csurf");
 const { isProduction } = require("./config/keys");
+
 
 const usersRouter = require("./routes/api/users");
 const problemsRouter = require("./routes/api/problems");
@@ -51,6 +53,7 @@ app.use("/api/users", usersRouter);
 app.use("/api/problems", problemsRouter);
 app.use("/api/csrf", csrfRouter);
 app.use("/api/test", testUserRouter);
+
 
 app.use((req, res, next) => {
   const err = new Error('Not Found');
