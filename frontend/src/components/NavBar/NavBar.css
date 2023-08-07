@@ -68,6 +68,7 @@
 
 .nav-btn:hover, 
 .nav-btn-gp2:hover, 
+.nav-btn:hover,
 #about-btn:hover {
   color: #031926;
 }
@@ -179,4 +180,50 @@
   .logout-btn {
     top: 0.1vw;
   }
+}
+
+.space{
+  padding-bottom: 3rem;
+}
+
+.select {
+  color: #666;
+  font-size: 1.3vw;
+  font-weight: bold;
+  font-family: 'Times New Roman', Times, serif;
+  background-color: #9DBEBB;
+  width: 100%
+}
+
+#category {
+  color: #666;
+  width: 75%
+}
+
+/* Style the options */
+#option {
+  background-color: #ffffff;
+  /* Set the background color for options */
+}
+
+/* Style the options on hover */
+option:hover {
+  background-color: #e0e0e0;
+  /* Change background color on hover */
+}
+
+.selecr-font {
+  color: #666;
+  font-size: 1.3vw;
+}
+
+select:focus,
+textarea:focus {
+  box-shadow: 0px 0px 10px 5px rgba(255, 255, 255, 1);
+}
+
+select,
+textarea {
+  outline: none;
+  transition: box-shadow 0.5s;
 }

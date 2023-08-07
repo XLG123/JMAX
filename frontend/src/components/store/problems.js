@@ -60,12 +60,12 @@ export const fetchUserProblems = id => async dispatch => {
 
 export const composeProblem = data => async dispatch => {
   try {
-    const res = await jwtFetch('/api/problems/', {
+    const res = await jwtFetch('/api/problems/create', {
       method: 'POST',
       body: JSON.stringify(data)
     });
     const problem = await res.json();
-    // dispatch(receiveNewPROBLEM(problem));
+    dispatch(receiveNewProblem(problem));
   } catch (err) {
     const resBody = await err.json();
     if (resBody.statusCode === 400) {
