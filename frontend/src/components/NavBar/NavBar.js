@@ -41,7 +41,7 @@ console.log(category,description,zipCode)
     if (loggedIn) {
       return (
         <div className="links-nav">
-          <NavLink to="/tweets">All Tweets</NavLink>
+          <NavLink to="/requests" >All Requests</NavLink>
           <NavLink to="/profile">Profile</NavLink>
           <button onClick={handelShowForm}>Write a Tweet</button>
           <button onClick={logoutUser}>Logout</button>
@@ -120,8 +120,9 @@ const handleSubmit = (e) => {
   <form onSubmit={handleSubmit}>
       <label for="category" className="title space" >Select a Category:</label>
       <br/>
+      <br/>
       <select id="category" className="select signup-input selecr-font" name="category" onChange={(e)=> setCategory(e.target.value)}>
-        <option  id="option"className="option" value="Home Repair">Home Repair</option>
+        <option value="Home Repair">Home Repair</option>
         <option value="Delivery">Delivery</option>
         <option value="Driver">Driver</option>
       </select>
@@ -134,16 +135,11 @@ const handleSubmit = (e) => {
             placeholder="Zip Code"
             required
            />
-      
-            <div className="signup-input"> 
-           <input type="file"
-           id="file"
-            // onChange={(e)=> setZipCode(e.target.value)}
-            className='signup-input'
-            placeholder="Add an image"
-            />
-           </div>
-      
+           <br></br>
+
+ 
+
+
           <div className="errors"></div>
       
           <textarea
@@ -152,8 +148,21 @@ const handleSubmit = (e) => {
             onChange={(e)=>setDescription(e.target.value)}
             required
           />
-        
-        <button className="sign-up-btn btn">Add Request</button>
+          <br/>
+          <br/>
+
+               <label className="img-input"> Add image
+                  <input
+                    type="file"
+                    placeholder="Add an image"
+                    className="signup-input"
+                  />
+                  </label>
+            <br/>
+            <br/>
+            <br/>
+
+        <button className="sign-up-btn ">Add Request</button>
    </form>
         </Modal>}
     </>
