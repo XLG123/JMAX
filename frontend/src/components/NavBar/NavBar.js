@@ -1,20 +1,24 @@
 import { NavLink, useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import "./NavBar.css";
+import { useState } from "react";
 import { logout, login } from "../store/session";
-
+import Modal from "../context/model.js"
 import webAppLogo from "../../assets/images/webAppLogo.jpg";
-
+import * as problemActions from "../store/problems"
 function NavBar() {
   const loggedIn = useSelector((state) => !!state.session.user);
   const dispatch = useDispatch();
-  let history = useHistory();
-
+  const history = useHistory();
+  const [showReq,setShowReqForm]=useState(false)
+  const [category, setCategory] = useState(null);
+  const [description, setDescription] = useState('');
+  const [zipCode,setZipCode]=useState('')
   const logoutUser = (e) => {
     e.preventDefault();
     dispatch(logout());
   };
-
+console.log(category,description,zipCode)
   const demoLogin = () => {
     const demoInformation = {
       email: "DEMO-USER@email.com",
@@ -22,7 +26,7 @@ function NavBar() {
     };
     dispatch(login(demoInformation))
       .then(() => {
-        history.push("/home");
+        history.push("/");
       })
       .catch((error) => {
         console.error("Error logging in as demo user:", error);
@@ -39,7 +43,7 @@ function NavBar() {
         <div className="links-nav">
           <NavLink to="/tweets">All Tweets</NavLink>
           <NavLink to="/profile">Profile</NavLink>
-          <NavLink to="/tweets/new">Write a Tweet</NavLink>
+          <button onClick={handelShowForm}>Write a Tweet</button>
           <button onClick={logoutUser}>Logout</button>
         </div>
       );
@@ -78,7 +82,21 @@ function NavBar() {
       );
     }
   };
-
+  function handelShowForm(e){
+    debugger
+    e.preventDefault()
+    setShowReqForm(true)
+  }
+function handelClose(e){
+  debugger
+  e.preventDefault();
+  setShowReqForm(false)
+}
+const handleSubmit = (e) => {
+  e.preventDefault();
+  dispatch(problemActions.composeProblem({ category,description ,address:zipCode }));
+  history.push("/")
+}
   return (
     <>
       <div className="nav-bar-container">
@@ -99,7 +117,39 @@ function NavBar() {
 
         {getLinks()}
       </div>
+      {showReq && <Modal onClose={handelClose}>
+
+  <form onSubmit={handleSubmit}>
+      <label for="category" className="title space" >Select a Category:</label>
+      <br/>
+      <select id="category" className="select signup-input selecr-font" name="category" onChange={(e)=> setCategory(e.target.value)}>
+        <option  id="option"className="option" value="Home Repair">Home Repair</option>
+        <option value="Delivery">Delivery</option>
+        <option value="Driver">Driver</option>
+      </select>
+
+
+
+            <input type="text"
+            onChange={(e)=> setZipCode(e.target.value)}
+            className='signup-input'
+            placeholder="Zip Code"
+          />
+      
+      
+          <div className="errors"></div>
+      
+          <textarea
+            className='signup-input'
+            placeholder="Description"
+            onChange={(e)=>setDescription(e.target.value)}
+          />
+        
+        <button className="sign-up-btn btn">Add Request</button>
+   </form>
+        </Modal>}
     </>
+
   );
 }
 
