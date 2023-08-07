@@ -1,0 +1,17 @@
+.search-bar-container {
+  position: absolute;
+  top: 1.5vw;
+  left: 40%;
+}
+
+.search-bar {
+  height: 2vw;
+  width: 25vw;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+.search-bar-btn {
+  display: inline-block;
+  border: 1px solid yellow;
+}

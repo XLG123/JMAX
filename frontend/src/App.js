@@ -22,8 +22,8 @@ function App() {
   useEffect(() => {
     dispatch(getCurrentUser()).then(() => setLoaded(true));
   }, [dispatch]);
-  
-  return (
+
+  return loaded && (
     <>
       <NavBar />
       <Switch>
