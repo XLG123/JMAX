@@ -22,7 +22,10 @@ function NavBar() {
       password: "password"
     };
     dispatch(login(demoInformation))
-    
+    .then(() => {
+      history.push("/home"); 
+    })
+
 
 
 
