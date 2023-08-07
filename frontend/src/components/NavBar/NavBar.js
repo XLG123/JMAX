@@ -21,6 +21,8 @@ function NavBar() {
       email: "DEMO-USER@email.com",
       password: "password"
     };
+    dispatch(login(demoInformation))
+    
 
 
 
