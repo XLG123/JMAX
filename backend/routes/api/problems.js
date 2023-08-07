@@ -19,10 +19,7 @@ router.post("/create", requireUser, async (req, res, next) => {
   });
   try {
     let savedProblem = await newProblem.save();
-    savedProblem = await savedProblem.populate(
-      "author",
-      "_id username email"
-    );
+    savedProblem = await savedProblem.populate("author", "_id username email");
 
     return res.json(savedProblem);
   } catch (error) {
@@ -32,20 +29,18 @@ router.post("/create", requireUser, async (req, res, next) => {
   }
 });
 
-
-
-
-router.get('/:id', async (req, res, next) => {
+router.get("/:id", async (req, res, next) => {
   try {
-    const problem = await Problem.findById(req.params.id)
-                             .populate("author", "_id username email");
+    const problem = await Problem.findById(req.params.id).populate(
+      "author",
+      "_id username email"
+    );
     return res.json(problem);
-  }
-  catch(err) {
-    const error = new Error('Problem not found');
+  } catch (err) {
+    const error = new Error("Problem not found");
     error.statusCode = 404;
     error.errors = { message: "No problem found with that id" };
     return next(error);
   }
-})
+});
 module.exports = router;
