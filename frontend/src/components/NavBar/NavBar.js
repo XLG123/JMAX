@@ -1,11 +1,12 @@
+import { useState } from "react";
 import { NavLink, useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import "./NavBar.css";
-import { useState } from "react";
 import { logout, login } from "../store/session";
 import Modal from "../context/model.js"
 import webAppLogo from "../../assets/images/webAppLogo.jpg";
 import * as problemActions from "../store/problems"
+import "./NavBar.css";
+
 function NavBar() {
   const loggedIn = useSelector((state) => !!state.session.user);
   const dispatch = useDispatch();
@@ -18,19 +19,20 @@ function NavBar() {
     e.preventDefault();
     dispatch(logout());
   };
-console.log(category,description,zipCode)
-  const demoLogin = () => {
-    const demoInformation = {
-      email: "DEMO-USER@email.com",
-      password: "password",
-    };
-    dispatch(login(demoInformation))
-      .then(() => {
-        history.push("/");
-      })
-      .catch((error) => {
-        console.error("Error logging in as demo user:", error);
-      });
+
+  console.log(category,description,zipCode)
+    const demoLogin = () => {
+      const demoInformation = {
+        email: "DEMO-USER@email.com",
+        password: "password",
+      };
+      dispatch(login(demoInformation))
+        .then(() => {
+          history.push("/");
+        })
+        .catch((error) => {
+          console.error("Error logging in as demo user:", error);
+        });
   };
 
   const goToAbout = () => {
@@ -77,6 +79,16 @@ console.log(category,description,zipCode)
               <span></span>
               {/* the empty spans are for css styling effects */}
             </NavLink>
+
+            <div className="nav-btn" id="about-btn" onClick={goToAbout}>
+              About
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              {/* the empty spans are for css styling effects */}
+            </div>
+
           </div>
         </>
       );
@@ -86,15 +98,18 @@ console.log(category,description,zipCode)
     e.preventDefault()
     setShowReqForm(true)
   }
-function handelClose(e){
-  e.preventDefault();
-  setShowReqForm(false)
-}
-const handleSubmit = (e) => {
-  e.preventDefault();
-  dispatch(problemActions.composeProblem({ category,description ,address:zipCode }));
-  setShowReqForm(false)
-}
+
+  function handelClose(e){
+    e.preventDefault();
+    setShowReqForm(false)
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(problemActions.composeProblem({ category,description ,address:zipCode }));
+    setShowReqForm(false)
+  }
+
   return (
     <>
       <div className="nav-bar-container">
@@ -104,59 +119,51 @@ const handleSubmit = (e) => {
           </div>
         </NavLink>
 
-        <div className="nav-btn" id="about-btn" onClick={goToAbout}>
-          About
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-          {/* the empty spans are for css styling effects */}
-        </div>
-
         {getLinks()}
       </div>
       {showReq && <Modal onClose={handelClose}>
 
-  <form onSubmit={handleSubmit}>
-      <label for="category" className="title space" >Select a Category:</label>
-      <br/>
-      <select id="category" className="select signup-input selecr-font" name="category" onChange={(e)=> setCategory(e.target.value)}>
-        <option  id="option"className="option" value="Home Repair">Home Repair</option>
-        <option value="Delivery">Delivery</option>
-        <option value="Driver">Driver</option>
-      </select>
+      <form onSubmit={handleSubmit}>
 
+        <label for="category" className="title space" >Select a Category:</label>
 
+        <br/>
 
-            <input type="number"
-            onChange={(e)=> setZipCode(e.target.value)}
-            className='signup-input'
-            placeholder="Zip Code"
-            required
-           />
-      
-            <div className="signup-input"> 
-           <input type="file"
-           id="file"
-            // onChange={(e)=> setZipCode(e.target.value)}
-            className='signup-input'
-            placeholder="Add an image"
-            />
-           </div>
-      
-          <div className="errors"></div>
-      
-          <textarea
-            className='signup-input'
-            placeholder="Description"
-            onChange={(e)=>setDescription(e.target.value)}
-            required
+        <select id="category" className="select signup-input selecr-font" name="category" onChange={(e)=> setCategory(e.target.value)}>
+          <option  id="option"className="option" value="Home Repair">Home Repair</option>
+          <option value="Delivery">Delivery</option>
+          <option value="Driver">Driver</option>
+        </select>
+
+        <input type="number"
+          onChange={(e)=> setZipCode(e.target.value)}
+          className='signup-input'
+          placeholder="Zip Code"
+          required
+        />
+    
+        <div className="signup-input"> 
+        <input type="file"
+        id="file"
+          // onChange={(e)=> setZipCode(e.target.value)}
+          className='signup-input'
+          placeholder="Add an image"
           />
-        
+        </div>
+    
+        <div className="errors"></div>
+    
+        <textarea
+          className='signup-input'
+          placeholder="Description"
+          onChange={(e)=>setDescription(e.target.value)}
+          required
+        />
+      
         <button className="sign-up-btn btn">Add Request</button>
-   </form>
-        </Modal>}
-    </>
+      </form>
+    </Modal>}
+  </>
 
   );
 }
