@@ -62,6 +62,12 @@ const validateRegisterInput = [
   .withMessage("Age is required")
   .isNumeric()
   .withMessage("Age must be a number")
+  .custom((value) => {
+    if (value < 12 || value > 99) {
+      throw new Error("Age should be between 12 and 99 years");
+    }
+    return true;
+  }),
 
 
 ];
