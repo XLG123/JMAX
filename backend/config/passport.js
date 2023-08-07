@@ -43,6 +43,8 @@ exports.loginUser = async function (user) {
   };
 };
 
+exports.requireUser = passport.authenticate("jwt", { session: false });
+
 const options = {};
 options.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
 options.secretOrKey = secretOrKey;

@@ -3,6 +3,10 @@ const Schema = mongoose.Schema;
 
 const problemSchema = new Schema(
   {
+    author: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
     category: {
       type: String,
       required: true,
