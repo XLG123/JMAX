@@ -42,6 +42,26 @@ const singleFileUpload = async ({ file, public = false }) => {
     }
     return fileUrl || key;
   };
+  
+  const storage = multer.memoryStorage({
+    destination: function (req, file, callback) {
+      callback(null, "");
+    },
+  });
+
+  const singleMulterUpload = (nameOfKey) =>
+    multer({ storage: storage }).single(nameOfKey);
+  const multipleMulterUpload = (nameOfKey) =>
+    multer({ storage: storage }).array(nameOfKey);
+
+  module.exports = {
+    s3,
+    singleFileUpload,
+    multipleFilesUpload,
+    retrievePrivateFile,
+    singleMulterUpload,
+    multipleMulterUpload
+  };
 
   module.exports = {
     s3,
