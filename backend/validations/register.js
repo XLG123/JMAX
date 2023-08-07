@@ -59,9 +59,11 @@ const validateRegisterInput = [
   //   .withMessage("Birthdate is not valid"),
   check("age")
   .exists({ checkFalsy: true })
+  .withMessage("Age is required")
   .isNumeric()
-  .withMessage("Age is required"),
-  handleValidationErrors,
+  .withMessage("Age must be a number")
+
+
 ];
 
 module.exports = validateRegisterInput;
