@@ -83,19 +83,17 @@ console.log(category,description,zipCode)
     }
   };
   function handelShowForm(e){
-    debugger
     e.preventDefault()
     setShowReqForm(true)
   }
 function handelClose(e){
-  debugger
   e.preventDefault();
   setShowReqForm(false)
 }
 const handleSubmit = (e) => {
   e.preventDefault();
   dispatch(problemActions.composeProblem({ category,description ,address:zipCode }));
-  history.push("/")
+  setShowReqForm(false)
 }
   return (
     <>
@@ -130,12 +128,21 @@ const handleSubmit = (e) => {
 
 
 
-            <input type="text"
+            <input type="number"
             onChange={(e)=> setZipCode(e.target.value)}
             className='signup-input'
             placeholder="Zip Code"
-          />
+            required
+           />
       
+            <div className="signup-input"> 
+           <input type="file"
+           id="file"
+            // onChange={(e)=> setZipCode(e.target.value)}
+            className='signup-input'
+            placeholder="Add an image"
+            />
+           </div>
       
           <div className="errors"></div>
       
@@ -143,6 +150,7 @@ const handleSubmit = (e) => {
             className='signup-input'
             placeholder="Description"
             onChange={(e)=>setDescription(e.target.value)}
+            required
           />
         
         <button className="sign-up-btn btn">Add Request</button>
