@@ -20,7 +20,7 @@ const problemSchema = new Schema(
       required: true,
     },
     problemImageUrl: {
-      type: String,
+      type: [String],
       required: false,
     },
   },
