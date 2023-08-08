@@ -48,7 +48,7 @@ export const fetchProblems = () => async dispatch => {
 
 export const fetchUserProblems = id => async dispatch => {
   try {
-    const res = await jwtFetch(`/api/problems/user/${id}`);
+    const res = await jwtFetch(`/api/users/${id}/problems`);
     const problems = await res.json();
     dispatch(receiveUserProblems(problems));
   } catch (err) {
@@ -90,16 +90,16 @@ export const problemErrorsReducer = (state = nullErrors, action) => {
   }
 };
 
-const problemsReducer = (state = { all: {}, user: {}, new: undefined }, action) => {
+const problemsReducer = (state = { all: {}, user: [], new: undefined }, action) => {
   switch (action.type) {
     case RECEIVE_PROBLEMS:
       return { ...state, all: action.problems, new: undefined };
     case RECEIVE_USER_PROBLEMS:
-      return { ...state, user: action.problems, new: undefined };
+      return { ...state, userProblems: action.problems, new: undefined };
     case RECEIVE_NEW_PROBLEM:
       return { ...state, new: action.problem };
     case RECEIVE_USER_LOGOUT:
-      return { ...state, user: {}, new: undefined }
+      return { ...state, user: [], new: undefined }
     default:
       return state;
   }

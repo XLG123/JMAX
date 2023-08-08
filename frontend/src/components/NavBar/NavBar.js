@@ -13,6 +13,8 @@ import "./NavBar.css";
 
 function NavBar() {
   const loggedIn = useSelector((state) => !!state.session.user);
+  const user = useSelector((state) => state.session.user);
+
   const dispatch = useDispatch();
   const history = useHistory();
   const [showReq,setShowReqForm]=useState(false)
@@ -66,7 +68,7 @@ function NavBar() {
                 position: "absolute", bottom: "0.2vw"}}/>
             </IconButton>
 
-            <NavLink to="/profile" className="nav-btn-gp2 user-profile-btn">
+            <NavLink to={`/users/${user._id}`} className="nav-btn-gp2 user-profile-btn">
               Profile
               <span></span>
               <span></span>
