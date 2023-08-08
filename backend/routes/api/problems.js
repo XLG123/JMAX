@@ -8,10 +8,26 @@ const { requireUser } = require("../../config/passport");
 //   multipleMulterUpload,
 // } = require("../../../backend/awsS3");
 
-router.get("/", async (req, res)=>{
-  const problems = await Problem.find().populate("author", "_id username email");
-  return res.json(problems);
+
+
+router.get("/", async (req, res) => {
+  try {
+    const problems = await Problem.find().populate("author", "_id username email");
+    
+    const modifiedProblems = {};
+    problems.forEach(problem => {
+      modifiedProblems[problem._id] = {
+        ...problem._doc,
+        author: problem.author
+      };
+    });
+
+    return res.json(modifiedProblems);
+  } catch (error) {
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
 });
+
 
 router.post(
   "/create",
