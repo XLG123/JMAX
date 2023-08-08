@@ -98,6 +98,7 @@ router.patch("/:id", requireUser, async (req, res) => {
   }
 });
 
+
 router.get("/:problemId/offers", async (req, res) => {
   try {
     const problemId = req.params.problemId;
@@ -107,7 +108,8 @@ router.get("/:problemId/offers", async (req, res) => {
     }
 
     const offers = await problem.getOffers();
-    res.json(offers);
+    const offerIds = offers.map(offer => offer._id); // Assuming "_id" is the field for the offer ID
+    res.json(offerIds);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "An error occurred" });
