@@ -19,6 +19,10 @@ const problemSchema = new Schema(
       type: String,
       required: true,
     },
+    // problemImageUrl: {
+    //   type: [String],
+    //   required: false,
+    // },
   },
   {
     timestamps: true,
