@@ -19,6 +19,11 @@ const problemSchema = new Schema(
       type: String,
       required: true,
     },
+    status: {
+      type: String,
+      required: true,
+      default: "open",
+    },
     // problemImageUrl: {
     //   type: [String],
     //   required: false,
