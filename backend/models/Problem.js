@@ -29,9 +29,17 @@ const problemSchema = new Schema(
     //   required: false,
     // },
   },
+
   {
     timestamps: true,
   }
 );
+
+problemSchema.methods.getOffers = async function () {
+  const offers = await mongoose.model("Offer").find({
+    problem: this._id,
+  }).select('_id')
+  return offers
+}
 
 module.exports = mongoose.model("Problem", problemSchema);
