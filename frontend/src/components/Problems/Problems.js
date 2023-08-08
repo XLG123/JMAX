@@ -17,7 +17,7 @@ const Problems = () => {
 
   return (
     <div className='container'>
-      <h2 className='title'>All Problems</h2>
+      <h2 className='title'>All  Requests</h2>
       {problems.map(problem => (
         <ProblemBox key={problem._id} problem={problem} />
       ))}
