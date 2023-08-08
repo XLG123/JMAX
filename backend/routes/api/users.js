@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
 const mongoose = require("mongoose");
+const Problem = require('../models/Problem');
 const User = mongoose.model("User");
 const passport = require("passport");
 const { loginUser, restoreUser } = require("../../config/passport");
@@ -9,11 +10,26 @@ const { isProduction } = require("../../config/keys");
 const validateRegisterInput = require("../../validations/register");
 const validateLoginInput = require("../../validations/login");
 
-/* GET users listing. */
-router.get("/", function (req, res, next) {
-  res.json({
-    message: "GET /api/users",
-  });
+
+router.get("/", async (req, res)=>{
+  const users = await User.find()
+  return res.json(users);
+});
+
+app.get('/users/:userId/problems', async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    const problems = await user.getProblems();
+    res.json(problems);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'An error occurred' });
+  }
 });
 
 router.post("/register", validateRegisterInput, async (req, res, next) => {
