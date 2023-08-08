@@ -29,6 +29,37 @@ router.get("/", async (req, res) => {
   }
 });
 
+// router.get("/", async (req, res) => {
+//   try {
+//     const problems = await Problem.find()
+//       .populate({
+//         path: "author",
+//         select: "_id username email",
+//       })
+//       .populate({
+//         path: "offers",
+//         select: "_id price description status helper",
+//         populate: {
+//           path: "helper",
+//           select: "_id username email",
+//         },
+//       });
+
+//     const modifiedProblems = {};
+//     problems.forEach((problem) => {
+//       modifiedProblems[problem._id] = {
+//         ...problem._doc,
+//         author: problem.author,
+//         offers: problem.offers,
+//       };
+//     });
+
+//     return res.json(modifiedProblems);
+//   } catch (error) {
+//     return res.status(500).json({ error: "Internal Server Error" });
+//   }
+// });
+
 router.post(
   "/create",
   // multipleMulterUpload("images"),
@@ -63,6 +94,8 @@ router.post(
   }
 );
 
+
+
 router.get("/:id", requireUser, async (req, res, next) => {
   try {
     const problem = await Problem.findById(req.params.id).populate(
@@ -95,6 +128,23 @@ router.patch("/:id", requireUser, async (req, res) => {
     return res.status(500).json({
       error: error.message,
     });
+  }
+});
+
+router.get("/:problemId/offers", async (req, res) => {
+  try {
+    const problemId = req.params.problemId;
+    const problem = await Problem.findById(problemId);
+    if (!problem) {
+      return res.status(404).json({ error: "Problem not found" });
+    }
+
+    const offers = await problem.getOffers();
+
+    res.json(offers);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "An error occurred" });
   }
 });
 
