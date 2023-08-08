@@ -3,13 +3,13 @@ const Schema = mongoose.Schema;
 
 const problemOfferSchema = new Schema(
   {
-    helper: {
+    offer: {
       type: Schema.Types.ObjectId,
-      ref: "User",
+      ref: "Offer",
     },
     problem: {
-        type: Schema.Types.ObjectId,
-        ref: "Problem",
+      type: Schema.Types.ObjectId,
+      ref: "Problem",
     },
   },
   {
