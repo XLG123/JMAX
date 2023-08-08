@@ -4,17 +4,15 @@ const mongoose = require("mongoose");
 const Offer = mongoose.model("Offer");
 const { requireUser } = require("../../config/passport");
 
-
-
 router.get("/", async (req, res) => {
   try {
-    const offers = await Offer.find().populate("author", "_id username email");
-    
+    const offers = await Offer.find().populate("helper", "_id username email");
+
     const modifiedOffers = {};
-    offers.forEach(offer => {
+    offers.forEach((offer) => {
       modifiedOffers[offer._id] = {
         ...offer._doc,
-        author: offer.author
+        helper: offer.helper,
       };
     });
 
@@ -24,39 +22,24 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.post("/create", requireUser, async (req, res) => {
+  const newOffer = new Offer({
+    price: req.body.price,
+    description: req.body.description,
+    status: req.body.status,
+    helper: req.user._id,
+  });
+  try {
+    let savedOffer = await newOffer.save();
+    savedOffer = await savedOffer.populate("helper", "_id username email");
 
-// router.post(
-//   "/create",
-//   // multipleMulterUpload("images"),
-//   requireUser,
-//   async (req, res) => {
-//     // console.log(req.files);
-//     // const imageUrls = await multipleFilesUpload({
-//     //   files: req.files,
-//     //   public: true,
-//     // });
-//     const newProblem = new Problem({
-//       category: req.body.category,
-//       description: req.body.description,
-//       address: req.body.address,
-//       // problemImageUrl: imageUrls,
-//       author: req.user._id,
-//     });
-//     try {
-//       let savedProblem = await newProblem.save();
-//       savedProblem = await savedProblem.populate(
-//         "author",
-//         "_id username email"
-//       );
-
-//       return res.json(savedProblem);
-//     } catch (error) {
-//       return res.status(500).json({
-//         error: error,
-//       });
-//     }
-//   }
-// );
+    return res.json(savedOffer);
+  } catch (error) {
+    return res.status(500).json({
+      error: error,
+    });
+  }
+});
 
 // router.get("/:id", requireUser, async (req, res, next) => {
 //   try {
