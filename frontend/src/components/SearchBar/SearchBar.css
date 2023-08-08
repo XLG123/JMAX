@@ -1,17 +1,88 @@
 .search-bar-container {
   position: absolute;
-  top: 1.5vw;
-  left: 40%;
+  top: 2vw;
+  left: 35%;
 }
 
-.search-bar {
-  height: 2vw;
-  width: 25vw;
+#search-bar {
+  height: 2.1vw;
+  width: 30vw;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
 }
 
+#search-bar {
+  padding-left: 10px;
+  font-size: 1.3vw;
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+#search-bar::placeholder {
+  padding: 0px 5px;
+  font-size: 1.1vw;
+  color: #7b7b7b;
+}
+
+#search-bar:focus {
+  box-shadow: 0px 0px 3px 1px #fff;
+  outline: none;
+}
+
+#search-bar:focus + .search-bar-btn {
+  box-shadow: 0px 0px 3px 1px #fff;
+}
+
 .search-bar-btn {
+  position: absolute;
+  top: 0.1vw;
+  font-size: 2vw;
+  width: 2.2vw;
+  height: 2.2vw;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-top: 1px solid gray;
+  border-right: 1px solid gray;
+  border-bottom: 1px solid gray;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
   display: inline-block;
-  border: 1px solid yellow;
+  cursor: pointer;
+}
+
+.search-icon {
+  width: 2vw;
+  top: 50%;
+  left: 50%;
+}
+
+@media screen and (width > 1440px) {
+  .search-bar-container {
+    top: 2vw;
+  }
+}
+
+@media screen and (width < 1440px) {
+  .search-bar-container {
+    top: 1.85vw;
+  }
+}
+
+@media screen and (width < 1200px) {
+  .search-bar-container {
+    top: 1.7vw;
+  }
+}
+
+@media screen and (width < 800px) {
+  .search-bar-container {
+    top: 1vw;
+  }
+}
+
+@media screen and (width < 600px) {
+  .search-bar-container {
+    top: -0.8vw;
+  }
 }

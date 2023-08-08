@@ -13,9 +13,13 @@
   top: 0.65vw;
 }
 
-.main-pg-logo {
+.main-pg-logo,
+.main-pg-logo2 {
   width: inherit;
   height: inherit;
+}
+
+.main-pg-logo {
   cursor: pointer;
 }
 
@@ -139,15 +143,30 @@
   right: 66vw;
 }
 
+.notify-btn {
+  position: relative;
+  left: 81vw;
+  top: 2.5vw;
+}
+
+.notify-icon {
+  transition: box-shadow 2s;
+  border-radius: 5px;
+}
+
+.notify-icon:hover {
+  box-shadow: 0px 0px 5px 3px #fff;
+}
+
 .user-profile-btn {
   position: absolute;
-  right: 6vw;
+  right: 5vw;
 }
 
 .logout-btn {
   position: relative;
   left: 94.5vw;
-  top: 2.4vw;
+  top: 2.45vw;
 }
 
 .logout-icon {
@@ -159,25 +178,25 @@
 }
 
 @media screen and (width > 1440px) {
-  .logout-btn {
+  .logout-btn, .notify-btn {
     top: 2.8vw;
   }
 }
 
 @media screen and (width < 1200px) {
-  .logout-btn {
-    top: 2vw;
+  .logout-btn, .notify-btn {
+    top: 1.9vw;
   }
 }
 
 @media screen and (width < 800px) {
-  .logout-btn {
+  .logout-btn, .notify-btn {
     top: 1vw;
   }
 }
 
 @media screen and (width < 600px) {
-  .logout-btn {
+  .logout-btn, .notify-btn {
     top: 0.1vw;
   }
 }
