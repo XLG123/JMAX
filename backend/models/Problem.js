@@ -38,8 +38,14 @@ const problemSchema = new Schema(
 problemSchema.methods.getOffers = async function () {
   const offers = await mongoose.model("Offer").find({
     problem: this._id,
-  }).select('_id')
-  return offers
-}
+  });
+
+  const offersObject = {};
+  offers.forEach((offer) => {
+    offersObject[offer._id] = offer;
+  });
+
+  return offersObject;
+};
 
 module.exports = mongoose.model("Problem", problemSchema);
