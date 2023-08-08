@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import './signup.css';
 import { signup, clearSessionErrors } from '../../store/session';
 // import logo from "./logo.jpg"
+import {receiveErrors} from "../../store/session"
 import logo from "./Vector.png"
 function SignupForm() {
   const [email, setEmail] = useState('');
@@ -11,6 +12,7 @@ function SignupForm() {
   const [password2, setPassword2] = useState('');
   const [address,setAddress]=useState('')
   const [age,setAge]=useState('')
+  // const [validZip,setValidZip]=useState(false)
   const errors = useSelector(state => state.errors.session);
   const year=Number(age)
   const dispatch = useDispatch();
@@ -52,16 +54,31 @@ function SignupForm() {
 
   const handleSubmit = e => {
     e.preventDefault();
-    const user = {
-      email,
-      username,
-      password,
-      age:year,
-      address
-    };
 
-    dispatch(signup(user));
-  }
+    if (address.length >= 5 && address >= 0) {
+  
+      const user = {
+        email,
+        username,
+        password,
+        age: year,
+        address,
+      };
+  
+      dispatch(signup(user));
+    } else {
+      // Properly set the error message in the Redux store
+      dispatch(clearSessionErrors()); // Clear any previous errors
+      dispatch(receiveErrors( 'Zip code is not correct') );
+    }
+}
+  // const zipCodeLen=String.valueOf(address).length()
+  // console.log(zipCodeLen)
+//   function vaildZipCode (address){
+// // if (address<0 ||  <5){
+//   return false
+// }else return true
+  // }
 
   return (
     <form className="session-form" onSubmit={handleSubmit}>
@@ -121,16 +138,16 @@ function SignupForm() {
             placeholder="Age"
           />
 
-          <div className="errors">{errors?.address}</div>
+          <div className="errors">{errors}</div>
 
-          <input type="text"
+          <input type="number"
             className='signup-input'
             // value={password2}
             onChange={update('address')}
             placeholder="Zip code"
           />
             
-          <div className="errors">{errors?.address}</div>
+          <div className="errors"></div>
         
           <input
             className='sign-up-btn'
