@@ -8,10 +8,9 @@ const {
   multipleMulterUpload,
 } = require("../../../backend/awsS3");
 
-router.get("/", function (req, res, next) {
-  res.json({
-    message: "GET /api/problems",
-  });
+router.get("/", async (req, res)=>{
+  const problems = await Problem.find().populate("author", "_id username email");
+  return res.json(problems);
 });
 
 router.post(
