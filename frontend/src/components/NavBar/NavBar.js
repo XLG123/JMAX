@@ -63,7 +63,7 @@ function NavBar() {
               {/* the empty spans are for css styling effects */}
             </NavLink>
 
-            <IconButton className="notify-btn" onClick={handelShowOffer}>
+            <IconButton className="notify-btn" onClick={handleShowOffer}>
               <NotificationsActiveIcon className="notify-icon"
                 sx={{color: "#F4E9CD", fontSize: "2.5vw",
                 position: "absolute", bottom: "0.2vw"}}/>
@@ -78,7 +78,7 @@ function NavBar() {
               {/* the empty spans are for css styling effects */}
             </NavLink>
 
-            <div onClick={handelShowForm} 
+            <div onClick={handleShowForm} 
               className="nav-btn-gp2 new-request-btn">
               Write a Request
               <span></span>
@@ -150,12 +150,12 @@ function NavBar() {
       );
     }
   };
-  function handelShowForm(e){
+  function handleShowForm(e){
     e.preventDefault()
     setShowReqForm(true)
   }
 
-  function handelClose(e){
+  function handleClose(e){
     e.preventDefault();
     setShowReqForm(false)
     setShowOffer(false)
@@ -166,7 +166,7 @@ function NavBar() {
     dispatch(problemActions.composeProblem({ category,description ,address:zipCode }));
     setShowReqForm(false)
   }
-  function handelShowOffer(e){
+  function handleShowOffer(e){
     e.preventDefault()
     debugger
     setShowOffer(true)
@@ -178,7 +178,7 @@ function NavBar() {
 
         {getLinks()}
       </div>
-      {showReq && <Modal onClose={handelClose}>
+      {showReq && <Modal onClose={handleClose}>
 
 <form onSubmit={handleSubmit}>
 
@@ -230,7 +230,7 @@ function NavBar() {
 </form>
 </Modal>}
 
-{showOffers&& <Modal onClose={handelClose}>
+{showOffers&& <Modal onClose={handleClose}>
   
   <div  className="offerbox">im an offer</div>
   <div >im an offer</div>
