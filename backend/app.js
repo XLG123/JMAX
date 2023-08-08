@@ -1,24 +1,22 @@
 const express = require("express");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
-const debug = require('debug');
-require('./models/Problem')
-require('./models/User');
+const debug = require("debug");
+require("./models/Problem");
+require("./models/User");
+require("./models/Offer");
 const cors = require("cors");
 const csurf = require("csurf");
 const { isProduction } = require("./config/keys");
-
 
 const usersRouter = require("./routes/api/users");
 const problemsRouter = require("./routes/api/problems");
 const csrfRouter = require("./routes/api/csrf");
 const testUserRouter = require("./routes/api/test");
+const offersRouter = require("./routes/api/offers");
 
-require('./config/passport');
-const passport = require('passport');
-
-
-
+require("./config/passport");
+const passport = require("passport");
 
 const app = express();
 
@@ -51,17 +49,17 @@ app.use(
 // Attach Express routers
 app.use("/api/users", usersRouter);
 app.use("/api/problems", problemsRouter);
+app.use("/api/offers", offersRouter);
 app.use("/api/csrf", csrfRouter);
 app.use("/api/test", testUserRouter);
 
-
 app.use((req, res, next) => {
-  const err = new Error('Not Found');
+  const err = new Error("Not Found");
   err.statusCode = 404;
   next(err);
 });
 
-const serverErrorLogger = debug('backend:error');
+const serverErrorLogger = debug("backend:error");
 
 // Express custom error handler that will be called whenever a route handler or
 // middleware throws an error or invokes the `next` function with a truthy value
@@ -72,8 +70,8 @@ app.use((err, req, res, next) => {
   res.json({
     message: err.message,
     statusCode,
-    errors: err.errors
-  })
+    errors: err.errors,
+  });
 });
 
 module.exports = app;
