@@ -1,20 +1,25 @@
 import "./ProblemBox.css"
 import { useState } from 'react';
 import Modal from "../context/model"
+import { useHistory } from 'react-router-dom';
 const ProblemBox = ({ problem: { category,author,description } }) => {
   const [show,setShow]=useState(false)
   const [price,setPrice]=useState()
   const [offer,setOffer]=useState("")
-  const { username } = author;
+  const history= useHistory()
+  const { username ,_id } = author;
   function handelSubmit(e){
     e.preventDefault()
+  }
+  function sendToProf(){
+    history.push(`/users/${_id}`)
   }
   return (
     <>
     <div className="problems-container">
 
     <div className="box">
-      <h3>{username}</h3>
+      <h3 onClick={sendToProf}> {username}</h3>
       <p className="catgory">{category}</p>
       <p className="des-box">{description}</p>
      <div className="offer"><button className="add-offer-btn" onClick={()=>setShow(true)}> Offer Help</button></div> 

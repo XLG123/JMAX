@@ -4,7 +4,6 @@ import * as problemActions from "../store/problems"
 import ProblemBox from './ProblemBox';
 
 const Problems = () => {
-  debugger
   const dispatch = useDispatch();
   const problems = useSelector(state => Object.values(state.problems.all));
 
