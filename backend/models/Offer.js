@@ -1,37 +1,29 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const problemSchema = new Schema(
+const offerSchema = new Schema(
   {
-    author: {
+    helper: {
       type: Schema.Types.ObjectId,
       ref: "User",
     },
-    category: {
-      type: String,
+    price: {
+      type: Number,
       required: true,
     },
     description: {
       type: String,
       required: true,
     },
-    address: {
-      type: String,
-      required: true,
-    },
     status: {
       type: String,
       required: true,
-      default: "open",
+      default: "pending",
     },
-    // problemImageUrl: {
-    //   type: [String],
-    //   required: false,
-    // },
   },
   {
     timestamps: true,
   }
 );
 
-module.exports = mongoose.model("Problem", problemSchema);
+module.exports = mongoose.model("Offer", offerSchema);
