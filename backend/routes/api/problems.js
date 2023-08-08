@@ -98,6 +98,22 @@ router.patch("/:id", requireUser, async (req, res) => {
   }
 });
 
+router.get("/:problemId/offers", async (req, res) => {
+  try {
+    const problemId = req.params.problemId;
+    const problem = await Problem.findById(problemId);
+    if (!problem) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    const offers = await problem.getOffers();
+    res.json(offers);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "An error occurred" });
+  }
+});
+
 router.delete("/:id", requireUser, async (req, res) => {
   try {
     // Find the problem by ID

@@ -33,9 +33,9 @@ router.get("/", async (req, res) => {
   }
 });
 
-// router.get("/:id", async (req, res, next) => {
+// router.get("/:userId", async (req, res, next) => {
 //   try {
-//     const user = await User.findById(req.params.id)
+//     const user = await User.findById(req.params.userId)
 //     return res.json(user);
 //   } catch (err) {
 //     const error = new Error("User not found");
