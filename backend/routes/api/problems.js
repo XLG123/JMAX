@@ -29,6 +29,37 @@ router.get("/", async (req, res) => {
   }
 });
 
+// router.get("/", async (req, res) => {
+//   try {
+//     const problems = await Problem.find()
+//       .populate({
+//         path: "author",
+//         select: "_id username email",
+//       })
+//       .populate({
+//         path: "offers",
+//         select: "_id price description status helper",
+//         populate: {
+//           path: "helper",
+//           select: "_id username email",
+//         },
+//       });
+
+//     const modifiedProblems = {};
+//     problems.forEach((problem) => {
+//       modifiedProblems[problem._id] = {
+//         ...problem._doc,
+//         author: problem.author,
+//         offers: problem.offers,
+//       };
+//     });
+
+//     return res.json(modifiedProblems);
+//   } catch (error) {
+//     return res.status(500).json({ error: "Internal Server Error" });
+//   }
+// });
+
 router.post(
   "/create",
   // multipleMulterUpload("images"),
@@ -62,6 +93,8 @@ router.post(
     }
   }
 );
+
+
 
 router.get("/:id", requireUser, async (req, res, next) => {
   try {
