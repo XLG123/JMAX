@@ -30,6 +30,12 @@
 
 .pg-middle-section {
   border: 1px solid red;
+  height: inherit;
+  overflow-y: auto;
+}
+
+.pg-middle-section::-webkit-scrollbar {
+  display: none;
 }
 
 .pg-right-side-bar {
