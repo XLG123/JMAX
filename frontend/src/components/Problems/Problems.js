@@ -2,12 +2,13 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import * as problemActions from "../store/problems"
 import ProblemBox from './ProblemBox';
-
+import * as sessionActions from "../store/session"
 const Problems = () => {
   const dispatch = useDispatch();
   const problems = useSelector(state => Object.values(state.problems.all));
 
   useEffect(() => {
+    // dispatch(sessionActions.fetchAllUsers())
     dispatch(problemActions.fetchProblems());
     return () => dispatch(problemActions.clearProblemErrors());
   }, [dispatch])

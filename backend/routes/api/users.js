@@ -10,10 +10,10 @@ const { isProduction } = require("../../config/keys");
 const validateRegisterInput = require("../../validations/register");
 const validateLoginInput = require("../../validations/login");
 
-router.get("/", async (req, res)=>{
-  const users = await User.find().populate("_id", "username email address");
-  return res.json(users);
-});
+// router.get("/", async (req, res)=>{
+//   const users = await User.find().populate("_id", "username email address");
+//   return res.json(users);
+// });
 router.get("/", async (req, res) => {
   try {
     const users = await User.find({}, "username email address age");

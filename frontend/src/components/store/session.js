@@ -4,7 +4,16 @@ const RECEIVE_CURRENT_USER = "session/RECEIVE_CURRENT_USER";
 export const RECEIVE_SESSION_ERRORS = "session/RECEIVE_SESSION_ERRORS";
 const CLEAR_SESSION_ERRORS = "session/CLEAR_SESSION_ERRORS";
 export const RECEIVE_USER_LOGOUT = "session/RECEIVE_USER_LOGOUT";
-
+export const RECEIVE_USERS ="session/RECEIVE_USERS"
+const RECEIVE_USER ="session/RECEIVE_USER"
+const receiveUsers=users=>({
+  type: RECEIVE_USERS,
+  users
+})
+const receiveUser=user=>({
+  type: RECEIVE_USER,
+  user
+})
 // Dispatch receiveCurrentUser when a user logs in.
 const receiveCurrentUser = currentUser => ({
   type: RECEIVE_CURRENT_USER,
@@ -62,6 +71,10 @@ const sessionReducer = (state = initialState, action) => {
       return { user: action.currentUser };
     case RECEIVE_USER_LOGOUT:
       return initialState;
+    case RECEIVE_USERS:
+      return {...state, users: action.users}
+    case RECEIVE_USER:
+      return { ...state, users: action.user }
     default:
       return state;
   }
@@ -87,4 +100,17 @@ export const getCurrentUser = () => async dispatch => {
   const res = await jwtFetch('/api/users/current');
   const user = await res.json();
   return dispatch(receiveCurrentUser(user));
+};
+
+export const fetchAllUsers = () => async dispatch => {
+  // debugger
+  const res = await jwtFetch('/api/users');
+  const users = await res.json();
+  return dispatch(receiveUsers(users));
+};
+export const fetchUser = (userId) => async dispatch => {
+  // debugger
+  const res = await jwtFetch(`/api/users/${userId}`);
+  const user = await res.json();
+  return dispatch(receiveUser(user));
 };

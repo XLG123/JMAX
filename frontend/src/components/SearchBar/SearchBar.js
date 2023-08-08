@@ -5,7 +5,7 @@ const SearchBar = () => {
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
-    e.stopPropagation();
+    // e.stopPropagation();
   }
 
   return (

@@ -14,7 +14,6 @@ import OfferModal from "../offerModal/index"
 function NavBar() {
   const loggedIn = useSelector((state) => !!state.session.user);
   const user = useSelector((state) => state.session.user);
-  // console.log(user._id)
   const dispatch = useDispatch();
   const history = useHistory();
   const [showReq,setShowReqForm]=useState(false)
