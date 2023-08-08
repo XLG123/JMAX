@@ -35,7 +35,13 @@ userSchema.methods.toSafeObject = function() {
   delete user.hashedPassword;
   return user;
 };
-
+// userSchema.methods.getProblems = function() {
+//   return mongoose.model('Problem').find({ author: this._id }).select('_id').populate();
+// };
+userSchema.methods.getProblems = async function() {
+  const problems = await mongoose.model('Problem').find({ author: this._id }).select('_id');
+  return problems.map(problem => problem._id);
+};
 // userSchema.virtual('birthdateFormatted').get(function () {
 //   return moment(this.birthdate).format('MM-DD-YYYY');
 // });

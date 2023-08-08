@@ -12,7 +12,7 @@ const receiveProblems = problems => ({
   problems
 });
 
-const receiveUserProbles = problems => ({
+const receiveUserProblems = problems => ({
   type: RECEIVE_USER_PROBLEMS,
   problems
 });
@@ -49,8 +49,8 @@ export const fetchProblems = () => async dispatch => {
 export const fetchUserProblems = id => async dispatch => {
   try {
     const res = await jwtFetch(`/api/problems/user/${id}`);
-    const tweets = await res.json();
-    // dispatch(receiveUserProblems(problems));
+    const problems = await res.json();
+    dispatch(receiveUserProblems(problems));
   } catch (err) {
     const resBody = await err.json();
     if (resBody.statusCode === 400) {

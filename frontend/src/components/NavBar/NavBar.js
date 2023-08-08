@@ -8,6 +8,7 @@ import * as problemActions from "../store/problems"
 import SearchBar from "../SearchBar/SearchBar";
 import IconButton from '@mui/material/IconButton';
 import LogoutIcon from '@mui/icons-material/Logout';
+import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import "./NavBar.css";
 
 function NavBar() {
@@ -45,6 +46,10 @@ function NavBar() {
     if (loggedIn) {
       return (
         <>
+          <div className="logo-container">
+            <img src={webAppLogo} alt="app-logo" className="main-pg-logo2" />
+          </div>
+
           <div className="links-nav">
             <NavLink to="/requests" className="nav-btn-gp2 all-requests-btn">
               All Requests
@@ -54,6 +59,12 @@ function NavBar() {
               <span></span>
               {/* the empty spans are for css styling effects */}
             </NavLink>
+
+            <IconButton className="notify-btn">
+              <NotificationsActiveIcon className="notify-icon"
+                sx={{color: "#F4E9CD", fontSize: "2.5vw",
+                position: "absolute", bottom: "0.2vw"}}/>
+            </IconButton>
 
             <NavLink to="/profile" className="nav-btn-gp2 user-profile-btn">
               Profile
@@ -76,8 +87,8 @@ function NavBar() {
             
             <IconButton onClick={logoutUser} className="logout-btn">
               <LogoutIcon className="logout-icon"
-                sx={{ color: '#F4E9CD', fontSize: "2.5vw", position: "absolute", 
-                bottom: "0.2vw", borderRadius: '5px' }}
+                sx={{ color: '#F4E9CD', fontSize: "2.5vw", 
+                position: "absolute", bottom: "0.2vw", borderRadius: '5px' }}
               />
             </IconButton>
           </div>
@@ -87,6 +98,13 @@ function NavBar() {
     } else {
       return (
         <>
+
+          <NavLink to="/">
+            <div className="logo-container">
+              <img src={webAppLogo} alt="app-logo" className="main-pg-logo" />
+            </div>
+          </NavLink>
+
           <div className="links-auth">
             <div className="nav-btn" id="demo-login" onClick={demoLogin}>
               Demo
@@ -148,11 +166,6 @@ function NavBar() {
   return (
     <>
       <div className="nav-bar-container">
-        <NavLink to="/">
-          <div className="logo-container">
-            <img src={webAppLogo} alt="app-logo" className="main-pg-logo" />
-          </div>
-        </NavLink>
 
         {getLinks()}
       </div>

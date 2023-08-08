@@ -13,7 +13,7 @@ import { getCurrentUser } from "./components/store/session";
 import AboutPage from "./components/About/AboutPage";
 
 // import Problems from './components/Problem/Problems';
-// import Profile from './components/Profile/Profile';
+import Profile from './components/Profile/Profile';
 // import ProblemCompose from './components/Problems/ProblemCompose';
 
 function App() {
@@ -33,9 +33,9 @@ function App() {
         <AuthRoute exact path="/signup" component={SignupForm} />
         <AuthRoute path="/about" component={AboutPage} />
 
-        {/* <ProtectedRoute exact path="/problems" component={Problems} />
+        {/* <ProtectedRoute exact path="/problems" component={Problems} /> */}
         <ProtectedRoute exact path="/profile" component={Profile} />
-        <ProtectedRoute exact path="/problems/new" component={ProblemCompose} 
+        {/* <ProtectedRoute exact path="/problems/new" component={ProblemCompose} 
         /> */}
       </Switch>
     </>
