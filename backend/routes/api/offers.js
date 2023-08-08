@@ -56,25 +56,25 @@ router.get("/:id", requireUser, async (req, res, next) => {
   }
 });
 
-// router.patch("/:id", requireUser, async (req, res) => {
-//   try {
-//     const problem = await Problem.findById(req.params.id);
-//     if (!problem) {
-//       throw new Error("Problem not found");
-//     }
+router.patch("/:id", requireUser, async (req, res) => {
+  try {
+    const offer = await Offer.findById(req.params.id);
+    if (!offer) {
+      throw new Error("Offer not found");
+    }
 
-//     if (!problem.author.equals(req.user._id)) {
-//       throw new Error("You are not authorized to edit this problem");
-//     }
-//     await Problem.updateOne({ _id: req.params.id }, { $set: req.body });
+    if (!offer.helper.equals(req.user._id)) {
+      throw new Error("You are not authorized to edit this offer");
+    }
+    await Offer.updateOne({ _id: req.params.id }, { $set: req.body });
 
-//     return res.json({ message: "Problem updated successfully" });
-//   } catch (error) {
-//     return res.status(500).json({
-//       error: error.message,
-//     });
-//   }
-// });
+    return res.json({ message: "Offer updated successfully" });
+  } catch (error) {
+    return res.status(500).json({
+      error: error.message,
+    });
+  }
+});
 
 // router.delete("/:id", requireUser, async (req, res) => {
 //   try {
