@@ -18,7 +18,8 @@ router.post(
   "/create",
   multipleMulterUpload("images"),
   requireUser,
-  async (req, res, next) => {
+  async (req, res) => {
+    console.log(req.files);
     const imageUrls = await multipleFilesUpload({
       files: req.files,
       public: true,
@@ -27,14 +28,14 @@ router.post(
       category: req.body.category,
       description: req.body.description,
       address: req.body.address,
-      imageUrls,
+      problemImageUrl: imageUrls,
       author: req.user._id,
     });
     try {
       let savedProblem = await newProblem.save();
       savedProblem = await savedProblem.populate(
         "author",
-        "_id username email problemImageUrl"
+        "_id username email" 
       );
 
       return res.json(savedProblem);
@@ -65,8 +66,9 @@ router.patch("/:id", requireUser, async (req, res) => {
   try {
     const problem = await Problem.findById(req.params.id);
     if (!problem) {
-      const error = new Error("Problem not found");
+      throw new Error("Problem not found");
     }
+
     if (!problem.author.equals(req.user._id)) {
       throw new Error("You are not authorized to edit this problem");
     }

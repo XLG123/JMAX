@@ -1,9 +1,9 @@
 require('dotenv').config();
 const mongoose = require("mongoose");
 const { mongoURI: db } = require('../config/keys.js');
-console.log('mongoURI:', db);
+
 // const User = require('../models/User');
-const Problem = require('../models/Problem');
+const Problem = require('../models/Problem.js');
 
 const DEFAULT_PROBLEM_IMAGE_URL = 'https://my-jmax.s3.us-east-2.amazonaws.com/public/tools.svg'; // <- Insert the S3 URL that you copied above here
 
