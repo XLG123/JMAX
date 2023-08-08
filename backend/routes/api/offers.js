@@ -76,30 +76,30 @@ router.patch("/:id", requireUser, async (req, res) => {
   }
 });
 
-// router.delete("/:id", requireUser, async (req, res) => {
-//   try {
-//     // Find the problem by ID
-//     const problem = await Problem.findById(req.params.id);
+router.delete("/:id", requireUser, async (req, res) => {
+  try {
+    // Find the problem by ID
+    const offer = await Offer.findById(req.params.id);
 
-//     // Check if the problem exists
-//     if (!problem) {
-//       return res.status(404).json({ message: "Problem not found" });
-//     }
+    // Check if the problem exists
+    if (!offer) {
+      return res.status(404).json({ message: "Offer not found" });
+    }
 
-//     // Check if the user is the author of the problem
-//     if (!problem.author.equals(req.user._id)) {
-//       return res
-//         .status(403)
-//         .json({ message: "You are not authorized to delete this problem" });
-//     }
+    // Check if the user is the author of the problem
+    if (!offer.helper.equals(req.user._id)) {
+      return res
+        .status(403)
+        .json({ message: "You are not authorized to delete this offer" });
+    }
 
-//     // Delete the problem
-//     await Problem.deleteOne({ _id: problem._id });
+    // Delete the problem
+    await Offer.deleteOne({ _id: offer._id });
 
-//     return res.json({ message: "Problem deleted successfully" });
-//   } catch (error) {
-//     return res.status(500).json({ error: "Error deleting problem" });
-//   }
-// });
+    return res.json({ message: "Offer deleted successfully" });
+  } catch (error) {
+    return res.status(500).json({ error: "Error deleting offer" });
+  }
+});
 
 module.exports = router;
