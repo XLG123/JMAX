@@ -10,17 +10,17 @@ import IconButton from '@mui/material/IconButton';
 import LogoutIcon from '@mui/icons-material/Logout';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import "./NavBar.css";
-
+import OfferModal from "../offerModal/index"
 function NavBar() {
   const loggedIn = useSelector((state) => !!state.session.user);
   const user = useSelector((state) => state.session.user);
-
   const dispatch = useDispatch();
   const history = useHistory();
   const [showReq,setShowReqForm]=useState(false)
   const [category, setCategory] = useState("Home Repair");
   const [description, setDescription] = useState('');
   const [zipCode,setZipCode]=useState('')
+  const [showOffers,setShowOffer]=useState(false)
   const logoutUser = (e) => {
     e.preventDefault();
     dispatch(logout());
@@ -62,13 +62,13 @@ function NavBar() {
               {/* the empty spans are for css styling effects */}
             </NavLink>
 
-            <IconButton className="notify-btn">
+            <IconButton className="notify-btn" onClick={handleShowOffer}>
               <NotificationsActiveIcon className="notify-icon"
                 sx={{color: "#F4E9CD", fontSize: "2.5vw",
                 position: "absolute", bottom: "0.2vw"}}/>
             </IconButton>
 
-            <NavLink to={`/users/${user._id}`} className="nav-btn-gp2 user-profile-btn">
+            <NavLink to={`/users/${user?._id}`} className="nav-btn-gp2 user-profile-btn">
               Profile
               <span></span>
               <span></span>
@@ -77,7 +77,7 @@ function NavBar() {
               {/* the empty spans are for css styling effects */}
             </NavLink>
 
-            <div onClick={handelShowForm} 
+            <div onClick={handleShowForm} 
               className="nav-btn-gp2 new-request-btn">
               Write a Request
               <span></span>
@@ -87,7 +87,7 @@ function NavBar() {
               {/* the empty spans are for css styling effects */}
             </div>
             
-            <IconButton onClick={logoutUser} className="logout-btn">
+            <IconButton onClick={logoutUser} className="logout-btn" >
               <LogoutIcon className="logout-icon"
                 sx={{ color: '#F4E9CD', fontSize: "2.5vw", 
                 position: "absolute", bottom: "0.2vw", borderRadius: '5px' }}
@@ -149,20 +149,26 @@ function NavBar() {
       );
     }
   };
-  function handelShowForm(e){
+  function handleShowForm(e){
     e.preventDefault()
     setShowReqForm(true)
   }
 
-  function handelClose(e){
+  function handleClose(e){
     e.preventDefault();
     setShowReqForm(false)
+    setShowOffer(false)
   }
 
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(problemActions.composeProblem({ category,description ,address:zipCode }));
     setShowReqForm(false)
+  }
+  function handleShowOffer(e){
+    e.preventDefault()
+    debugger
+    setShowOffer(true)
   }
 
   return (
@@ -171,7 +177,7 @@ function NavBar() {
 
         {getLinks()}
       </div>
-      {showReq && <Modal onClose={handelClose}>
+      {showReq && <Modal onClose={handleClose}>
 
 <form onSubmit={handleSubmit}>
 
@@ -222,6 +228,27 @@ function NavBar() {
   <button className="sign-up-btn ">Add Request</button>
 </form>
 </Modal>}
+
+{showOffers&& <Modal onClose={handleClose}>
+  
+  <div  className="offerbox">im an offer</div>
+  <div >im an offer</div>
+  <div >im an offer</div>
+  <div >im an offer</div>
+  <div >im an offer</div>
+  <div >im an offer</div>
+  <div >im an offer</div>
+  <div >im an offer</div>
+  <div >im an offer</div>
+  <div >im an offer</div>
+  <div >im an offer</div>
+  <div >im an offer</div>
+  <div >im an offer</div>
+  <div >im an offer</div>
+  <div >im an offer</div>
+  <div >im an offer</div>
+
+  </Modal>}
   </>
 
 
