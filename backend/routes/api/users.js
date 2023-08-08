@@ -10,19 +10,20 @@ const { isProduction } = require("../../config/keys");
 const validateRegisterInput = require("../../validations/register");
 const validateLoginInput = require("../../validations/login");
 
-// router.get("/", async (req, res)=>{
-//   const users = await User.find().populate("_id", "username email address");
-//   return res.json(users);
-// });
+router.get("/", async (req, res)=>{
+  const users = await User.find().populate("_id", "username email address");
+  return res.json(users);
+});
 router.get("/", async (req, res) => {
   try {
     const users = await User.find({}, "username email address age");
     const userMap = {};
-    users.forEach((user) => {
+    users?.forEach((user) => {
       userMap[user._id] = {
         username: user.username,
         email: user.email,
         address: user.address,
+        age: user.age,
       };
     });
     return res.json(userMap);
@@ -32,17 +33,17 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/:id", async (req, res, next) => {
-  try {
-    const user = await User.findById(req.params.id)
-    return res.json(user);
-  } catch (err) {
-    const error = new Error("User not found");
-    error.statusCode = 404;
-    error.errors = { message: "No user found with that id" };
-    return next(error);
-  }
-});
+// router.get("/:id", async (req, res, next) => {
+//   try {
+//     const user = await User.findById(req.params.id)
+//     return res.json(user);
+//   } catch (err) {
+//     const error = new Error("User not found");
+//     error.statusCode = 404;
+//     error.errors = { message: "No user found with that id" };
+//     return next(error);
+//   }
+// });
 
 router.get("/:userId/problems", async (req, res) => {
   try {
@@ -131,6 +132,9 @@ router.get("/current", restoreUser, (req, res) => {
     _id: req.user._id,
     username: req.user.username,
     email: req.user.email,
+    address: req.user.address,
+    age: req.user.age,
+
   });
 });
 

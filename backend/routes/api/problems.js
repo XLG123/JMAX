@@ -3,10 +3,10 @@ const router = express.Router();
 const mongoose = require("mongoose");
 const Problem = mongoose.model("Problem");
 const { requireUser } = require("../../config/passport");
-const {
-  multipleFilesUpload,
-  multipleMulterUpload,
-} = require("../../../backend/awsS3");
+// const {
+//   multipleFilesUpload,
+//   multipleMulterUpload,
+// } = require("../../../backend/awsS3");
 
 router.get("/", async (req, res)=>{
   const problems = await Problem.find().populate("author", "_id username email");
@@ -15,26 +15,26 @@ router.get("/", async (req, res)=>{
 
 router.post(
   "/create",
-  multipleMulterUpload("images"),
+  // multipleMulterUpload("images"),
   requireUser,
   async (req, res) => {
-    console.log(req.files);
-    const imageUrls = await multipleFilesUpload({
-      files: req.files,
-      public: true,
-    });
+    // console.log(req.files);
+    // const imageUrls = await multipleFilesUpload({
+    //   files: req.files,
+    //   public: true,
+    // });
     const newProblem = new Problem({
       category: req.body.category,
       description: req.body.description,
       address: req.body.address,
-      problemImageUrl: imageUrls,
+      // problemImageUrl: imageUrls,
       author: req.user._id,
     });
     try {
       let savedProblem = await newProblem.save();
       savedProblem = await savedProblem.populate(
         "author",
-        "_id username email" 
+        "_id username email"
       );
 
       return res.json(savedProblem);
