@@ -3,31 +3,19 @@ import { useDispatch, useSelector } from 'react-redux';
 // import { fetchUserProblems, clearProblemErrors } from '../../store/problems';
 // import ProblemBox from '../Problems/ProblemBox';
 import "./Profile.css";
+import ProblemBox from '../Problems/ProblemBox';
+import { clearProblemErrors, fetchUserProblems } from '../store/problems';
 
 const Profile = () => {
   const dispatch = useDispatch();
-  // const currentUser = useSelector(state => state.session.user);
-  // const userProblems = useSelector(state => Object.values(state.problems.user))
+  const currentUser = useSelector(state => state.session.user);
+  const userProblems = useSelector(state => Object.values(state.problems.user))
 
-  // useEffect(() => {
-  //   dispatch(fetchUserProblems(currentUser._id));
-  //   return () => dispatch(clearProblemErrors());
-  // }, [currentUser, dispatch]);
+  useEffect(() => {
+    dispatch(fetchUserProblems(currentUser._id));
+    return () => dispatch(clearProblemErrors());
+  }, [currentUser, dispatch]);
 
-  // if (userProblems.length === 0) {
-  //   return <div>{currentUser.username} has no problems</div>;
-  // } else {
-  //   return (
-  //     <>
-  //       <h2>All of {currentUser.username}'s Problems</h2>
-  //       {userProblems.map(problem => (
-  //         <ProblemBox
-  //           key={problem._id}
-  //           problem={problem}
-  //         />
-  //       ))}
-  //     </>
-  //   );
   // }
   return (
     <>
@@ -35,15 +23,31 @@ const Profile = () => {
       <div className='pg-container'>
 
         <div className='pg-left-side-bar'>
-          hi from left side bar
+          <div className='pg-filter-gp'>
+            <div className='pg-filter-btn'>ALL</div>
+            <div className='pg-filter-btn'>Requester</div>
+            <div className='pg-filter-btn'>Helper</div>
+          </div>
         </div>
 
         <div className="pg-middle-section">
-          hi from middle section
+          {userProblems.length === 0 ? 
+            <div>{currentUser.email} has no problems</div> : 
+            <>
+              <h2>All of {currentUser.email}'s Problems</h2>     {userProblems.map(problem => (
+                  <ProblemBox
+                    key={problem._id}
+                    problem={problem}
+                  />
+                ))}          
+            </>}
         </div>
 
         <div className="pg-right-side-bar">
-          hi from right side bar
+          <h1>{currentUser.username}</h1>
+          <h1>{currentUser.email}</h1>
+          {/* <h1>{currentUser.address}</h1>
+          <h1>{currentUser.age}</h1> */}
         </div>
 
       </div>
@@ -51,4 +55,4 @@ const Profile = () => {
   );
 }
 
-export default Profile;
+export default Profile; 

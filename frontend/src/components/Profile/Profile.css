@@ -1,16 +1,37 @@
 .pg-container {
-  display: relative;
-  top: 2vw;
+  position: absolute;
+  top: 8vw;
+  padding: 0px 2vw;
+  display: grid;
+  grid-template-columns: 18vw 45vw 30vw;
+  column-gap: 1.5%;
+  height: 42vw;
+}
+
+.pg-left-side-bar,
+.pg-middle-section,
+.pg-right-side-bar {
+  padding: 1vw;
+}
+
+.pg-left-side-bar,
+.pg-middle-section {
+  /* margin-right: 2vw; */
 }
 
 .pg-left-side-bar {
-  display: absolute;
+  border: 1px solid yellow;
+}
+
+.pg-filter-btn {
+  margin-bottom: 1vw;
+  border: 1px solid gray;
 }
 
 .pg-middle-section {
-  display: absolute;
+  border: 1px solid red;
 }
 
 .pg-right-side-bar {
-  display: absolute;
+  border: 1px solid lightgreen;
 }
