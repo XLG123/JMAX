@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
 const Offer = mongoose.model("Offer");
+const Problem = mongoose.model("Problem");
 const { requireUser } = require("../../config/passport");
 
 router.get("/", async (req, res) => {
@@ -28,9 +29,12 @@ router.post("/create", requireUser, async (req, res) => {
     description: req.body.description,
     status: req.body.status,
     helper: req.user._id,
+    problem: req.body.problem,
   });
+
   try {
     let savedOffer = await newOffer.save();
+    savedOffer = await savedOffer.populate("problem", "_id");
     savedOffer = await savedOffer.populate("helper", "_id username email");
 
     return res.json(savedOffer);
