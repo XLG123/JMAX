@@ -167,7 +167,7 @@ function NavBar() {
   }
   function handleShowOffer(e){
     e.preventDefault()
-    debugger
+    // debugger
     setShowOffer(true)
   }
 
