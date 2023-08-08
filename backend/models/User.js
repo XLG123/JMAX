@@ -35,6 +35,9 @@ userSchema.methods.toSafeObject = function() {
   delete user.hashedPassword;
   return user;
 };
+userSchema.methods.getProblems = function() {
+  return mongoose.model('Problem').find({ author: this._id });
+};
 
 // userSchema.virtual('birthdateFormatted').get(function () {
 //   return moment(this.birthdate).format('MM-DD-YYYY');
