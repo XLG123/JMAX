@@ -49,7 +49,7 @@ export const fetchOffers = () => async dispatch => {
 
   export const fetchUserOffers = id => async dispatch => {
     try {
-      const res = await jwtFetch(`/api/offers/user/${id}`);
+      const res = await jwtFetch(`/api/users/${id}/problems/offers`);
       const offers = await res.json();
       dispatch(receiveUserOffers(offers));
     } catch (err) {

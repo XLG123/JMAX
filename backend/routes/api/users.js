@@ -46,21 +46,6 @@ router.get("/", async (req, res) => {
 //   }
 // });
 
-// router.get("/:userId/problems", async (req, res) => {
-//   try {
-//     const userId = req.params.userId;
-//     const user = await User.findById(userId);
-//     if (!user) {
-//       return res.status(404).json({ error: "User not found" });
-//     }
-
-//     const problems = await user.getProblems();
-//     res.json(problems);
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).json({ error: "An error occurred" });
-//   }
-// });
 router.get("/:userId/problems", async (req, res) => {
   try {
     const userId = req.params.userId;
@@ -70,14 +55,25 @@ router.get("/:userId/problems", async (req, res) => {
     }
 
     const problems = await user.getProblems();
-
-    const result = {};
-
-    for (const problem of problems) {
-      const offers = await Offer.find({ problem: problem._id }); 
-      result[problem._id] = offers; 
+    res.json(problems);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "An error occurred" });
+  }
+});
+router.get("/:userId/problems/offers", async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
     }
-
+    const problems = await user.getProblems();
+    const result = {};
+    for (const problem of problems) {
+      const offers = await Offer.find({ problem: problem._id });
+      if (offers.length !== 0) result[problem._id] = offers;
+    }
     res.json(result);
   } catch (err) {
     console.error(err);
@@ -143,7 +139,7 @@ router.post("/login", validateLoginInput, async (req, res, next) => {
   })(req, res, next);
 });
 
-router.get("/current", restoreUser, (req, res) => {
+router.get("/current", restoreUser, async (req, res) => {
   if (!isProduction) {
     // In development, allow React server to gain access to the CSRF token
     // whenever the current user information is first loaded into the

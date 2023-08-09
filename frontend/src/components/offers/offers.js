@@ -5,10 +5,12 @@ import * as offersActions from "../store/offers"
 
 const Offers = () => {
   const dispatch = useDispatch();
-  // const offers = useSelector(state => Object.values(state.offers.all));
-
+  const user = useSelector(state => state.session.user);
+  const reqOffers=useSelector(state=>state.offers.user)
+  // debugger
+  console.log(reqOffers)
   useEffect(() => {
-    dispatch(offersActions.fetchOffers());
+    dispatch(offersActions.fetchUserOffers(user._id));
     // return () => dispatch(problemActions.clearOfferErrors());
   }, [dispatch])
 
@@ -16,7 +18,7 @@ const Offers = () => {
 
   return (
     <div className='container'>
-      <h2 className='title'>All  Requests</h2>
+      <h2 className='title'>All  Offers</h2>
       {/* {offers.map(offer => (
         <OfferBox key={offers._id} offers={offers} />
       ))} */}

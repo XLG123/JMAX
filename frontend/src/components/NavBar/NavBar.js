@@ -240,8 +240,10 @@ function NavBar() {
 
 {showOffers&& <Modal onClose={handleClose}>
   
-  <div  className="offerbox">im an offer</div>
-  {/* <Offers/> */}
+  <div  className="offerbox">
+  <Offers/>
+
+  </div>
 
   </Modal>}
   </>
