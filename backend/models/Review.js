@@ -8,7 +8,7 @@ const reviewSchema = new Schema(
     //   min: 1,
     //   max: 5,
     // },
-    offer: {
+    offeree: {
       type: Schema.Types.ObjectId,
       ref: "Offer",
     },

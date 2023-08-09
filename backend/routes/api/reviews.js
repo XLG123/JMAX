@@ -10,6 +10,7 @@ router.post("/create", requireUser, async (req, res) => {
     description: req.body.description,
     reviewer: req.user._id,
     reviewee: req.body.reviewee,
+    offeree: req.body.offeree,
   });
 
   try {
@@ -20,9 +21,7 @@ router.post("/create", requireUser, async (req, res) => {
 
     return res.json(savedReview);
   } catch (error) {
-    return res.status(500).json({
-      error: error,
-    });
+    return res.status(500).json({ error: "Create review failed" });
   }
 });
 router.get("/:reviewId", async (req, res) => {
