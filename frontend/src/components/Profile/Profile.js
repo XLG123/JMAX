@@ -31,7 +31,7 @@ const Profile = () => {
     dispatch(fetchProblems());
     dispatch(fetchUserProblems(userId));
     return () => dispatch(clearProblemErrors());
-  }, [userId, dispatch]);
+  }, [userId, dispatch, allProblems.length]);
 
   if (!userProblemIds) {
     return [];
