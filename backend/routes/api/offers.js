@@ -66,10 +66,6 @@ router.patch("/:id", requireUser, async (req, res) => {
     if (!offer) {
       throw new Error("Offer not found");
     }
-
-    if (!offer.helper.equals(req.user._id)) {
-      throw new Error("You are not authorized to edit this offer");
-    }
     await Offer.updateOne({ _id: req.params.id }, { $set: req.body });
 
     return res.json({ message: "Offer updated successfully" });
@@ -88,13 +84,6 @@ router.delete("/:id", requireUser, async (req, res) => {
     // Check if the problem exists
     if (!offer) {
       return res.status(404).json({ message: "Offer not found" });
-    }
-
-    // Check if the user is the author of the problem
-    if (!offer.helper.equals(req.user._id)) {
-      return res
-        .status(403)
-        .json({ message: "You are not authorized to delete this offer" });
     }
 
     // Delete the problem
