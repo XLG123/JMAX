@@ -1,7 +1,3 @@
-const { Server } = require("socket.io");
-const { createServer } = require("http");
-
-
 const express = require("express");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
@@ -9,7 +5,6 @@ const debug = require("debug");
 require("./models/Problem");
 require("./models/User");
 require("./models/Offer");
-require("./models/Review");
 const cors = require("cors");
 const csurf = require("csurf");
 const { isProduction } = require("./config/keys");
@@ -19,26 +14,11 @@ const problemsRouter = require("./routes/api/problems");
 const csrfRouter = require("./routes/api/csrf");
 const testUserRouter = require("./routes/api/test");
 const offersRouter = require("./routes/api/offers");
-const reviewsRouter = require("./routes/api/reviews");
-
-
-
-
-
-
-
-
 
 require("./config/passport");
 const passport = require("passport");
 
 const app = express();
-const httpServer = createServer(app);
-const io = new Server(httpServer, { /* options */ });
-httpServer.listen(3000);
-io.on("connection", (socket) => {
-  // ...
-});
 
 app.use(logger("dev"));
 app.use(express.json());
@@ -72,7 +52,6 @@ app.use("/api/problems", problemsRouter);
 app.use("/api/offers", offersRouter);
 app.use("/api/csrf", csrfRouter);
 app.use("/api/test", testUserRouter);
-app.use("/api/reviews", reviewsRouter);
 
 if (isProduction) {
   const path = require('path');

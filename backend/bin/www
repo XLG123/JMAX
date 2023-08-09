@@ -22,10 +22,22 @@ app.set("port", port);
  */
 
 var server = http.createServer(app);
-
+const io = require("socket.io")(server);
 /**
  * Listen on provided port, on all network interfaces.
  */
+
+// connection to socket.io
+io.on("connection", (socket) => {
+  console.log("a user connected");
+
+  // Define other events, such as handling messages here
+
+  socket.on("disconnect", () => {
+    console.log("user disconnected");
+  });
+});
+
 mongoose
   .connect(db, { useNewUrlParser: true })
   .then(() => {
