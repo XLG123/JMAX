@@ -49,5 +49,30 @@ problemSchema.methods.getOffers = async function () {
 
   return offersObject;
 };
+problemSchema.methods.getReviewsWritten = async function () {
+  const reviews = await mongoose.model("Review").find({
+    reviewer: this._id,
+  });
+
+  const reviewsObject = {};
+  reviews.forEach((review) => {
+    reviewsObject[review._id] = review;
+  });
+
+  return reviewsObject;
+};
+
+problemSchema.methods.getReviewsReceived = async function () {
+  const reviews = await mongoose.model("Review").find({
+    reviewee: this._id,
+  });
+
+  const reviewsObject = {};
+  reviews.forEach((review) => {
+    reviewsObject[review._id] = review;
+  });
+
+  return reviewsObject;
+};
 
 module.exports = mongoose.model("Problem", problemSchema);

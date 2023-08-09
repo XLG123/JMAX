@@ -47,31 +47,7 @@ userSchema.methods.getProblems = async function () {
   return problems.map((problem) => problem._id);
 };
 
-userSchema.methods.getReviewsWritten = async function () {
-  const reviews = await mongoose.model("Review").find({
-    reviewer: this._id,
-  });
 
-  const reviewsObject = {};
-  reviews.forEach((review) => {
-    reviewsObject[review._id] = review;
-  });
-
-  return reviewsObject;
-};
-
-userSchema.methods.getReviewsReceived = async function () {
-  const reviews = await mongoose.model("Review").find({
-    reviewee: this._id,
-  });
-
-  const reviewsObject = {};
-  reviews.forEach((review) => {
-    reviewsObject[review._id] = review;
-  });
-
-  return reviewsObject;
-};
 
 // userSchema.virtual('birthdateFormatted').get(function () {
 //   return moment(this.birthdate).format('MM-DD-YYYY');
