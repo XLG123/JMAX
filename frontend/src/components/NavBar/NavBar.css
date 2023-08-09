@@ -8,10 +8,10 @@
 }
 
 .logo-container {
-  width: 6vw;
-  height: 6vw;
+  width: 4vw;
+  height: 4vw;
   position: absolute;
-  top: 0.65vw;
+  top: 1.3vw;
 }
 
 .main-pg-logo,
@@ -255,6 +255,7 @@ textarea {
   transition: box-shadow 0.5s;
   max-width: 100%;
 }
+
 .custom-file-input {
   display: inline-block;
   padding: 8px 12px;
@@ -287,8 +288,6 @@ input[type="file"] {
   display: none;
 }
 
-
-
 .offerbox{
   background-color: #F3E9CD;
   width:100%;
@@ -296,6 +295,7 @@ input[type="file"] {
   overflow:auto;
 
 }
+
 .shaking {
   animation: shake 0.60s ease-in-out infinite, changeColor 0.60s alternate infinite;
 }
@@ -320,3 +320,4 @@ input[type="file"] {
     color: #F4E9CD; /* Change it to the original color or any other color */
   }
 }
+

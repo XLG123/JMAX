@@ -29,6 +29,52 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.get("/open", async (req, res) => {
+  try {
+    const problems = await Problem.find().populate(
+      "author",
+      "_id username email"
+    );
+
+    const modifiedProblems = {};
+    problems.forEach((problem) => {
+      if (problem.status === "open") {
+        modifiedProblems[problem._id] = {
+          ...problem._doc,
+          author: problem.author,
+        };
+      }
+    });
+
+    return res.json(modifiedProblems);
+  } catch (error) {
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+router.get("/closed", async (req, res) => {
+  try {
+    const problems = await Problem.find().populate(
+      "author",
+      "_id username email"
+    );
+
+    const modifiedProblems = {};
+    problems.forEach((problem) => {
+      if (problem.status === "closed") {
+        modifiedProblems[problem._id] = {
+          ...problem._doc,
+          author: problem.author,
+        };
+      }
+    });
+
+    return res.json(modifiedProblems);
+  } catch (error) {
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 // router.get("/", async (req, res) => {
 //   try {
 //     const problems = await Problem.find()
@@ -93,8 +139,6 @@ router.post(
     }
   }
 );
-
-
 
 router.get("/:id", requireUser, async (req, res, next) => {
   try {
@@ -197,6 +241,54 @@ router.delete("/:id", requireUser, async (req, res) => {
     return res.json({ message: "Problem deleted successfully" });
   } catch (error) {
     return res.status(500).json({ error: "Error deleting problem" });
+  }
+});
+
+//Search by category
+router.get("/search/category/:category", async (req, res) => {
+  try {
+    const category = req.params.category;
+
+    const problems = await Problem.find({ category: category }).populate(
+      "author",
+      "_id username email"
+    );
+
+    const modifiedProblems = {};
+    problems.forEach((problem) => {
+      modifiedProblems[problem._id] = {
+        ...problem._doc,
+        author: problem.author,
+      };
+    });
+
+    return res.json(modifiedProblems);
+  } catch (error) {
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+//Search by address
+router.get("/search/address/:address", async (req, res) => {
+  try {
+    const address = req.params.address;
+
+    const problems = await Problem.find({ address: address }).populate(
+      "author",
+      "_id username email"
+    );
+
+    const modifiedProblems = {};
+    problems.forEach((problem) => {
+      modifiedProblems[problem._id] = {
+        ...problem._doc,
+        author: problem.author,
+      };
+    });
+
+    return res.json(modifiedProblems);
+  } catch (error) {
+    return res.status(500).json({ error: "Internal Server Error" });
   }
 });
 

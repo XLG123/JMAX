@@ -23,28 +23,78 @@ const userSchema = new Schema(
       type: Number,
       required: true,
     },
+    reviewsWritten: [{ type: Schema.Types.ObjectId, ref: "Review" }],
+    reviewsReceived: [{ type: Schema.Types.ObjectId, ref: "Review" }],
   },
   {
     timestamps: true,
   }
 );
 
-userSchema.methods.toSafeObject = function() {
+userSchema.methods.toSafeObject = function () {
   let user = this.toObject();
   delete user.hashedPassword;
   return user;
 };
-// userSchema.methods.getProblems = function() {
-//   return mongoose.model('Problem').find({ author: this._id }).select('_id').populate();
-// };
-userSchema.methods.getProblems = async function() {
-  const problems = await mongoose.model('Problem').find({ author: this._id }).select('_id');
-  return problems.map(problem => problem._id);
+userSchema.methods.getProblems = function() {
+  return mongoose.model('Problem').find({ author: this._id }).select('_id').populate();
 };
+
+userSchema.methods.getOffers = async function() {
+  const offers = await mongoose.model("Offer").find({
+    helper: this._id,
+  });
+
+  const offersObject = {};
+  offers.forEach((offer) => {
+    offersObject[offer._id] = offer;
+  });
+
+  return offersObject;
+};
+
+userSchema.methods.getProblemsObject = async function () {
+  const problemsArray = await mongoose
+    .model("Problem")
+    .find({ author: this._id });
+
+  const problemsObject = problemsArray.reduce((acc, problem) => {
+    acc[problem._id] = problem;
+    return acc;
+  }, {});
+
+  return problemsObject;
+};
+
+userSchema.methods.getReviewsWritten = async function () {
+  const reviews = await mongoose.model("Review").find({
+    reviewer: this._id,
+  });
+
+  const reviewsObject = {};
+  reviews.forEach((review) => {
+    reviewsObject[review._id] = review;
+  });
+
+  return reviewsObject;
+};
+
+userSchema.methods.getReviewsReceived = async function () {
+  const reviews = await mongoose.model("Review").find({
+    reviewee: this._id,
+  });
+
+  const reviewsObject = {};
+  reviews.forEach((review) => {
+    reviewsObject[review._id] = review;
+  });
+
+  return reviewsObject;
+};
+
 // userSchema.virtual('birthdateFormatted').get(function () {
 //   return moment(this.birthdate).format('MM-DD-YYYY');
 // });
-
 
 // userSchema.set('toJSON', { virtuals: true });
 // userSchema.set('toObject', { virtuals: true });

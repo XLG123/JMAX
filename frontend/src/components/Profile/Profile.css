@@ -1,11 +1,22 @@
+/* pg stands for profile page instead of pp */
+
 .pg-container {
   position: absolute;
-  top: 8vw;
+  top: 7.5vw;
   padding: 0px 2vw;
   display: grid;
-  grid-template-columns: 18vw 45vw 30vw;
-  column-gap: 1.5%;
-  height: 42vw;
+  grid-template-columns: 20vw 55vw 20vw;
+  column-gap: 1%;
+  height: 45vw;
+  color: inherit;
+  letter-spacing: 0.05vw;
+}
+
+@media screen and (width > 1440px) {
+  .pg-container {
+    top: 6vw;
+    height: 38vw;
+  }
 }
 
 .pg-left-side-bar,
@@ -14,22 +25,71 @@
   padding: 1vw;
 }
 
-.pg-left-side-bar,
-.pg-middle-section {
-  /* margin-right: 2vw; */
-}
-
 .pg-left-side-bar {
-  border: 1px solid yellow;
+  border-right: 1px solid #fff;
+  font-size: 1.3vw;
 }
 
 .pg-filter-btn {
-  margin-bottom: 1vw;
-  border: 1px solid gray;
+  margin-bottom: 3vw;
+  padding: 1em;
+  cursor: pointer;
+  transition: background-color 1s;
+}
+
+.pg-filter-btn,
+.pg-requester-btn-gp,
+.pg-helper-btn-gp {
+  /* padding: 0.3em; */
+  border-radius: 10px;
+  border: 1px solid #fff;
+}
+
+.requester-btn,
+.helper-btn {
+  cursor: pointer;
+  transition: background-color 1s;
+}
+
+.pg-requester-btn-gp,
+.pg-helper-btn-gp {
+  padding: 1em;
+}
+
+.pg-requester-btn-gp {
+  margin-bottom: 3vw;
+}
+
+.pg-requester-open-status-btn,
+.pg-requester-resolved-status-btn,
+.helper-accepted-filter-btn,
+.helper-pending-filter-btn {
+  padding-left: 1em;
+  margin-top: 1vw;
+  border-radius: 5px;
+  transition: background-color 1s;
+  cursor: pointer;
+}
+
+.pg-filter-btn:hover,
+.requester-btn:hover,
+.helper-btn:hover,
+.pg-requester-open-status-btn:hover,
+.pg-requester-resolved-status-btn:hover,
+.helper-accepted-filter-btn:hover,
+.helper-pending-filter-btn:hover
+{
+  background-color: #468189;
+}
+
+.linebreak {
+  width: 100%;
+  margin-top: 1vw;
+  border-top: 1px dashed rgba(255, 255, 255, 0.8);
 }
 
 .pg-middle-section {
-  border: 1px solid red;
+  border-radius: 10px;
   height: inherit;
   overflow-y: auto;
 }
@@ -38,6 +98,131 @@
   display: none;
 }
 
+.pg-box {
+  width: 95%;
+  background: 
+    linear-gradient(to bottom, #9dbebb 0%, #468189 50%, #9dbebb 100%);
+  border-radius: 1rem;
+  padding: 1rem;
+  margin: 0px auto;
+  word-spacing: 0.3vw;
+  letter-spacing: 0.05vw;
+  color: inherit;
+  position: relative;
+  transition: box-shadow 0.5s;
+  animation-duration: 6s;
+  animation-iteration-count: infinite;
+  box-sizing: border-box;
+}
+
+.pg-box:hover {
+  animation-name: border-color-change;
+  box-shadow: 0px 0px 12px 5px #fff;
+}
+
+@keyframes border-color-change {
+  0% {
+    border: 5px solid #9dbebb;
+  }
+
+  25% {
+    border: 5px solid #8acaed;
+  }
+
+  50% {
+    border: 5px solid #61e687;
+  }
+
+  75% {
+    border: 5px solid #cdea77;
+  }
+
+  100% {
+    border: 5px solid #52d3be;
+  }
+}
+
+.pg-user {
+  font-size: 1.3vw;
+}
+
+.pg-box:not(:nth-child(2)) {
+  margin-bottom: 2vw;
+}
+
+.pg-catgory {
+  font-size: 1.2vw;
+  color: #031926;
+  border-bottom: 3px #031926 solid;
+  font-weight: 900;
+  padding-bottom: 1rem;
+}
+
+.pg-status {
+  color: #1c6721;
+  text-align: center;
+  font-size: 1.3vw;
+}
+
+.pg-des-box {
+  font-size: 1.6vw;
+  margin-top: 0.6vw;
+  text-align: center;
+}
+
 .pg-right-side-bar {
-  border: 1px solid lightgreen;
+  border-left: 1px solid #fff;
+}
+
+.user-info-display {
+  position: relative;
+}
+
+.avatar-container {
+  width: 10vw;
+  height: 10vw;
+  margin: 0px auto;
+  border: 2px solid green;;
+}
+
+.user-info-display {
+  margin: px 20px;
+}
+
+.general-info {
+  margin: 2.5vw;
+  font-size: 1.2vw;
+}
+
+.edit-delete-btn-gp {
+  position: absolute;
+  left: 40vw;
+  top: 1.1vw;
+  font-size: 1.1vw;
+}
+
+.pg-edit-btn,
+.pg-delete-btn {
+  display: inline-block;
+  border: 1px solid white;
+  cursor: pointer;
+  padding: 0.3em;
+  border-radius: 5px;
+  transition: background-color 0.5s;
+  background-color: transparent;
+}
+
+.pg-edit-btn:hover,
+.pg-delete-btn:hover {
+  background-color: #468189;
+}
+
+.pg-edit-btn {
+  margin-right: 2vw;
+}
+
+@media screen and (width > 1440px) {
+  .edit-delete-btn-gp {
+    top: 0.75vw;
+  }
 }
