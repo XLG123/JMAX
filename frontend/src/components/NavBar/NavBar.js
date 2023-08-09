@@ -95,6 +95,8 @@ function NavBar() {
               <span></span>
               {/* the empty spans are for css styling effects */}
             </div>
+
+            {/* TODO: CATEGORY FILTER */}
             
             <IconButton onClick={logoutUser} className="logout-btn" >
               <LogoutIcon className="logout-icon"
@@ -199,6 +201,13 @@ function NavBar() {
     <option value="Delivery">Delivery</option>
     <option value="Driver">Driver</option>
   </select>
+
+  <input type="number"
+    onChange={(e)=> setZipCode(e.target.value)}
+    className='signup-input'
+    placeholder="Zip Code"
+    required
+  />
 
   <input type="number"
     onChange={(e)=> setZipCode(e.target.value)}
