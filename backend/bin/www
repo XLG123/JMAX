@@ -31,7 +31,8 @@ const io = require("socket.io")(server);
 io.on("connection", (socket) => {
   console.log("a user connected");
 
-  // Define other events, such as handling messages here
+  socket.on("chat message", (msg) => {
+    io.emit("chat message", msg); 
 
   socket.on("disconnect", () => {
     console.log("user disconnected");
