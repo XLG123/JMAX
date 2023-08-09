@@ -1,4 +1,6 @@
 import { RECEIVE_USER_LOGOUT } from './session';
+import jwtFetch from './jwt';
+
 const RECEIVE_OFFERS = "offers/RECEIVE_OFFERS";
 const RECEIVE_USER_OFFERSS = "offers/RECEIVE_USER_OFFERSS";
 const RECEIVE_NEW_OFFER = "offers/RECEIVE_NEW_OFFER";
@@ -47,7 +49,7 @@ export const fetchOffers = () => async dispatch => {
 
   export const fetchUserOffers = id => async dispatch => {
     try {
-      const res = await jwtFetch(`/api/offers/user/${id}`);
+      const res = await jwtFetch(`/api/users/${id}/problems/offers`);
       const offers = await res.json();
       dispatch(receiveUserOffers(offers));
     } catch (err) {

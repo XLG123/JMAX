@@ -3,6 +3,7 @@ const router = express.Router();
 const bcrypt = require("bcryptjs");
 const mongoose = require("mongoose");
 const Problem = require("../../models/Problem");
+const Offer = require("../../models/Offer");
 const User = mongoose.model("User");
 const passport = require("passport");
 const { loginUser, restoreUser } = require("../../config/passport");
@@ -55,6 +56,25 @@ router.get("/:userId/problems", async (req, res) => {
 
     const problems = await user.getProblems();
     res.json(problems);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "An error occurred" });
+  }
+});
+router.get("/:userId/problems/offers", async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    const problems = await user.getProblems();
+    const result = {};
+    for (const problem of problems) {
+      const offers = await Offer.find({ problem: problem._id });
+      if (offers.length !== 0) result[problem._id] = offers;
+    }
+    res.json(result);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "An error occurred" });
@@ -128,21 +148,12 @@ router.get("/current", restoreUser, async (req, res) => {
     res.cookie("CSRF-TOKEN", csrfToken);
   }
   if (!req.user) return res.json(null);
-
-  const user = await User.findById(req.user._id);
-  const reviewsWritten = await user.getReviewsWritten();
-  const reviewsReceived = await user.getReviewsReceived();
-  const problems = await user.getProblems();
-
   res.json({
-    _id: user._id,
-    username: user.username,
-    email: user.email,
-    address: user.address,
-    age: user.age,
-    // reviewsWritten: reviewsWritten,
-    // reviewsReceived: reviewsReceived,
-    problems: problems,
+    _id: req.user._id,
+    username: req.user.username,
+    email: req.user.email,
+    address: req.user.address,
+    age: req.user.age,
   });
 });
 
