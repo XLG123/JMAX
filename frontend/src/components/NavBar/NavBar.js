@@ -12,9 +12,20 @@ import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import "./NavBar.css";
 import OfferModal from "../offerModal/index"
 import Offers from "../offers/offers";
-import * as offersActions from "../store/offers"
 
 import { useLocation } from "react-router-dom";
+
+
+
+import * as offersActions from "../store/offers"
+
+
+import { useLocation } from "react-router-dom";
+
+
+import { useLocation } from "react-router-dom";
+
+
 
 function NavBar() {
   const loggedIn = useSelector((state) => !!state.session.user);
@@ -132,6 +143,8 @@ useEffect(() => {
               <span></span>
               {/* the empty spans are for css styling effects */}
             </div>
+
+            {/* TODO: CATEGORY FILTER */}
             
             <IconButton onClick={logoutUser} className="logout-btn" >
               <LogoutIcon className="logout-icon"
@@ -236,6 +249,13 @@ useEffect(() => {
     <option value="Delivery">Delivery</option>
     <option value="Driver">Driver</option>
   </select>
+
+  <input type="number"
+    onChange={(e)=> setZipCode(e.target.value)}
+    className='signup-input'
+    placeholder="Zip Code"
+    required
+  />
 
   <input type="number"
     onChange={(e)=> setZipCode(e.target.value)}
