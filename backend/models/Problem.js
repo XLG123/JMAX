@@ -48,4 +48,9 @@ problemSchema.methods.getOffers = async function () {
   return offersObject;
 };
 
+problemSchema.statics.searchByCategory = async function (category) {
+  const problems = await this.find({ category: category });
+  return problems;
+};
+
 module.exports = mongoose.model("Problem", problemSchema);

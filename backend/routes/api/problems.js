@@ -244,5 +244,52 @@ router.delete("/:id", requireUser, async (req, res) => {
   }
 });
 
+//Search by category
+router.get("/search/category/:category", async (req, res) => {
+  try {
+    const category = req.params.category;
+
+    const problems = await Problem.find({ category: category }).populate(
+      "author",
+      "_id username email"
+    );
+
+    const modifiedProblems = {};
+    problems.forEach((problem) => {
+      modifiedProblems[problem._id] = {
+        ...problem._doc,
+        author: problem.author,
+      };
+    });
+
+    return res.json(modifiedProblems);
+  } catch (error) {
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+//Search by address
+router.get("/search/address/:address", async (req, res) => {
+  try {
+    const address = req.params.address;
+
+    const problems = await Problem.find({ address: address }).populate(
+      "author",
+      "_id username email"
+    );
+
+    const modifiedProblems = {};
+    problems.forEach((problem) => {
+      modifiedProblems[problem._id] = {
+        ...problem._doc,
+        author: problem.author,
+      };
+    });
+
+    return res.json(modifiedProblems);
+  } catch (error) {
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+});
 
 module.exports = router;
