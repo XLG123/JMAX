@@ -147,4 +147,3 @@ router.get("/current", restoreUser, async (req, res) => {
 });
 
 module.exports = router;
-
