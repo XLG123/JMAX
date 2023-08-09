@@ -25,4 +25,17 @@ router.post("/create", requireUser, async (req, res) => {
     });
   }
 });
+router.get("/:reviewId", async (req, res) => {
+  try {
+    const review = await Review.findById(req.params.reviewId)
+      .populate("reviewer", "_id username")
+      .populate("reviewee", "_id username");
+    if (!review) {
+      return res.status(404).json({ error: "Review not found" });
+    }
+    return res.json(review);
+  } catch (error) {
+    return res.status(500).json({ error: "An error occurred" });
+  }
+});
 module.exports = router;
