@@ -3,6 +3,7 @@ const router = express.Router();
 const bcrypt = require("bcryptjs");
 const mongoose = require("mongoose");
 const Problem = require("../../models/Problem");
+const Offer = require("../../models/Offer");
 const User = mongoose.model("User");
 const passport = require("passport");
 const { loginUser, restoreUser } = require("../../config/passport");
@@ -45,6 +46,21 @@ router.get("/", async (req, res) => {
 //   }
 // });
 
+// router.get("/:userId/problems", async (req, res) => {
+//   try {
+//     const userId = req.params.userId;
+//     const user = await User.findById(userId);
+//     if (!user) {
+//       return res.status(404).json({ error: "User not found" });
+//     }
+
+//     const problems = await user.getProblems();
+//     res.json(problems);
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).json({ error: "An error occurred" });
+//   }
+// });
 router.get("/:userId/problems", async (req, res) => {
   try {
     const userId = req.params.userId;
@@ -54,7 +70,15 @@ router.get("/:userId/problems", async (req, res) => {
     }
 
     const problems = await user.getProblems();
-    res.json(problems);
+
+    const result = {};
+
+    for (const problem of problems) {
+      const offers = await Offer.find({ problem: problem._id }); 
+      result[problem._id] = offers; 
+    }
+
+    res.json(result);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "An error occurred" });
@@ -134,7 +158,6 @@ router.get("/current", restoreUser, (req, res) => {
     email: req.user.email,
     address: req.user.address,
     age: req.user.age,
-
   });
 });
 

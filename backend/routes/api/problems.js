@@ -131,6 +131,32 @@ router.patch("/:id", requireUser, async (req, res) => {
   }
 });
 
+router.get("/:userId", async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const problems = await Problem.find({ author: userId }).populate({
+      path: "offers",
+      select: "_id price description status helper",
+      populate: {
+        path: "helper",
+        select: "_id username email",
+      },
+    });
+
+    const problemIdsWithOffers = {};
+    problems.forEach((problem) => {
+      problemIdsWithOffers[problem._id] = {
+        offers: problem.offers,
+      };
+    });
+
+    res.json(problemIdsWithOffers);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "An error occurred" });
+  }
+});
+
 router.get("/:problemId/offers", async (req, res) => {
   try {
     const problemId = req.params.problemId;
