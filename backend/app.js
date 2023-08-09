@@ -1,3 +1,9 @@
+const { Server } = require("socket.io");
+const { createServer } = require("http");
+const httpServer = createServer(app);
+const io = new Server(httpServer, { /* options */ });
+
+
 const express = require("express");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
@@ -16,6 +22,14 @@ const csrfRouter = require("./routes/api/csrf");
 const testUserRouter = require("./routes/api/test");
 const offersRouter = require("./routes/api/offers");
 const reviewsRouter = require("./routes/api/reviews");
+
+
+
+
+
+
+
+
 
 require("./config/passport");
 const passport = require("passport");
