@@ -140,8 +140,8 @@ router.get("/current", restoreUser, async (req, res) => {
     email: user.email,
     address: user.address,
     age: user.age,
-    reviewsWritten: reviewsWritten,
-    reviewsReceived: reviewsReceived,
+    // reviewsWritten: reviewsWritten,
+    // reviewsReceived: reviewsReceived,
     problems: problems,
   });
 });
