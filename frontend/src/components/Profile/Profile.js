@@ -86,7 +86,7 @@ const Profile = () => {
 
         <div className="pg-middle-section">
           {allProblems
-            .filter((problem) => userProblemIds.hasOwnProperty(problem._id))
+            .filter((problem) => userProblemIds.includes(problem._id))
             .map((problem)=> (<ProfileBox key={problem._id} 
               problem={problem}/>))}
         </div>
