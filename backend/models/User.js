@@ -23,8 +23,8 @@ const userSchema = new Schema(
       type: Number,
       required: true,
     },
-    reviewsWritten: [{ type: Schema.Types.ObjectId, ref: "Review" }],
-    reviewsReceived: [{ type: Schema.Types.ObjectId, ref: "Review" }],
+    // reviewsWritten: [{ type: Schema.Types.ObjectId, ref: "Review" }],
+    // reviewsReceived: [{ type: Schema.Types.ObjectId, ref: "Review" }],
   },
   {
     timestamps: true,

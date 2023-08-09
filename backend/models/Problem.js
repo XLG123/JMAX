@@ -24,6 +24,8 @@ const problemSchema = new Schema(
       required: true,
       default: "open",
     },
+     reviewsWritten: [{ type: Schema.Types.ObjectId, ref: "Review" }],
+    reviewsReceived: [{ type: Schema.Types.ObjectId, ref: "Review" }],
     // problemImageUrl: {
     //   type: [String],
     //   required: false,

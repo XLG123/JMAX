@@ -3,21 +3,21 @@ const Schema = mongoose.Schema;
 
 const reviewSchema = new Schema(
   {
-    rating: {
-      type: Number,
-      min: 1,
-      max: 5,
-    },
+    // rating: {
+    //   type: Number,
+    //   min: 1,
+    //   max: 5,
+    // },
     description: {
       type: String,
     },
     reviewer: {
       type: Schema.Types.ObjectId,
-      ref: "User",
+      ref: "Problem",
     },
     reviewee: {
       type: Schema.Types.ObjectId,
-      ref: "User",
+      ref: "Problem",
     },
   },
   {
