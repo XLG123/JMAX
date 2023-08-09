@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { NavLink, useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout, login } from "../store/session";
@@ -12,9 +12,12 @@ import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import "./NavBar.css";
 import OfferModal from "../offerModal/index"
 import Offers from "../offers/offers";
+import * as offersActions from "../store/offers"
+
 function NavBar() {
   const loggedIn = useSelector((state) => !!state.session.user);
   const user = useSelector((state) => state.session.user);
+  const [notify,setNotify]=useState("")
   const dispatch = useDispatch();
   const history = useHistory();
   const [showReq,setShowReqForm]=useState(false)
@@ -44,6 +47,21 @@ function NavBar() {
   const goToAbout = () => {
     history.push("/about");
   };
+  const reqOffers=useSelector(state=>state.offers.user)
+ 
+  
+useEffect(() => {
+  if (loggedIn) {
+    dispatch(offersActions.fetchUserOffers(user._id)).then(() => {
+      if (Object.keys(reqOffers).length === 0) {
+        setNotify(false);
+      } else {
+        setNotify(true);
+      }
+    });
+  }
+}, [ user,dispatch]);
+// [ user,reqOffers]
 
   const getLinks = () => {
     if (loggedIn) {
@@ -62,12 +80,31 @@ function NavBar() {
               <span></span>
               {/* the empty spans are for css styling effects */}
             </NavLink>
+            {notify=== false && 
+  <IconButton className="notify-btn" onClick={handleShowOffer}>
+    <NotificationsActiveIcon
+      className="notify-icon"
+      sx={{ color: "#F4E9CD", fontSize: "2.5vw", position: "absolute", bottom: "0.2vw" }}
+    />
+  </IconButton>
+}
 
-            <IconButton className="notify-btn" onClick={handleShowOffer}>
-              <NotificationsActiveIcon className="notify-icon"
-                sx={{color: "#F4E9CD", fontSize: "2.5vw",
-                position: "absolute", bottom: "0.2vw"}}/>
-            </IconButton>
+{notify ===true && 
+  <IconButton className={`notify-btn ${notify ? "shaking" : ""}`} onClick={handleShowOffer}>
+  <NotificationsActiveIcon
+    className="notify-icon"
+    sx={{ color: "red", fontSize: "2.5vw", position: "absolute", bottom: "0.2vw" }}
+  />
+</IconButton>
+}
+
+
+
+
+
+
+
+
 
             <NavLink to={`/users/${user?._id}`} className="nav-btn-gp2 user-profile-btn">
               Profile
