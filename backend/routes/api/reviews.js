@@ -38,4 +38,27 @@ router.get("/:reviewId", async (req, res) => {
     return res.status(500).json({ error: "An error occurred" });
   }
 });
+router.patch("/:reviewId", requireUser, async (req, res) => {
+  try {
+    const review = await Review.findById(req.params.reviewId);
+    if (!review) {
+      throw new Error("Review not found");
+    }
+    if (req.user._id.toString() !== review.reviewer.toString()) {
+      throw new Error("You are not authorized to edit this review");
+    }
+
+    await Review.updateOne({ _id: req.params.reviewId }, { $set: req.body });
+
+    const updatedReview = await Review.findById(req.params.reviewId)
+      .populate("reviewer", "_id username")
+      .populate("reviewee", "_id username");
+    return res.json(updatedReview);
+  } catch (error) {
+    return res.status(500).json({
+      error: error.message,
+    });
+  }
+});
+
 module.exports = router;
