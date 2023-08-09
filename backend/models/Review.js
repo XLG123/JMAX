@@ -8,7 +8,7 @@ const reviewSchema = new Schema(
       min: 1,
       max: 5,
     },
-    body: {
+    description: {
       type: String,
     },
     reviewer: {
