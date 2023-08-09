@@ -29,6 +29,52 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.get("/open", async (req, res) => {
+  try {
+    const problems = await Problem.find().populate(
+      "author",
+      "_id username email"
+    );
+
+    const modifiedProblems = {};
+    problems.forEach((problem) => {
+      if (problem.status === "open") {
+        modifiedProblems[problem._id] = {
+          ...problem._doc,
+          author: problem.author,
+        };
+      }
+    });
+
+    return res.json(modifiedProblems);
+  } catch (error) {
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+router.get("/closed", async (req, res) => {
+  try {
+    const problems = await Problem.find().populate(
+      "author",
+      "_id username email"
+    );
+
+    const modifiedProblems = {};
+    problems.forEach((problem) => {
+      if (problem.status === "closed") {
+        modifiedProblems[problem._id] = {
+          ...problem._doc,
+          author: problem.author,
+        };
+      }
+    });
+
+    return res.json(modifiedProblems);
+  } catch (error) {
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 // router.get("/", async (req, res) => {
 //   try {
 //     const problems = await Problem.find()
@@ -93,8 +139,6 @@ router.post(
     }
   }
 );
-
-
 
 router.get("/:id", requireUser, async (req, res, next) => {
   try {
@@ -199,5 +243,6 @@ router.delete("/:id", requireUser, async (req, res) => {
     return res.status(500).json({ error: "Error deleting problem" });
   }
 });
+
 
 module.exports = router;

@@ -36,16 +36,36 @@ userSchema.methods.toSafeObject = function () {
   delete user.hashedPassword;
   return user;
 };
-// userSchema.methods.getProblems = function() {
-//   return mongoose.model('Problem').find({ author: this._id }).select('_id').populate();
-// };
-userSchema.methods.getProblems = async function () {
-  const problems = await mongoose
-    .model("Problem")
-    .find({ author: this._id })
-    .select("_id");
-  return problems.map((problem) => problem._id);
+userSchema.methods.getProblems = function() {
+  return mongoose.model('Problem').find({ author: this._id }).select('_id').populate();
 };
+
+userSchema.methods.getOffers = async function() {
+  const offers = await mongoose.model("Offer").find({
+    helper: this._id,
+  });
+
+  const offersObject = {};
+  offers.forEach((offer) => {
+    offersObject[offer._id] = offer;
+  });
+
+  return offersObject;
+};
+
+userSchema.methods.getProblemsObject = async function () {
+  const problemsArray = await mongoose
+    .model("Problem")
+    .find({ author: this._id });
+
+  const problemsObject = problemsArray.reduce((acc, problem) => {
+    acc[problem._id] = problem;
+    return acc;
+  }, {});
+
+  return problemsObject;
+};
+
 userSchema.methods.getReviewsWritten = async function () {
   const reviews = await mongoose.model("Review").find({
     reviewer: this._id,
