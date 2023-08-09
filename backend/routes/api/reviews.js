@@ -60,6 +60,24 @@ router.patch("/:reviewId", requireUser, async (req, res) => {
     });
   }
 });
+router.delete("/:reviewId", requireUser, async (req, res) => {
+  try {
+    const review = await Review.findById(req.params.reviewId);
+    if (!review) {
+      return res.status(404).json({ error: "Review not found" });
+    }
+    if (req.user._id.toString() !== review.reviewer.toString()) {
+      return res.status(403).json({ error: "You are not authorized to delete this review" });
+    }
 
+    await Review.deleteOne({ _id: req.params.reviewId });
+
+    return res.status(204).send(); // 204 No Content, successfully deleted
+  } catch (error) {
+    return res.status(500).json({
+      error: error.message,
+    });
+  }
+})
 
 module.exports = router;
