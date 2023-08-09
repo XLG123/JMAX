@@ -67,17 +67,17 @@ router.delete("/:reviewId", requireUser, async (req, res) => {
       return res.status(404).json({ error: "Review not found" });
     }
     if (req.user._id.toString() !== review.reviewer.toString()) {
-      return res.status(403).json({ error: "You are not authorized to delete this review" });
+      return res
+        .status(403)
+        .json({ error: "You are not authorized to delete this review" });
     }
 
     await Review.deleteOne({ _id: req.params.reviewId });
 
-    return res.status(204).send(); // 204 No Content, successfully deleted
+    return res.json({ message: "Review deleted successfully" });
   } catch (error) {
-    return res.status(500).json({
-      error: error.message,
-    });
+    return res.status(500).json({ error: "Error deleting problem" });
   }
-})
+});
 
 module.exports = router;
