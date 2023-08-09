@@ -1,7 +1,5 @@
 const { Server } = require("socket.io");
 const { createServer } = require("http");
-const httpServer = createServer(app);
-const io = new Server(httpServer, { /* options */ });
 
 
 const express = require("express");
@@ -35,6 +33,12 @@ require("./config/passport");
 const passport = require("passport");
 
 const app = express();
+const httpServer = createServer(app);
+const io = new Server(httpServer, { /* options */ });
+httpServer.listen(3000);
+io.on("connection", (socket) => {
+  // ...
+});
 
 app.use(logger("dev"));
 app.use(express.json());
