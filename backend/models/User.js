@@ -23,8 +23,8 @@ const userSchema = new Schema(
       type: Number,
       required: true,
     },
-    // reviewsWritten: [{ type: Schema.Types.ObjectId, ref: "Review" }],
-    // reviewsReceived: [{ type: Schema.Types.ObjectId, ref: "Review" }],
+    reviewsWritten: [{ type: Schema.Types.ObjectId, ref: "Review" }],
+    reviewsReceived: [{ type: Schema.Types.ObjectId, ref: "Review" }],
   },
   {
     timestamps: true,
@@ -46,8 +46,31 @@ userSchema.methods.getProblems = async function () {
     .select("_id");
   return problems.map((problem) => problem._id);
 };
+userSchema.methods.getReviewsWritten = async function () {
+  const reviews = await mongoose.model("Review").find({
+    reviewer: this._id,
+  });
 
+  const reviewsObject = {};
+  reviews.forEach((review) => {
+    reviewsObject[review._id] = review;
+  });
 
+  return reviewsObject;
+};
+
+userSchema.methods.getReviewsReceived = async function () {
+  const reviews = await mongoose.model("Review").find({
+    reviewee: this._id,
+  });
+
+  const reviewsObject = {};
+  reviews.forEach((review) => {
+    reviewsObject[review._id] = review;
+  });
+
+  return reviewsObject;
+};
 
 // userSchema.virtual('birthdateFormatted').get(function () {
 //   return moment(this.birthdate).format('MM-DD-YYYY');

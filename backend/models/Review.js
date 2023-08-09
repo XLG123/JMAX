@@ -13,11 +13,11 @@ const reviewSchema = new Schema(
     },
     reviewer: {
       type: Schema.Types.ObjectId,
-      ref: "Problem",
+      ref: "User",
     },
     reviewee: {
       type: Schema.Types.ObjectId,
-      ref: "Problem",
+      ref: "User",
     },
   },
   {
