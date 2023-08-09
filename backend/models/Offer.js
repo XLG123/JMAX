@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-
 const offerSchema = new Schema(
   {
     helper: {
@@ -23,10 +22,14 @@ const offerSchema = new Schema(
       default: "pending",
     },
     problem: {
-        type: Schema.Types.ObjectId,
-        ref: "Problem",
-        required: true
-    }
+      type: Schema.Types.ObjectId,
+      ref: "Problem",
+      required: true,
+    },
+    reviews: {
+      type: Schema.Types.ObjectId,
+      ref: "Review",
+    },
   },
   {
     timestamps: true,
