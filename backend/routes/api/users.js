@@ -119,7 +119,7 @@ router.post("/login", validateLoginInput, async (req, res, next) => {
   })(req, res, next);
 });
 
-router.get("/current", restoreUser, (req, res) => {
+router.get("/current", restoreUser, async (req, res) => {
   if (!isProduction) {
     // In development, allow React server to gain access to the CSRF token
     // whenever the current user information is first loaded into the
@@ -128,14 +128,23 @@ router.get("/current", restoreUser, (req, res) => {
     res.cookie("CSRF-TOKEN", csrfToken);
   }
   if (!req.user) return res.json(null);
-  res.json({
-    _id: req.user._id,
-    username: req.user.username,
-    email: req.user.email,
-    address: req.user.address,
-    age: req.user.age,
 
+  const user = await User.findById(req.user._id);
+  const reviewsWritten = await user.getReviewsWritten();
+  const reviewsReceived = await user.getReviewsReceived();
+  const problems = await user.getProblems();
+
+  res.json({
+    _id: user._id,
+    username: user.username,
+    email: user.email,
+    address: user.address,
+    age: user.age,
+    reviewsWritten: reviewsWritten,
+    reviewsReceived: reviewsReceived,
+    problems: problems,
   });
 });
 
 module.exports = router;
+
