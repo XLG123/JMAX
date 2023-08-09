@@ -10,7 +10,7 @@ router.post("/create", requireUser, async (req, res) => {
     description: req.body.description,
     reviewer: req.user._id,
     reviewee: req.body.reviewee,
-    offeree: req.body.offeree,
+    offerId: req.body.offerId,
   });
 
   try {

@@ -8,7 +8,7 @@ const reviewSchema = new Schema(
     //   min: 1,
     //   max: 5,
     // },
-    offeree: {
+    offerId: {
       type: Schema.Types.ObjectId,
       ref: "Offer",
     },
@@ -23,6 +23,10 @@ const reviewSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "User",
     },
+    status: {
+      type: String,
+      default: "Good",
+    }
   },
   {
     timestamps: true,
