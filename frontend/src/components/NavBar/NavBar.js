@@ -14,6 +14,8 @@ import OfferModal from "../offerModal/index"
 import Offers from "../offers/offers";
 import * as offersActions from "../store/offers"
 
+import { useLocation } from "react-router-dom";
+
 function NavBar() {
   const loggedIn = useSelector((state) => !!state.session.user);
   const user = useSelector((state) => state.session.user);
@@ -25,6 +27,8 @@ function NavBar() {
   const [description, setDescription] = useState('');
   const [zipCode,setZipCode]=useState('')
   const [showOffers,setShowOffer]=useState(false)
+  const currentUrl = useLocation().pathname;
+  
   const logoutUser = (e) => {
     e.preventDefault();
     dispatch(logout());
@@ -67,9 +71,13 @@ useEffect(() => {
     if (loggedIn) {
       return (
         <>
-          <div className="logo-container">
-            <img src={webAppLogo} alt="app-logo" className="main-pg-logo2" />
-          </div>
+          <NavLink to={currentUrl === "/" || currentUrl === "/about" 
+          || currentUrl === "/login" || currentUrl === "/signup"? "/" :
+           "/requests"}>
+            <div className="logo-container">
+              <img src={webAppLogo} alt="app-logo" className="main-pg-logo2" />
+            </div>
+          </NavLink>
 
           <div className="links-nav">
             <NavLink to="/requests" className="nav-btn-gp2 all-requests-btn">
