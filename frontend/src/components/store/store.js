@@ -3,12 +3,13 @@ import thunk from 'redux-thunk';
 import session from './session';
 import errors from './errors';
 import problemsReducer from './problems';
-
+import offersReducer from "./offers"
 
 const rootReducer = combineReducers({
   session,
   errors,
-  problems: problemsReducer
+  problems: problemsReducer,
+  offers:offersReducer
 });
 
 let enhancer;

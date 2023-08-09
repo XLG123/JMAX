@@ -13,8 +13,8 @@ const ProblemBox = ({ problem: { category, author, description, status, _id: id 
   const dispatch = useDispatch();
   const history = useHistory();
   const { username, _id: userId } = author;
-  console.log("userId:", userId);
-  console.log("CurrentUser._id:", CurrentUser._id);
+  // console.log("userId:", userId);
+  // console.log("CurrentUser._id:", CurrentUser._id);
   
   function sendToProf() {
     history.push(`/users/${userId}`);
@@ -31,9 +31,7 @@ const ProblemBox = ({ problem: { category, author, description, status, _id: id 
     history.push(`users/${userId}`);
   }
 
-  // Check if the current user is not the problem creator
   const isCurrentUserProblemCreator = userId === CurrentUser._id;
-  console.log("isCurrentUserProblemCreator:", isCurrentUserProblemCreator);
 
   return (
     <>
@@ -68,7 +66,6 @@ const ProblemBox = ({ problem: { category, author, description, status, _id: id 
               placeholder="Price"
               required
             />
-            {/* Render the "Add Offer" button only if the current user is not the problem creator */}
             
               <button className="sign-up-btn" type="submit">Add Offer</button>
             
