@@ -65,3 +65,12 @@
     justify-content: center;
 
 }
+.status{
+    color:green;
+    /* background-color: aliceblue; */
+    text-align: center;
+    
+}
+.user{
+    cursor: pointer;
+}

@@ -11,6 +11,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import "./NavBar.css";
 import OfferModal from "../offerModal/index"
+import Offers from "../offers/offers";
 function NavBar() {
   const loggedIn = useSelector((state) => !!state.session.user);
   const user = useSelector((state) => state.session.user);
@@ -232,21 +233,7 @@ function NavBar() {
 {showOffers&& <Modal onClose={handleClose}>
   
   <div  className="offerbox">im an offer</div>
-  <div >im an offer</div>
-  <div >im an offer</div>
-  <div >im an offer</div>
-  <div >im an offer</div>
-  <div >im an offer</div>
-  <div >im an offer</div>
-  <div >im an offer</div>
-  <div >im an offer</div>
-  <div >im an offer</div>
-  <div >im an offer</div>
-  <div >im an offer</div>
-  <div >im an offer</div>
-  <div >im an offer</div>
-  <div >im an offer</div>
-  <div >im an offer</div>
+  {/* <Offers/> */}
 
   </Modal>}
   </>

@@ -5,6 +5,7 @@ import { signup, clearSessionErrors } from '../../store/session';
 // import logo from "./logo.jpg"
 import {receiveErrors} from "../../store/session"
 import logo from "./Vector.png"
+import { useHistory } from 'react-router-dom';
 function SignupForm() {
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
@@ -12,6 +13,7 @@ function SignupForm() {
   const [password2, setPassword2] = useState('');
   const [address,setAddress]=useState('')
   const [age,setAge]=useState('')
+  const history=useHistory()
   // const [validZip,setValidZip]=useState(false)
   const errors = useSelector(state => state.errors.session);
   const year=Number(age)
@@ -65,7 +67,9 @@ function SignupForm() {
         address,
       };
   
-      dispatch(signup(user));
+      dispatch(signup(user)).then(()=>{
+        history.push("/requests")
+      })
     } else {
       // Properly set the error message in the Redux store
       dispatch(clearSessionErrors()); // Clear any previous errors

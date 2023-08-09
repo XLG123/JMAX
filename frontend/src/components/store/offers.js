@@ -1,4 +1,6 @@
 import { RECEIVE_USER_LOGOUT } from './session';
+import jwtFetch from './jwt';
+
 const RECEIVE_OFFERS = "offers/RECEIVE_OFFERS";
 const RECEIVE_USER_OFFERSS = "offers/RECEIVE_USER_OFFERSS";
 const RECEIVE_NEW_OFFER = "offers/RECEIVE_NEW_OFFER";
