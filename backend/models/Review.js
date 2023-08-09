@@ -19,3 +19,5 @@ const reviewSchema = new Schema({
     ref: "User",
   },
 });
+
+const Review = mongoose.model('Review', reviewSchema);
