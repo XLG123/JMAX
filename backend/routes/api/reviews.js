@@ -80,5 +80,27 @@ router.delete("/:reviewId", requireUser, async (req, res) => {
   }
 });
 
+router.get("/", async (req, res) => {
+  try {
+    const reviewsReceived = await Review.find()
+      .populate("reviewer", "_id username")
+      .populate("reviewee", "_id username");
+
+    const reviews = {};
+    reviewsReceived.forEach((review) => {
+      reviews[review._id] = {
+        ...review._doc,
+        reviewer: review.reviewer,
+        reviewee: review.reviewee,
+      };
+    });
+
+    return res.json(reviews);
+  } catch (error) {
+    return res.status(500).json({
+      error: error.message,
+    });
+  }
+});
 
 module.exports = router;
