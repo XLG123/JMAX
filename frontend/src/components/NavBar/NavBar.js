@@ -12,14 +12,7 @@ import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import "./NavBar.css";
 import OfferModal from "../offerModal/index"
 import Offers from "../offers/offers";
-
-
-
 import * as offersActions from "../store/offers"
-
-
-
-
 
 function NavBar() {
   const loggedIn = useSelector((state) => !!state.session.user);

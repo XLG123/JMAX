@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as offerActions from "../store/offers";
 import "../NavBar/NavBar.css";
 import "./Profile.css";
-import { deleteProblem, updateProblem } from '../store/problems';
+import { deleteProblem, fetchUpdateProblem, fetchUserProblems } from '../store/problems';
 
 // All classnames are declared with the prefix pg which stands for profile page, instead of pp.
 
@@ -44,10 +44,6 @@ const ProfileBox = ({ problem: { category, author, description,
   const isCurrentUserProblemCreator = userId === CurrentUser._id;
   console.log("isCurrentUserProblemCreator:", isCurrentUserProblemCreator);
 
-  const handleShowReqForm = () => {
-    setShowRequestForm(true);
-  }
-
   const handleClose = (e) => {
     e.preventDefault();
     setShowRequestForm(false);
@@ -55,8 +51,12 @@ const ProfileBox = ({ problem: { category, author, description,
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // dispatch(updateProblem({id: id, category: editCategory, 
-    //   address: editZipCode, description: editDescription}));
+    const updatedProblem = {
+      category: editCategory,
+      address: editZipCode,
+      description: editDescription
+    }
+    dispatch(fetchUpdateProblem(id, updatedProblem));
     setShowRequestForm(false);
   }
 
@@ -85,6 +85,10 @@ const ProfileBox = ({ problem: { category, author, description,
       </div>
     )
   }
+
+  // useEffect(()=> {
+  //   dispatch(fetchUserProblems(CurrentUser._id));
+  // }, [dispatch])
 
   return (
     <>

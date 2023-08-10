@@ -14,6 +14,7 @@ const updateProblem = (id, updatedProblem) => ({
   id,
   updatedProblem
 });
+
 const receiveProblems = problems => ({
   type: RECEIVE_PROBLEMS,
   problems
@@ -66,24 +67,6 @@ export const fetchUserProblems = id => async dispatch => {
   }
 };
 
-export const updateProblem = (problem) => async (dispatch) => {
-  // debugger
-  try {
-    const res = await jwtFetch(`/api/problems/${problem.id}`, {
-      method: 'PATCH',
-      body: JSON.stringify(problem)
-    });
-    const problem = await res.json();
-    dispatch(receiveNewProblem(problem));
-    dispatch(fetchProblems());
-  } catch (err) {
-    const resBody = await err.json();
-    if (resBody.statusCode === 400) {
-      return dispatch(receiveErrors(resBody.errors));
-    }
-  }
-}
-
 export const deleteProblem = (id) => async (dispatch, getState) => {
   await jwtFetch(`/api/problems/${id}`, {
     method: 'DELETE',
@@ -128,8 +111,8 @@ export const fetchUpdateProblem = (problemId, updatedData) => async (dispatch,ge
       const updatedProblem = await res.json();
       dispatch(updateProblem(problemId, updatedProblem));
       dispatch(offerActions.fetchUserOffers(user._id))
-
-    } 
+      dispatch(fetchUserProblems(user._id));
+    }
   } catch (err) {
     // Handle error
   }
@@ -159,13 +142,13 @@ const problemsReducer = (state = { all: {}, user: [], new: undefined }, action) 
     case RECEIVE_NEW_PROBLEM:
       return { ...state, new: action.problem };
     case REMOVE_PROBLEM:
-      let newState = {...state};
+      let newState = { ...state };
       delete newState[action.problemId];
-      return newState;
+      return { ...newState };
     case RECEIVE_USER_LOGOUT:
       return { ...state, user: [], new: undefined }
-      case UPDATE_PROBLEM:
-        return { ...state};
+    case UPDATE_PROBLEM:
+      return { ...state, all: action.updatedProblem, new: undefined };
     default:
       return state;
   }

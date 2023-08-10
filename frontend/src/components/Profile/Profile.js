@@ -23,6 +23,7 @@ const Profile = () => {
 
   const currentUser = useSelector(state => state.session.user);
   const allProblems = useSelector(state => Object.values(state.problems.all));
+  console.log(allProblems);
   const userProblemIds = 
     useSelector(state => state.problems.userProblems)
   // console.log(userProblemIds);
@@ -67,6 +68,16 @@ const Profile = () => {
   const showPendingOffers = (e) => {
     e.preventDefault();
   }
+  // debugger
+  // if (allProblems.length === 0)return null
+
+  const noRequestsMsg = () => {
+    return (<div className='no-requests-container'>
+      <h1 className='no-requests-msg' style={{color: 'green'}}>
+        No requests yet.
+      </h1>
+    </div>)
+  }
 
   return (
     <>
@@ -95,7 +106,7 @@ const Profile = () => {
               </div>
 
               <div className='pg-requester-resolved-status-btn'
-                onClock={(e) => {showResolvedRequests(e)}}>
+                onClick={(e) => {showResolvedRequests(e)}}>
                 Resolved
               </div>
 
@@ -123,6 +134,9 @@ const Profile = () => {
         </div>
 
         <div className="pg-middle-section">
+          {userProblemIds.length === 0 ? <div className='no-request-container'>
+            No requests
+          </div> : <></>}
           {allProblems
             .filter((problem) => userProblemIds.includes(problem._id))
             .map((problem)=> (<ProfileBox key={problem._id} 
