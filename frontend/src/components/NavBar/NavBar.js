@@ -209,13 +209,6 @@ function NavBar() {
     required
   />
 
-  <input type="number"
-    onChange={(e)=> setZipCode(e.target.value)}
-    className='signup-input'
-    placeholder="Zip Code"
-    required
-  />
-
   {/* <br></br>
 <br></br>  */}
 <br />

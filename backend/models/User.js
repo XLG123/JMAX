@@ -53,6 +53,15 @@ userSchema.methods.getOffers = async function() {
   return offersObject;
 };
 
+userSchema.methods.getProblems = function () {
+  return mongoose
+    .model("Problem")
+    .find({ author: this._id })
+    .select("_id")
+    .lean()
+    .then((problems) => problems.map((problem) => problem._id));
+};
+
 userSchema.methods.getProblemsObject = async function () {
   const problemsArray = await mongoose
     .model("Problem")
