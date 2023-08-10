@@ -5,10 +5,14 @@ import "./LiveChat.css";
 let socket;
 
 const LivePrivateChat = () => {
+  const userId = useParams().userId;
+  const dispatch = useDispatch();
+  let users = useSelector((state) => state.session.users);
   const [message, setMessage] = useState("");
   const [chat, setChat] = useState([]);
   const [typing, setTyping] = useState(false);
   const [typingTimeout, setTypingTimeout] = useState(null);
+  const user = users[userId]
 
   const handleKeyUp = () => {
     if (typingTimeout) clearTimeout(typingTimeout);
@@ -32,13 +36,13 @@ const LivePrivateChat = () => {
     // });
     socket.on("typing", () => {
       console.log("Typing event received");
-    //   debugger
+      //   debugger
       setTyping("A user is typing...");
     });
 
     socket.on("stop typing", () => {
       console.log("Stop typing event received");
-    //    debugger
+      //    debugger
       setTyping(""); // Clear the message
     });
 
@@ -59,9 +63,9 @@ const LivePrivateChat = () => {
     }
   };
 
-//   const handleInputBlur = () => {
-//     socket.emit("stop typing"); // Send stop typing event when the input loses focus
-//   };
+  //   const handleInputBlur = () => {
+  //     socket.emit("stop typing"); // Send stop typing event when the input loses focus
+  //   };
 
   const sendMessage = (e) => {
     e.preventDefault();
