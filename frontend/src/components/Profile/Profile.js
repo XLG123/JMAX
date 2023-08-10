@@ -7,10 +7,12 @@ import "./Profile.css";
 import ProfileBox from './ProfileBox';
 import { clearProblemErrors, fetchProblems, fetchUserProblems } from '../store/problems';
 import { useParams } from 'react-router-dom';
-
+import CommentIcon from '@mui/icons-material/Comment';
+import { useHistory } from 'react-router-dom';
 // All classnames are declared with the prefix pg which stands for profile page, instead of pp.
 
 const Profile = () => {
+  const history=useHistory()
   const userId = useParams().userId;
   const dispatch = useDispatch();
    let users = useSelector(state => state.session.users);
@@ -77,6 +79,9 @@ const Profile = () => {
         No requests yet.
       </h1>
     </div>)
+  }
+  function handelText(){
+history.push(`/chat/private/${currentUser._id}/${userId}`) 
   }
 
   return (
@@ -174,7 +179,7 @@ const Profile = () => {
                 Age: &nbsp;&nbsp;{user?.age}
               </div>
             </div>
-
+            <CommentIcon sx={{fontSize: "5rem", marginLeft: "6rem"}} onClick={handelText}/>
           </div>
         </div>
 

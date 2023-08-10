@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as offerActions from "../store/offers";
 
 const ProblemBox = ({ problem: { category, author, description, status, _id: id } }) => {
+  // debugger
   const CurrentUser = useSelector(state => state.session.user);
   const [show, setShow] = useState(false);
   const [price, setPrice] = useState();

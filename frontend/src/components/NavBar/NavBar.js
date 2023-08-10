@@ -49,20 +49,24 @@ function NavBar() {
   const goToAbout = () => {
     history.push("/about");
   };
-  const reqOffers = useSelector(state => state.offers.user)
+  const reqOffers=useSelector(state=>state.offers.user)
+ 
+  
+useEffect(() => {
+  if (loggedIn) {
+    dispatch(problemActions.fetchUserProblemsOpen(user._id))
 
-  useEffect(() => {
-    if (loggedIn) {
-      dispatch(offersActions.fetchUserOffers(user._id)).then(() => {
-        if (Object.keys(reqOffers).length === 0) {
-          setNotify(false);
-        } else {
-          setNotify(true);
-        }
-      });
-    }
-  }, [user, dispatch]);
-  // [ user,reqOffers]
+    dispatch(offersActions.fetchUserOffers(user._id)).then(() => {
+      if (Object.keys(reqOffers).length === 0) {
+        setNotify(false);
+      } else {
+        setNotify(true);
+      }
+    });
+  }
+}, [ user,dispatch]);
+// [ user,reqOffers]
+
 
   const getLinks = () => {
     if (loggedIn) {

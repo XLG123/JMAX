@@ -1,31 +1,68 @@
-#!/usr/bin/env node
-
-/**
- * Module dependencies.
- */
-
 var app = require("../app");
 var debug = require("debug")("JMAX:server");
+const Message = require("../models/Message");
 var http = require("http");
 const mongoose = require("mongoose");
 const { mongoURI: db } = require("../config/keys.js");
 
-/**
- * Get port from environment and store in Express.
- */
-
 var port = normalizePort(process.env.PORT || "4000");
 app.set("port", port);
 
-/**
- * Create HTTP server.
- */
-
 var server = http.createServer(app);
+const io = require("socket.io")(server, {
+  cors: {
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST"],
+  },
+});
 
-/**
- * Listen on provided port, on all network interfaces.
- */
+// connection to socket.io
+io.on("connection", (socket) => {
+  console.log("a user connected through sockets");
+  socket.on("chat message", (msg) => {
+    io.emit("chat message", msg);
+  });
+  socket.on("register user", (userId) => {
+    socket.join(userId);
+  })
+  socket.on("private message", (msg) => {
+    if (!msg.content || !msg.sender || !msg.receiver) {
+      console.error("Missing required fields in message:", msg);
+      return;
+    }
+
+    const message = new Message({
+      sender: msg.sender,
+      receiver: msg.receiver,
+      content: msg.content,
+    });
+
+    message
+      .save()
+      .then(() => {
+        // Emit the message to the sender and receiver only
+        io.to(msg.sender).emit("private message", msg);
+        io.to(msg.receiver).emit("private message", msg);
+      })
+      .catch((err) => {
+        console.error("Error saving message:", err);
+      });
+  });
+
+  socket.on("typing", () => {
+    socket.broadcast.emit("typing");
+  });
+
+  socket.on("stop typing", () => {
+    socket.broadcast.emit("stop typing");
+  });
+
+  socket.on("disconnect", () => {
+    console.log("user disconnected");
+    socket.leaveAll();
+  });
+});
+
 mongoose
   .connect(db, { useNewUrlParser: true })
   .then(() => {
