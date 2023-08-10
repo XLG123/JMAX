@@ -1,10 +1,13 @@
 .live-private-chat-container {
     width: 80%;
-    margin: auto;
+    max-width: 600px;
+    margin: 10% auto;
     padding: 20px;
     background-color: #f9f9f9;
     border-radius: 10px;
     box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.3);
+    position: relative;
+    z-index: 1; 
   }
   .live-private-chat-messages {
     list-style-type: none;
@@ -30,4 +33,7 @@
     background-color: #007bff;
     color: #fff;
     cursor: pointer;
+  }
+  .live-private-chat-input-form button:hover {
+    background-color: #0056b3;
   }
