@@ -21,9 +21,8 @@ const messageSchema = new Schema({
     default: Date.now
   },
   roomId: {
-    type: String, // or Schema.Types.ObjectId if you are using room IDs from a Room model
-    required: true
-  },
+    type: Schema.Types.ObjectId, 
+  }
 });
 
 module.exports = mongoose.model("Message", messageSchema);
