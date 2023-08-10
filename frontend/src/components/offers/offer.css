@@ -36,3 +36,11 @@ box-shadow: 0px 0px 50px #F4E9CD;
     /* color:red; */
     font-size: x-large;
 }
+.accepted-offers{
+    margin-top: 5rem;
+}
+.center{
+    align-items: center;
+    text-align: center;
+    align-content: center;
+}

@@ -64,7 +64,8 @@ const Profile = () => {
   }
 
   const showAcceptedOffers = (e) => {
-    e.preventDefault();
+    // e.preventDefault();
+    history.push("/accepted/offers")
   }
 
   const showPendingOffers = (e) => {
@@ -125,7 +126,7 @@ history.push(`/chat/private/${currentUser._id}/${userId}`)
               <div className='linebreak'></div>
 
               <div className='helper-accepted-filter-btn'
-                onClick={(e) => {showAcceptedOffers(e)}}>
+                onClick={showAcceptedOffers}>
                 Accepted
               </div>
 

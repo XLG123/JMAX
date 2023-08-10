@@ -57,6 +57,19 @@ export const fetchOffers = () => async dispatch => {
       }
     }
   };
+
+  export const fetchAcceptedOffers = (userId) => async dispatch => {
+    try {
+      const res = await jwtFetch(`/api/users/${userId}/offers/accepted`);
+      const offers = await res.json();
+      dispatch(receiveOffers(offers));
+    } catch (err) {
+      const resBody = await err.json();
+      if (resBody.statusCode === 400) {
+        dispatch(receiveErrors(resBody.errors));
+      }
+    }
+  };
   
 
   export const fetchUserOffers = id => async dispatch => {
