@@ -1,5 +1,6 @@
 var app = require("../app");
 var debug = require("debug")("JMAX:server");
+const Message = require("../models/Message");
 var http = require("http");
 const mongoose = require("mongoose");
 const { mongoURI: db } = require("../config/keys.js");
@@ -31,8 +32,20 @@ io.on("connection", (socket) => {
 
 
   //this is just sending a message but its private to the room, just like above but without the room. Roomm means that the user is in the room and can send messages to that specific chat/group
-  socket.on("private chat message", (roomId, msg) => {
-    io.to(roomId).emit("chat message", msg);
+  socket.on("private message", (msg) => {
+    const message = new Message({
+      sender: msg.sender,
+      receiver: msg.receiver,
+      content: msg.content,
+    });
+
+    message.save()
+      .then(() => {
+        socket.to(msg.receiver).emit("private message", msg);
+      })
+      .catch(err => {
+        console.error("Error saving message:", err);
+      });
   });
 
   socket.on("typing", () => {
@@ -45,7 +58,7 @@ io.on("connection", (socket) => {
 
   socket.on("disconnect", () => {
     console.log("user disconnected");
-    socket.leaveAll(); 
+    socket.leaveAll();
   });
 });
 
