@@ -1,25 +1,11 @@
-#!/usr/bin/env node
-
-/**
- * Module dependencies.
- */
-
 var app = require("../app");
 var debug = require("debug")("JMAX:server");
 var http = require("http");
 const mongoose = require("mongoose");
 const { mongoURI: db } = require("../config/keys.js");
 
-/**
- * Get port from environment and store in Express.
- */
-
 var port = normalizePort(process.env.PORT || "4000");
 app.set("port", port);
-
-/**
- * Create HTTP server.
- */
 
 var server = http.createServer(app);
 const io = require('socket.io')(server, {
@@ -28,28 +14,40 @@ const io = require('socket.io')(server, {
     methods: ["GET", "POST"]
   }
 });
-/**
- * Listen on provided port, on all network interfaces.
- */
 
 // connection to socket.io
 io.on("connection", (socket) => {
-  console.log("a user connected through sockets ");
+  console.log("a user connected through sockets");
 
+  // Join a private room
+  socket.on("join room", (roomId) => {
+    socket.join(roomId);
+  });
+
+  // Public chat message
   socket.on("chat message", (msg) => {
     io.emit("chat message", msg);
   });
+
+  // Private chat message
+  socket.on("private chat message", (roomId, msg) => {
+    io.to(roomId).emit("chat message", msg);
+  });
+
   socket.on("typing", () => {
     socket.broadcast.emit("typing");
   });
+
   socket.on("stop typing", () => {
     socket.broadcast.emit("stop typing");
   });
 
   socket.on("disconnect", () => {
     console.log("user disconnected");
+    socket.leaveAll(); // Leave all rooms the socket has joined
   });
 });
+
 
 mongoose
   .connect(db, { useNewUrlParser: true })
