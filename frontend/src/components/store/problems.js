@@ -14,6 +14,7 @@ const updateProblem = (id, updatedProblem) => ({
   id,
   updatedProblem
 });
+
 const receiveProblems = problems => ({
   type: RECEIVE_PROBLEMS,
   problems
@@ -83,18 +84,18 @@ export const fetchUserProblemsOpen = id => async dispatch => {
   }
 };
 
-export const deleteProblem = (id) => async (dispatch,getState) => {
+export const deleteProblem = (id) => async (dispatch, getState) => {
   await jwtFetch(`/api/problems/${id}`, {
     method: 'DELETE',
   });
-const user=getState().session.user
+
+  const user = getState().session.user
   dispatch({
     type: REMOVE_PROBLEM,
     problemId: id,
   });
 
   dispatch(fetchUserProblems(user._id))
-
 }
 
 export const composeProblem = data => async dispatch => {
@@ -127,6 +128,7 @@ export const fetchUpdateProblem = (problemId, updatedData) => async (dispatch,ge
       dispatch(updateProblem(problemId, updatedProblem));
       dispatch(fetchUserProblems(user._id));
       dispatch(offerActions.fetchUserOffers(user._id))
+      dispatch(fetchUserProblems(user._id));
     }
   } catch (err) {
     // Handle error
@@ -164,8 +166,6 @@ const problemsReducer = (state = { all: {}, user: [], new: undefined }, action) 
       return { ...state, user: [], new: undefined }
     case UPDATE_PROBLEM:
       return { ...state, all: action.updatedProblem, new: undefined };
-      case RECEIVE_USER_PROBLEMS_OPEN:
-        return { ...state, new: action.problems };
     default:
       return state;
   }

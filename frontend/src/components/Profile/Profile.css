@@ -49,6 +49,10 @@
 .helper-btn {
   cursor: pointer;
   transition: background-color 1s;
+  border-radius: 5px;
+  padding-left: 1em;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
 }
 
 .pg-requester-btn-gp,
@@ -64,7 +68,9 @@
 .pg-requester-resolved-status-btn,
 .helper-accepted-filter-btn,
 .helper-pending-filter-btn {
-  padding-left: 1em;
+  padding-left: 2em;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
   margin-top: 1vw;
   border-radius: 5px;
   transition: background-color 1s;
@@ -86,6 +92,10 @@
   width: 100%;
   margin-top: 1vw;
   border-top: 1px dashed rgba(255, 255, 255, 0.8);
+}
+
+.selected-filter-btn {
+  background-color: #468189;
 }
 
 .pg-middle-section {

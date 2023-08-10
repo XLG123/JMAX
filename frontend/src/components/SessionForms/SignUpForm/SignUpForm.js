@@ -57,8 +57,9 @@ function SignupForm() {
   const handleSubmit = e => {
     e.preventDefault();
 
-    if (address.length >= 5 && address >= 0) {
-  
+    let inputErrors = [];
+
+    if (address.length >= 5 && address >= 0 && address ) {
       const user = {
         email,
         username,
@@ -66,11 +67,13 @@ function SignupForm() {
         age: year,
         address,
       };
-  
       dispatch(signup(user)).then(()=>{
         history.push("/requests")
       })
-    } else {
+    } 
+    
+    
+    else {
       // Properly set the error message in the Redux store
       dispatch(clearSessionErrors()); // Clear any previous errors
       dispatch(receiveErrors( 'Zip code is not correct') );
@@ -90,7 +93,7 @@ function SignupForm() {
 
         <h1 className='sign-up-title'> 
           {/* <img src={logo} alt="session-form-logo" className="logo"/>  */}
-          Rigister for a new account on Problem Solver
+          Register for a new account on Problem Solver
         </h1>
 
         <div className='sign'>
@@ -157,8 +160,6 @@ function SignupForm() {
             className='sign-up-btn'
             type="submit"
             value="Register"
-            disabled={!email || !username || !password || 
-              password !== password2}
           />
 
         </div>

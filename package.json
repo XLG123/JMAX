@@ -15,5 +15,8 @@
   },
   "keywords": [],
   "author": "jmax",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "socket.io": "^4.7.2"
+  }
 }
