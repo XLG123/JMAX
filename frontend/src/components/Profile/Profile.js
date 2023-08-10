@@ -25,6 +25,7 @@ const Profile = () => {
   const allProblems = useSelector(state => Object.values(state.problems.all));
   const userProblemIds = 
     useSelector(state => state.problems.userProblems)
+  // console.log(userProblemIds);
 
   useEffect(() => {
     dispatch(sessionActions.fetchAllUsers())
