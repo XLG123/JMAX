@@ -6,3 +6,28 @@
     border-radius: 10px;
     box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.3);
   }
+  .live-private-chat-messages {
+    list-style-type: none;
+    padding: 0;
+    max-height: 300px;
+    overflow-y: auto;
+  }
+  .live-private-chat-input-form {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .live-private-chat-input-form  input {
+    width: 85%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  .live-private-chat-input-form button {
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+  }
