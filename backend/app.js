@@ -5,6 +5,7 @@ const debug = require("debug");
 require("./models/Problem");
 require("./models/User");
 require("./models/Offer");
+require("./models/Message");
 const cors = require("cors");
 const csurf = require("csurf");
 const { isProduction } = require("./config/keys");
@@ -14,6 +15,7 @@ const problemsRouter = require("./routes/api/problems");
 const csrfRouter = require("./routes/api/csrf");
 const testUserRouter = require("./routes/api/test");
 const offersRouter = require("./routes/api/offers");
+const messagesRouter = require("./routes/api/messages");
 
 require("./config/passport");
 const passport = require("passport");
@@ -26,6 +28,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 
+
 if (!isProduction) {
   // Enable CORS only in development because React will be on the React
   // development server (http://localhost:3000). (In production, React files
@@ -34,7 +37,7 @@ if (!isProduction) {
     origin: 'http://localhost:3000',
   };
   app.use(cors(corsOptions));
- 
+
 }
 
 app.use(passport.initialize());
@@ -56,6 +59,7 @@ app.use("/api/problems", problemsRouter);
 app.use("/api/offers", offersRouter);
 app.use("/api/csrf", csrfRouter);
 app.use("/api/test", testUserRouter);
+app.use("/api/messages", messagesRouter);
 
 if (isProduction) {
   const path = require('path');
