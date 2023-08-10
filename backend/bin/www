@@ -11,7 +11,7 @@ app.set("port", port);
 var server = http.createServer(app);
 const io = require("socket.io")(server, {
   cors: {
-    origin: "https://jmax.onrender.com/:4000",
+    origin: "https://jmax.onrender.com",
     methods: ["GET", "POST"],
   },
 });
