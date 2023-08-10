@@ -25,12 +25,16 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-// Security Middleware
+
 if (!isProduction) {
   // Enable CORS only in development because React will be on the React
   // development server (http://localhost:3000). (In production, React files
   // will be served statically on the Express server.)
-  app.use(cors());
+  const corsOptions = {
+    origin: 'http://localhost:3000',
+  };
+  app.use(cors(corsOptions));
+ 
 }
 
 app.use(passport.initialize());
