@@ -37,8 +37,13 @@ function App() {
           <AuthRoute path="/about" component={AboutPage} />
 
           {/* <ProtectedRoute exact path="/problems" component={Problems} /> */}
+          <ProtectedRoute
+            exact
+            path="/chat/private/:userId/:receiverId"
+            component={PrivateChat}
+          />
+
           <ProtectedRoute exact path="/users/:userId" component={Profile} />
-          <ProtectedRoute exact path="/chat/private" component={PrivateChat} />
 
           <ProtectedRoute exact path="/chat" component={LivePrivateChat} />
           {/* <ProtectedRoute exact path="/problems/new" component={ProblemCompose}
