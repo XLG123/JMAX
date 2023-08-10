@@ -1,17 +1,18 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
+import '../Problems/ProblemBox';
+import ProblemBox from "../Problems/ProblemBox";
+import "./SearchBar.css";
 
 const SearchResults = () => {
   const location = useLocation();
   const searchResults = location.state.searchResults;
+
   return (
-    <div>
-      <h2 style={{ marginTop: "250px" }}>Search Results</h2>
+    <div className="search-result">
+
       {Object.values(searchResults).map((result) => (
-        <div className="search-result-box" key={result._id}>
-          <div>{result.description}</div>
-          <div>{result.category}</div>
-        </div>
+          <ProblemBox problem={result}/>
       ))}
     </div>
   );
