@@ -87,7 +87,7 @@ const PrivateChat = () => {
 
     socket.on("private message", (msg) => {
       if (
-        (msg.sender === userId && msg.receiver === receiverId) ||
+        
         (msg.sender === receiverId && msg.receiver === userId)
       ) {
         setMessages((prevMessages) => [...prevMessages, msg]);
