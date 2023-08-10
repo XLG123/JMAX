@@ -82,7 +82,7 @@ const PrivateChat = () => {
   const [inputMessage, setInputMessage] = useState("");
 
   useEffect(() => {
-    socket = io("https://jmax.onrender.com/:4000");
+    socket = io("https://jmax.onrender.com");
     socket.emit("register user", userId)
 
     socket.on("private message", (msg) => {
