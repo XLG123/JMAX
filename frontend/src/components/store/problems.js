@@ -59,18 +59,36 @@ export const fetchUserProblems = id => async dispatch => {
   }
 };
 
-export const deleteProblem = (id) => async (dispatch,getState) => {
+export const updateProblem = (problem) => async (dispatch) => {
+  debugger
+  try {
+    const res = await jwtFetch(`/api/problems/${problem.id}`, {
+      method: 'PATCH',
+      body: JSON.stringify(problem)
+    });
+    const problem = await res.json();
+    dispatch(receiveNewProblem(problem));
+    dispatch(fetchProblems());
+  } catch (err) {
+    const resBody = await err.json();
+    if (resBody.statusCode === 400) {
+      return dispatch(receiveErrors(resBody.errors));
+    }
+  }
+}
+
+export const deleteProblem = (id) => async (dispatch, getState) => {
   await jwtFetch(`/api/problems/${id}`, {
     method: 'DELETE',
   });
-const user=getState().session.user
+
+  const user = getState().session.user
   dispatch({
     type: REMOVE_PROBLEM,
     problemId: id,
   });
 
   dispatch(fetchUserProblems(user._id))
-
 }
 
 export const composeProblem = data => async dispatch => {

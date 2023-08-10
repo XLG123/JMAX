@@ -59,7 +59,8 @@ const Profile = () => {
             </div>
 
             <div className='pg-requester-btn-gp'>
-              <div className='requester-btn'>Requester</div>
+              <div className='requester-btn'
+                onClick={(e) => {allRequestsOffers(e)}}>Requester</div>
 
               <div className='linebreak'></div>
               <div className='pg-requester-open-status-btn'>

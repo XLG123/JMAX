@@ -1,5 +1,5 @@
-import { useState,useEffect } from "react";
-import { NavLink, useHistory } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { NavLink, useHistory, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout, login } from "../store/session";
 import Modal from "../context/model.js"
@@ -15,74 +15,66 @@ import Offers from "../offers/offers";
 
 import * as offersActions from "../store/offers"
 
-import { useLocation } from "react-router-dom";
-
 
 function NavBar() {
   const loggedIn = useSelector((state) => !!state.session.user);
   const user = useSelector((state) => state.session.user);
-  const [notify,setNotify]=useState("")
+  const [notify, setNotify] = useState("")
   const dispatch = useDispatch();
   const history = useHistory();
-  const [showReq,setShowReqForm]=useState(false)
+  const [showReq, setShowReqForm] = useState(false)
   const [category, setCategory] = useState("Home Repair");
   const [description, setDescription] = useState('');
-  const [zipCode,setZipCode]=useState('')
-  const [showOffers,setShowOffer]=useState(false)
+  const [zipCode, setZipCode] = useState('')
+  const [showOffers, setShowOffer] = useState(false)
   const currentUrl = useLocation().pathname;
-  
+
   const logoutUser = (e) => {
     e.preventDefault();
     dispatch(logout());
   };
 
-    const demoLogin = () => {
-      const demoInformation = {
-        email: "DEMO-USER@email.com",
-        password: "password",
-      };
-      dispatch(login(demoInformation))
-        .then(() => {
-          history.push("/requests");
-        })
-        .catch((error) => {
-          console.error("Error logging in as demo user:", error);
-        });
+  const demoLogin = () => {
+    const demoInformation = {
+      email: "DEMO-USER@email.com",
+      password: "password",
+    };
+    dispatch(login(demoInformation))
+      .then(() => {
+        history.push("/requests");
+      })
+      .catch((error) => {
+        console.error("Error logging in as demo user:", error);
+      });
   };
 
   const goToAbout = () => {
     history.push("/about");
   };
-  const reqOffers=useSelector(state=>state.offers.user)
- 
-  
-useEffect(() => {
-  if (loggedIn) {
-    dispatch(offersActions.fetchUserOffers(user._id)).then(() => {
-      if (Object.keys(reqOffers).length === 0) {
-        setNotify(false);
-      } else {
-        setNotify(true);
-      }
-    });
-  }
-}, [ user,dispatch]);
-// [ user,reqOffers]
+  const reqOffers = useSelector(state => state.offers.user)
+
+  useEffect(() => {
+    if (loggedIn) {
+      dispatch(offersActions.fetchUserOffers(user._id)).then(() => {
+        if (Object.keys(reqOffers).length === 0) {
+          setNotify(false);
+        } else {
+          setNotify(true);
+        }
+      });
+    }
+  }, [user, dispatch]);
+  // [ user,reqOffers]
 
   const getLinks = () => {
     if (loggedIn) {
       return (
         <>
-          <NavLink to={currentUrl === "/" || currentUrl === "/about" 
-          || currentUrl === "/login" || currentUrl === "/signup"? "/" :
-           "/requests"}>
-            <div className="logo-container">
-              <img src={webAppLogo} alt="app-logo" className="main-pg-logo2" />
-            </div>
-          </NavLink>
 
           <div className="links-nav">
-            <NavLink to="/requests" className="nav-btn-gp2 all-requests-btn">
+            <NavLink to="/requests" className={currentUrl === "/requests" ?
+              "nav-btn-gp2 all-requests-btn selected-nav-btn" :
+              "nav-btn-gp2 all-requests-btn"}>
               All Requests
               <span></span>
               <span></span>
@@ -90,33 +82,29 @@ useEffect(() => {
               <span></span>
               {/* the empty spans are for css styling effects */}
             </NavLink>
-            {notify=== false && 
-  <IconButton className="notify-btn" onClick={handleShowOffer}>
-    <NotificationsActiveIcon
-      className="notify-icon"
-      sx={{ color: "#F4E9CD", fontSize: "2.5vw", position: "absolute", bottom: "0.2vw" }}
-    />
-  </IconButton>
-}
 
-{notify ===true && 
-  <IconButton className={`notify-btn ${notify ? "shaking" : ""}`} onClick={handleShowOffer}>
-  <NotificationsActiveIcon
-    className="notify-icon"
-    sx={{ color: "red", fontSize: "2.5vw", position: "absolute", bottom: "0.2vw" }}
-  />
-</IconButton>
-}
+            {notify === false &&
+              <IconButton className="notify-btn" onClick={handleShowOffer}>
+                <NotificationsActiveIcon
+                  className="notify-icon"
+                  sx={{ color: "#F4E9CD", fontSize: "2.5vw", position: "absolute", bottom: "0.2vw" }}
+                />
+              </IconButton>
+            }
 
+            {notify === true &&
+              <IconButton className={`notify-btn ${notify ? "shaking" : ""}`} onClick={handleShowOffer}>
+                <NotificationsActiveIcon
+                  className="notify-icon"
+                  sx={{ color: "red", fontSize: "2.5vw", position: "absolute", bottom: "0.2vw" }}
+                />
+              </IconButton>
+            }
 
-
-
-
-
-
-
-
-            <NavLink to={`/users/${user?._id}`} className="nav-btn-gp2 user-profile-btn">
+            <NavLink to={`/users/${user?._id}`} className={currentUrl ===
+              `/users/${user?._id}` ?
+              "nav-btn-gp2 user-profile-btn selected-nav-btn" :
+              "nav-btn-gp2 user-profile-btn"}>
               Profile
               <span></span>
               <span></span>
@@ -125,7 +113,7 @@ useEffect(() => {
               {/* the empty spans are for css styling effects */}
             </NavLink>
 
-            <div onClick={handleShowForm} 
+            <div onClick={handleShowForm}
               className="nav-btn-gp2 new-request-btn">
               Write a Request
               <span></span>
@@ -136,26 +124,22 @@ useEffect(() => {
             </div>
 
             {/* TODO: CATEGORY FILTER */}
-            
+
             <IconButton onClick={logoutUser} className="logout-btn" >
               <LogoutIcon className="logout-icon"
-                sx={{ color: '#F4E9CD', fontSize: "2.5vw", 
-                position: "absolute", bottom: "0.2vw", borderRadius: '5px' }}
+                sx={{
+                  color: '#F4E9CD', fontSize: "2.5vw",
+                  position: "absolute", bottom: "0.2vw", borderRadius: '5px'
+                }}
               />
             </IconButton>
           </div>
-          <SearchBar/>
+          <SearchBar />
         </>
       );
     } else {
       return (
         <>
-
-          <NavLink to="/">
-            <div className="logo-container">
-              <img src={webAppLogo} alt="app-logo" className="main-pg-logo" />
-            </div>
-          </NavLink>
 
           <div className="links-auth">
             <div className="nav-btn" id="demo-login" onClick={demoLogin}>
@@ -167,7 +151,8 @@ useEffect(() => {
               {/* the empty spans are for css styling effects */}
             </div>
 
-            <NavLink to="/signup" className="nav-btn">
+            <NavLink to="/signup" className={currentUrl === "/signup" ?
+              "nav-btn selected-nav-btn" : "nav-btn"}>
               Sign Up
               <span></span>
               <span></span>
@@ -176,7 +161,8 @@ useEffect(() => {
               {/* the empty spans are for css styling effects */}
             </NavLink>
 
-            <NavLink to="/login" className="nav-btn">
+            <NavLink to="/login" className={currentUrl === "/login" ?
+              "nav-btn selected-nav-btn" : "nav-btn"}>
               Log In
               <span></span>
               <span></span>
@@ -185,7 +171,9 @@ useEffect(() => {
               {/* the empty spans are for css styling effects */}
             </NavLink>
 
-            <div className="nav-btn" id="about-btn" onClick={goToAbout}>
+            <div className={currentUrl === "/about" ?
+              "nav-btn selected-nav-btn" : "nav-btn"} id="about-btn"
+              onClick={goToAbout}>
               About
               <span></span>
               <span></span>
@@ -199,12 +187,13 @@ useEffect(() => {
       );
     }
   };
-  function handleShowForm(e){
+
+  function handleShowForm(e) {
     e.preventDefault()
     setShowReqForm(true)
   }
 
-  function handleClose(e){
+  function handleClose(e) {
     e.preventDefault();
     setShowReqForm(false)
     setShowOffer(false)
@@ -212,10 +201,10 @@ useEffect(() => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(problemActions.composeProblem({ category,description ,address:zipCode }));
+    dispatch(problemActions.composeProblem({ category, description, address: zipCode }));
     setShowReqForm(false)
   }
-  function handleShowOffer(e){
+  function handleShowOffer(e) {
     e.preventDefault()
     // debugger
     setShowOffer(true)
@@ -225,69 +214,76 @@ useEffect(() => {
     <>
       <div className="nav-bar-container">
 
+        <NavLink to={currentUrl === "/" || currentUrl === "/about"
+          || currentUrl === "/login" || currentUrl === "/signup" ? "/" :
+          "/requests"}>
+          <div className="logo-container">
+            <img src={webAppLogo} alt="app-logo" className="main-pg-logo2" />
+          </div>
+        </NavLink>
+
         {getLinks()}
       </div>
       {showReq && <Modal onClose={handleClose}>
 
-<form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit}>
 
-  <label htmlFor="category" className="title space" >Select a Category:</label>
+          <label htmlFor="category" className="title space" >Select a Category:</label>
 
-  <br/>
+          <br />
 
-  <select id="category" className="select signup-input selecr-font" name="category" onChange={(e)=> setCategory(e.target.value)}>
-    <option  value="Home Repair">Home Repair</option>
-    <option value="Delivery">Delivery</option>
-    <option value="Driver">Driver</option>
-  </select>
+          <select id="category" className="select signup-input selecr-font" name="category" onChange={(e) => setCategory(e.target.value)}>
+            <option value="Home Repair">Home Repair</option>
+            <option value="Delivery">Delivery</option>
+            <option value="Driver">Driver</option>
+          </select>
 
-  <input type="number"
-    onChange={(e)=> setZipCode(e.target.value)}
-    className='signup-input'
-    placeholder="Zip Code"
-    required
-  />
+          <input type="number"
+            onChange={(e) => setZipCode(e.target.value)}
+            className='signup-input'
+            placeholder="Zip Code"
+            required
+          />
 
-  {/* <br></br>
+          {/* <br></br>
 <br></br>  */}
-<br />
-  <div className="errors"></div>
+          <br />
+          <div className="errors"></div>
 
-  <textarea
-    className='signup-input'
-    placeholder="Description"
-    onChange={(e)=>setDescription(e.target.value)}
-    required
-  />
-<br></br>
-<br></br>
+          <textarea
+            className='signup-input'
+            placeholder="Description"
+            onChange={(e) => setDescription(e.target.value)}
+            required
+          />
+          <br></br>
+          <br></br>
 
+          <label className="img-input"> Add image
+            <input type="file"
+              id="file"
+              // onChange={(e)=> setZipCode(e.target.value)}
+              className='signup-input'
+              placeholder="Add an image"
+            />
+          </label>
+          <br></br>
+          <br></br>
+          <br></br>
 
-  <label className="img-input"> Add image
-  <input type="file"
-  id="file"
-    // onChange={(e)=> setZipCode(e.target.value)}
-    className='signup-input'
-    placeholder="Add an image"
-    />
-  </label>
-  <br></br>
-<br></br>
-<br></br>
+          <button className="sign-up-btn ">Add Request</button>
+        </form>
+      </Modal>}
 
-  <button className="sign-up-btn ">Add Request</button>
-</form>
-</Modal>}
+      {showOffers && <Modal onClose={handleClose}>
 
-{showOffers&& <Modal onClose={handleClose}>
-  
-  <div  className="offerbox">
-  <Offers/>
+        <div className="offerbox">
+          <Offers />
 
-  </div>
+        </div>
 
-  </Modal>}
-  </>
+      </Modal>}
+    </>
 
 
   );

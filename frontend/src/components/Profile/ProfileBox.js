@@ -1,15 +1,20 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Modal from "../context/model";
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import * as offerActions from "../store/offers";
+import "../NavBar/NavBar.css";
 import "./Profile.css";
-import { deleteProblem } from '../store/problems';
+import { deleteProblem, updateProblem } from '../store/problems';
 
 // All classnames are declared with the prefix pg which stands for profile page, instead of pp.
 
-const ProfileBox = ({ problem: { category, author, description, status, _id: id } }) => {
+const ProfileBox = ({ problem: { category, author, description,
+  address, status, _id: id } }) => {
   const CurrentUser = useSelector(state => state.session.user);
+  const [editCategory, setEditCategory] = useState(category);
+  const [editDescription, setEditDescription] = useState(description);
+  const [editZipCode, setEditZipCode] = useState(address);
   // const [show, setShow] = useState(false);
   // const [price, setPrice] = useState();
   // const [offer, setOffer] = useState("");
@@ -50,39 +55,18 @@ const ProfileBox = ({ problem: { category, author, description, status, _id: id 
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // dispatch();
+    dispatch(updateProblem({id: id, category: editCategory, 
+      address: editZipCode, description: editDescription}));
+    setShowRequestForm(false);
   }
 
   const editCurrentRequest = (e) => {
     e.preventDefault()
-    // debugger
-    // handleShowReqForm()
     setShowRequestForm(true)
-    // console.log(showRequestForm);
   }
-  //   return (showRequestForm && (<Modal onClose={handleClose}>
-  //     <form onSubmit={handleSubmit}>
-  //       <label>
-  //         Select a Category:
-
-  //         <select id="category" className="select signup-input selecr-font" 
-  //         name="category">
-  //           <option value="Home Repair">Home Repair</option>
-  //           <option value="Delivery">Delivery</option>
-  //           <option value="Driver">Driver</option>
-  //         </select>
-
-  //       </label>
-  //     </form>
-  //   </Modal>)
-  //   );
-  // }
 
   const deleteCurrentRequest = (id) => {
     dispatch(deleteProblem(id));
-    // .then(()=>{
-    //   history.push(`/users/${userId}`);
-    // });
   }
 
   const editAndDeleteButtonGroup = () => {
@@ -120,25 +104,53 @@ const ProfileBox = ({ problem: { category, author, description, status, _id: id 
         </div>
       </div>
       {showRequestForm && <Modal onClose={handleClose}>
-  //     <form onSubmit={handleSubmit}>
-  //       <label>
-  //         Select a Category:
+        <form onSubmit={handleSubmit}>
+          <label>
+            Select a Category:
 
-  //         <select id="category" className="select signup-input selecr-font"
-          name="category">
-            <option value="Home Repair">Home Repair</option>
-            <option value="Delivery">Delivery</option>
-            <option value="Driver">Driver</option>
-          </select>
+            <select id="category" className="select signup-input selecr-font"
+              name="category" value={editCategory}
+              onChange={(e) => setEditCategory(e.target.value)}>
+                <option value="Home Repair">Home Repair</option>
+                <option value="Delivery">Delivery</option>
+                <option value="Driver">Driver</option>
+            </select>
 
-        </label>
-      </form>
-    </Modal>}
+          </label>
+
+          <input type="number"
+            className='signup-input'
+            value={editZipCode}
+            placeholder="1"
+            required
+            onChange={(e) => setEditZipCode(e.target.value)}
+          />
+
+          <textarea
+            className='signup-input'
+            value={editDescription}
+            placeholder="Description"
+            required
+            onChange={(e) => setEditDescription(e.target.value)}
+          />
+
+          <label className="img-input"> Add image
+            <input type="file"
+              id="file"
+              className='signup-input'
+              placeholder="Add an image"
+            />
+          </label>
+
+          <button className="sign-up-btn ">Edit Request</button>
+
+        </form>
+      </Modal>}
 
 
 
 
-   
+
     </>
   );
 }
