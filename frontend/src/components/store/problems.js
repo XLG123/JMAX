@@ -8,7 +8,7 @@ export const REMOVE_PROBLEM = "problems/REMOVE_PROBLEM";
 const RECEIVE_PROBLEM_ERRORS = "problems/RECEIVE_PROBLEM_ERRORS";
 const CLEAR_PROBLEM_ERRORS = "problems/CLEAR_PROBLEM_ERRORS";
 const UPDATE_PROBLEM= "problems/UPDATE_PROBLEM"
-
+const RECEIVE_USER_PROBLEMS_OPEN="problems/RECEIVE_USER_PROBLEMS_OPEN"
 const updateProblem = (id, updatedProblem) => ({
   type: UPDATE_PROBLEM,
   id,
@@ -21,6 +21,10 @@ const receiveProblems = problems => ({
 
 const receiveUserProblems = problems => ({
   type: RECEIVE_USER_PROBLEMS,
+  problems
+});
+const receiveUserProblemsOpen = problems => ({
+  type: RECEIVE_USER_PROBLEMS_OPEN,
   problems
 });
 
@@ -58,6 +62,19 @@ export const fetchUserProblems = id => async dispatch => {
     const res = await jwtFetch(`/api/users/${id}/problems`);
     const problems = await res.json();
     dispatch(receiveUserProblems(problems));
+  } catch (err) {
+    const resBody = await err.json();
+    if (resBody.statusCode === 400) {
+      return dispatch(receiveErrors(resBody.errors));
+    }
+  }
+};
+export const fetchUserProblemsOpen = id => async dispatch => {
+  debugger
+  try {
+    const res = await jwtFetch(`/api/users/${id}/problems/open`);
+    const problems = await res.json();
+    dispatch(receiveUserProblemsOpen(problems));
   } catch (err) {
     const resBody = await err.json();
     if (resBody.statusCode === 400) {
@@ -105,13 +122,12 @@ export const fetchUpdateProblem = (problemId, updatedData) => async (dispatch,ge
       body: JSON.stringify(updatedData)
     });
     const user=getState().session.user
-
     if (res.ok) {
       const updatedProblem = await res.json();
       dispatch(updateProblem(problemId, updatedProblem));
+      dispatch(fetchUserProblems(user._id));
       dispatch(offerActions.fetchUserOffers(user._id))
-
-    } 
+    }
   } catch (err) {
     // Handle error
   }
@@ -141,16 +157,19 @@ const problemsReducer = (state = { all: {}, user: [], new: undefined }, action) 
     case RECEIVE_NEW_PROBLEM:
       return { ...state, new: action.problem };
     case REMOVE_PROBLEM:
-      let newState = {...state};
+      let newState = { ...state };
       delete newState[action.problemId];
-      return newState;
+      return { ...newState };
     case RECEIVE_USER_LOGOUT:
       return { ...state, user: [], new: undefined }
-      case UPDATE_PROBLEM:
-        return { ...state};
+    case UPDATE_PROBLEM:
+      return { ...state, all: action.updatedProblem, new: undefined };
+      case RECEIVE_USER_PROBLEMS_OPEN:
+        return { ...state, new: action.problems };
     default:
       return state;
   }
+
 };
 
 export default problemsReducer;

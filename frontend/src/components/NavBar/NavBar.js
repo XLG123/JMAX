@@ -63,6 +63,8 @@ function NavBar() {
   
 useEffect(() => {
   if (loggedIn) {
+    dispatch(problemActions.fetchUserProblemsOpen(user._id))
+
     dispatch(offersActions.fetchUserOffers(user._id)).then(() => {
       if (Object.keys(reqOffers).length === 0) {
         setNotify(false);

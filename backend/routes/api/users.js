@@ -73,9 +73,12 @@ router.get("/:userId/problems/open", async (req, res) => {
     }
 
     const problems = await user.getProblemsObject();
-    const openProblems = Object.values(problems).filter(
-      (problem) => problem.status === "open"
-    );
+    const openProblems = Object.values(problems).reduce((result, problem) => {
+      if (problem.status === "open") {
+        result[problem._id] = problem;
+      }
+      return result;
+    }, {});
 
     res.json(openProblems);
   } catch (err) {
