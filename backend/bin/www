@@ -33,6 +33,11 @@ io.on("connection", (socket) => {
 
   //this is just sending a message but its private to the room, just like above but without the room. Roomm means that the user is in the room and can send messages to that specific chat/group
   socket.on("private message", (msg) => {
+    if (!msg.content || !msg.sender || !msg.receiver) {
+      console.error("Missing required fields in message:", msg);
+      return;
+    }
+
     const message = new Message({
       sender: msg.sender,
       receiver: msg.receiver,

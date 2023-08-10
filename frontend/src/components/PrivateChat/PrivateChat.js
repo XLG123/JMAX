@@ -99,7 +99,12 @@ const PrivateChat = () => {
   }, [userId, receiverId]);
 
   const sendMessage = (e) => {
+
     e.preventDefault();
+    if (inputMessage.trim() === "") {
+        return;
+      }
+
     const message = {
       sender: userId,
       receiver: receiverId,
@@ -107,10 +112,9 @@ const PrivateChat = () => {
     };
 
     socket.emit("private message", message);
-
-    setMessages((prevMessages) => [...prevMessages, message]);
-    setInputMessage("");
-  };
+  setMessages((prevMessages) => [...prevMessages, message]);
+  setInputMessage("");
+};
 
   return (
     <div className="live-private-chat-container">
