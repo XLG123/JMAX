@@ -209,6 +209,11 @@
   }
 }
 
+.selected-nav-btn {
+  color: #031926 !important;
+  background-color: #9DBEBB;
+}
+
 .space{
   padding-bottom: 3rem;
 }

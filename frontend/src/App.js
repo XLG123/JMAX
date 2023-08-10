@@ -1,20 +1,18 @@
 import { useEffect, useState, Route } from "react";
 import { useDispatch } from "react-redux";
 import { Switch } from "react-router-dom";
-
 import { AuthRoute, ProtectedRoute } from "./components/Routes/Routes";
 import NavBar from "./components/NavBar/NavBar";
-
 import MainPage from "./components/MainPage/MainPage";
 import LoginForm from "./components/SessionForms/LoginForm/LoginForm";
 import SignupForm from "./components/SessionForms/SignUpForm/SignUpForm";
 import Problems from "./components/Problems/Problems";
 import { getCurrentUser } from "./components/store/session";
 import AboutPage from "./components/About/AboutPage";
-
 // import Problems from './components/Problem/Problems';
 import Profile from './components/Profile/Profile';
 // import ProblemCompose from './components/Problems/ProblemCompose';
+import SearchResults from "./components/SearchBar/searchResults";
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -35,6 +33,7 @@ function App() {
 
         {/* <ProtectedRoute exact path="/problems" component={Problems} /> */}
         <ProtectedRoute exact path="/users/:userId" component={Profile} />
+        <ProtectedRoute path="/search-results" component={SearchResults} />
         {/* <ProtectedRoute exact path="/problems/new" component={ProblemCompose} 
         /> */}
       </Switch>
