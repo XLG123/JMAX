@@ -48,11 +48,12 @@ io.on("connection", (socket) => {
   //   socket.broadcast.emit("stop typing", user); // Send a stop typing event to all other connected clients
   // });
   socket.on("typing", (username) => {
-    socket.broadcast.emit("typing", { username });
+    socket.broadcast.emit("typing", username);
   });
   socket.on("stop typing", (username) => {
-    socket.broadcast.emit("stop typing", { username });
+    socket.broadcast.emit("stop typing", username);
   });
+
 
   socket.on("disconnect", () => {
     console.log("user disconnected");

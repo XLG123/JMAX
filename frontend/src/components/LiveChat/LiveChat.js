@@ -1,18 +1,28 @@
 import React, { useState, useEffect } from "react";
 import io from "socket.io-client";
 import "./LiveChat.css";
+import { useDispatch, useSelector} from "react-redux";
+import { useParams } from 'react-router-dom';
 
 let socket;
 
 const LivePrivateChat = () => {
   const userId = useParams().userId;
-  const dispatch = useDispatch();
-  let users = useSelector((state) => state.session.users);
+
+
   const [message, setMessage] = useState("");
   const [chat, setChat] = useState([]);
   const [typing, setTyping] = useState(false);
   const [typingTimeout, setTypingTimeout] = useState(null);
-  const user = users[userId]
+
+  const dispatch = useDispatch();
+  let users = useSelector(state => state.session.users);
+
+ if (!users){
+   users={}
+ }
+
+ const user = users[userId]
 
   const handleKeyUp = () => {
     if (typingTimeout) clearTimeout(typingTimeout);
@@ -34,18 +44,13 @@ const LivePrivateChat = () => {
     // socket.on("typing", (user) => {
     //   setTyping(user + " is typing...");
     // });
-    socket.on("typing", () => {
-      console.log("Typing event received");
-      //   debugger
-      setTyping("A user is typing...");
-    });
+    socket.on("typing", (username) => {
+        setTyping(username + " is typing...");
+      });
 
-    socket.on("stop typing", () => {
-      console.log("Stop typing event received");
-      //    debugger
-      setTyping(""); // Clear the message
-    });
-
+      socket.on("stop typing", () => {
+        setTyping(""); // Clear the message
+      });
     // socket.on("stop typing", () => {
     //   setTyping(false);
     // });
@@ -54,12 +59,17 @@ const LivePrivateChat = () => {
   }, [chat]);
 
   const handleInputChange = (e) => {
-    // debugger
     setMessage(e.target.value);
+    if (typingTimeout) clearTimeout(typingTimeout);
     if (e.target.value.trim() === "") {
       socket.emit("stop typing");
     } else {
-      socket.emit("typing");
+      setTypingTimeout(
+        setTimeout(() => {
+          socket.emit("stop typing");
+        }, 500)
+      );
+      socket.emit("typing", user.username);
     }
   };
 
