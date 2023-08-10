@@ -28,9 +28,11 @@ debugger
         <div key={reqId}>
             {/* {requests}[reqId].status== "open" &&  */}
             <ProblemBox problem={requests[reqId]} />
+            
             {Object.values(reqOffers[reqId])?.map(offer => (
+              // {console.log(requests[reqId])}
               // offer.status === "pending"&&
-              <OfferBox key={offer._id} offer={offer}  problemId={reqId}/>
+              <OfferBox key={offer._id} offer={offer} />
   
              
             ))}

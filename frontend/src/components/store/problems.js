@@ -100,7 +100,7 @@ export const composeProblem = data => async dispatch => {
 
 export const fetchUpdateProblem = (problemId, updatedData) => async (dispatch,getState) => {
   try {
-    const res = await jwtFetch(`/api/offers/${problemId}`, {
+    const res = await jwtFetch(`/api/problems/${problemId}`, {
       method: 'PATCH',
       body: JSON.stringify(updatedData)
     });
