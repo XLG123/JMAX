@@ -22,4 +22,21 @@ const LivePrivateChat = () => {
     socket.emit("chat message", message);
     setMessage("");
   };
+  return (
+    <div>
+      <ul>
+        {chat.map((msg, index) => <li key={index}>{msg}</li>)}
+      </ul>
+      <form onSubmit={sendMessage}>
+        <input
+          value={message}
+          onChange={e => setMessage(e.target.value)}
+          placeholder="Enter a message"
+        />
+        <button type="submit">Send</button>
+      </form>
+    </div>
+  );
 };
+
+export default LivePrivateChat;
