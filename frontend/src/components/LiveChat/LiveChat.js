@@ -21,7 +21,7 @@ const LivePrivateChat = () => {
   };
 
   useEffect(() => {
-    socket = io("http://localhost:4000");
+    socket = io("https://jmax.onrender.com/:4000");
 
     socket.on("chat message", (msg) => {
       setChat([...chat, msg]);
