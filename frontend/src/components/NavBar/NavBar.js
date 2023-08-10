@@ -13,9 +13,14 @@ import "./NavBar.css";
 import OfferModal from "../offerModal/index"
 import Offers from "../offers/offers";
 
+import { useLocation } from "react-router-dom";
+
+
+
 import * as offersActions from "../store/offers"
 
-import { useLocation } from "react-router-dom";
+
+
 
 
 function NavBar() {

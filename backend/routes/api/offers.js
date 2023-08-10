@@ -91,6 +91,13 @@ router.delete("/:id", requireUser, async (req, res) => {
       return res.status(404).json({ message: "Offer not found" });
     }
 
+    // Check if the user is the author of the problem
+    // if (!offer.helper.equals(req.user._id)) {
+    //   return res
+    //     .status(403)
+    //     .json({ message: "You are not authorized to delete this offer" });
+    // }
+
 
     // Check if the user is the author of the problem
     // if (!offer.helper.equals(req.user._id)) {
