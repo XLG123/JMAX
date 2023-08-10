@@ -1,4 +1,5 @@
 import jwtFetch from './jwt';
+import * as offerActions from "./offers"
 import { RECEIVE_USER_LOGOUT } from './session';
 const RECEIVE_PROBLEMS = "problems/RECEIVE_PROBLEMS";
 const RECEIVE_USER_PROBLEMS = "problems/RECEIVE_USER_PROBLEMS";
@@ -6,7 +7,13 @@ const RECEIVE_NEW_PROBLEM = "problems/RECEIVE_NEW_PROBLEM";
 export const REMOVE_PROBLEM = "problems/REMOVE_PROBLEM"; 
 const RECEIVE_PROBLEM_ERRORS = "problems/RECEIVE_PROBLEM_ERRORS";
 const CLEAR_PROBLEM_ERRORS = "problems/CLEAR_PROBLEM_ERRORS";
+const UPDATE_PROBLEM= "problems/UPDATE_PROBLEM"
 
+const updateProblem = (id, updatedProblem) => ({
+  type: UPDATE_PROBLEM,
+  id,
+  updatedProblem
+});
 const receiveProblems = problems => ({
   type: RECEIVE_PROBLEMS,
   problems
@@ -90,6 +97,27 @@ export const composeProblem = data => async dispatch => {
   }
 };
 
+
+export const fetchUpdateProblem = (problemId, updatedData) => async (dispatch,getState) => {
+  try {
+    const res = await jwtFetch(`/api/offers/${problemId}`, {
+      method: 'PATCH',
+      body: JSON.stringify(updatedData)
+    });
+    const user=getState().session.user
+
+    if (res.ok) {
+      const updatedProblem = await res.json();
+      dispatch(updateProblem(problemId, updatedProblem));
+      dispatch(offerActions.fetchUserOffers(user._id))
+
+    } 
+  } catch (err) {
+    // Handle error
+  }
+};
+
+
 const nullErrors = null;
 
 export const problemErrorsReducer = (state = nullErrors, action) => {
@@ -118,6 +146,8 @@ const problemsReducer = (state = { all: {}, user: [], new: undefined }, action) 
       return newState;
     case RECEIVE_USER_LOGOUT:
       return { ...state, user: [], new: undefined }
+      case UPDATE_PROBLEM:
+        return { ...state};
     default:
       return state;
   }

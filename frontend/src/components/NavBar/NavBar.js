@@ -20,10 +20,6 @@ import { useLocation } from "react-router-dom";
 import * as offersActions from "../store/offers"
 
 
-import { useLocation } from "react-router-dom";
-
-
-import { useLocation } from "react-router-dom";
 
 
 

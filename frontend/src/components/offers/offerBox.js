@@ -1,4 +1,5 @@
 // import "./ProblemBox.css"
+import * as problemActions from "../store/problems"
 import * as sessionActions from "../store/session"
 import * as offerActions from "../store/offers"
 import { useState } from 'react';
@@ -10,7 +11,7 @@ import { useHistory } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import "./offer.css"
-const OfferBox = ({ offer: {description ,price,status ,helper ,_id} }) => {
+const OfferBox = ({ offer: {description ,price,status ,helper ,_id} },{problemId}) => {
   const [show,setShow]=useState(false)
   const history=useHistory()
   // const [offer,setOffer]=useState("")
@@ -36,6 +37,7 @@ dispatch(offerActions.fetchDeleteOffer(_id))
 function handelTakingOffer(e){
 e.preventDefault()
 dispatch(offerActions.fetchUpdateOffer(_id, {status: "Accepted"}))
+dispatch(problemActions.fetchUpdateProblem(problemId,{status: "in progress"}))
 }
 
 
