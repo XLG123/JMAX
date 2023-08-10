@@ -8,28 +8,29 @@ var port = normalizePort(process.env.PORT || "4000");
 app.set("port", port);
 
 var server = http.createServer(app);
-const io = require('socket.io')(server, {
+const io = require("socket.io")(server, {
   cors: {
     origin: "http://localhost:3000",
-    methods: ["GET", "POST"]
-  }
+    methods: ["GET", "POST"],
+  },
 });
 
 // connection to socket.io
 io.on("connection", (socket) => {
   console.log("a user connected through sockets");
 
-  // Join a private room
+  // This is creating a connection to "room" so eventually you're only talking to someone separated from public
   socket.on("join room", (roomId) => {
     socket.join(roomId);
   });
 
-  // Public chat message
+  // This is like a main page public chat, all users can message to the chat, the front end needs to css and show the current user typing"
   socket.on("chat message", (msg) => {
     io.emit("chat message", msg);
   });
 
-  // Private chat message
+
+  //this is just sending a message but its private to the room, just like above but without the room. Roomm means that the user is in the room and can send messages to that specific chat/group
   socket.on("private chat message", (roomId, msg) => {
     io.to(roomId).emit("chat message", msg);
   });
@@ -44,10 +45,9 @@ io.on("connection", (socket) => {
 
   socket.on("disconnect", () => {
     console.log("user disconnected");
-    socket.leaveAll(); // Leave all rooms the socket has joined
+    socket.leaveAll(); 
   });
 });
-
 
 mongoose
   .connect(db, { useNewUrlParser: true })
