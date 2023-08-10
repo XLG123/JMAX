@@ -46,6 +46,7 @@ router.get("/", async (req, res) => {
 //   }
 // });
 
+//All the user's problems
 router.get("/:userId/problems", async (req, res) => {
   try {
     const userId = req.params.userId;
@@ -61,6 +62,49 @@ router.get("/:userId/problems", async (req, res) => {
     res.status(500).json({ error: "An error occurred" });
   }
 });
+
+//All the user's open problems
+router.get("/:userId/problems/open", async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    const problems = await user.getProblemsObject();
+    const openProblems = Object.values(problems).filter(
+      (problem) => problem.status === "open"
+    );
+
+    res.json(openProblems);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "An error occurred" });
+  }
+});
+
+//All the user's closed problems
+router.get("/:userId/problems/closed", async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    const problems = await user.getProblemsObject();
+    const closedProblems = Object.values(problems).filter(
+      (problem) => problem.status === "closed"
+    );
+
+    res.json(closedProblems);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "An error occurred" });
+  }
+});
+
 router.get("/:userId/problems/offers", async (req, res) => {
   try {
     const userId = req.params.userId;
@@ -157,4 +201,29 @@ router.get("/current", restoreUser, async (req, res) => {
   });
 });
 
+router.get("/:userId/offers/accepted", async (req, res) => {
+  const userId = req.params.userId;
+  const user = await User.findById(userId);
+  if (!user) {
+    return res.status(404).json({ error: "User not found" });
+  } 
+  const offers = await user.getOffers();
+  const acceptedOffers = Object.values(offers).filter(
+    (offer) => offer.status === "accepted"
+  );
+  res.json(acceptedOffers);}
+)
+
+router.get("/:userId/offers/pending", async (req, res) => {
+  const userId = req.params.userId;
+  const user = await User.findById(userId);
+  if (!user) {
+    return res.status(404).json({ error: "User not found" });
+  } 
+  const offers = await user.getOffers();
+  const pendingOffers = Object.values(offers).filter(
+    (offer) => offer.status === "pending"
+  );
+  res.json(pendingOffers);}
+)
 module.exports = router;

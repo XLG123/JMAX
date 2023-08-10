@@ -1,0 +1,38 @@
+.offer-container{
+/* background-color: aliceblue; */
+width: 100%;
+/* height: 17rem; */
+/* border-radius: 50%; */
+box-shadow: 0px 0px 50px #F4E9CD;
+margin: 1rem;
+/* margin-bottom: 2rem; */
+/* margin-right: -3rem; */
+
+
+}
+.req-offer-container{
+    background-color: #9DBEBB;
+    /* margin-top: 3rem; */
+    padding-top: 3rem;
+    /* color:#031926; */
+    
+  overflow:auto;
+
+}
+.bigger{
+    /* padding: .5rem; */
+    font-size: xx-large;
+box-shadow: 0px 0px 50px #F4E9CD;
+
+}
+.green{
+    color: green;
+}
+.pad{
+    margin: 1rem;
+    /* background-color:#9DBEBB ; */
+}
+.close{
+    /* color:red; */
+    font-size: x-large;
+}

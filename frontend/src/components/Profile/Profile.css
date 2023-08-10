@@ -25,11 +25,6 @@
   padding: 1vw;
 }
 
-.pg-left-side-bar,
-.pg-middle-section {
-  /* margin-right: 2vw; */
-}
-
 .pg-left-side-bar {
   border-right: 1px solid #fff;
   font-size: 1.3vw;
@@ -54,6 +49,10 @@
 .helper-btn {
   cursor: pointer;
   transition: background-color 1s;
+  border-radius: 5px;
+  padding-left: 1em;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
 }
 
 .pg-requester-btn-gp,
@@ -69,7 +68,9 @@
 .pg-requester-resolved-status-btn,
 .helper-accepted-filter-btn,
 .helper-pending-filter-btn {
-  padding-left: 1em;
+  padding-left: 2em;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
   margin-top: 1vw;
   border-radius: 5px;
   transition: background-color 1s;
@@ -93,6 +94,10 @@
   border-top: 1px dashed rgba(255, 255, 255, 0.8);
 }
 
+.selected-filter-btn {
+  background-color: #468189;
+}
+
 .pg-middle-section {
   border-radius: 10px;
   height: inherit;
@@ -114,10 +119,37 @@
   letter-spacing: 0.05vw;
   color: inherit;
   position: relative;
+  transition: box-shadow 0.5s;
+  animation-duration: 6s;
+  animation-iteration-count: infinite;
+  box-sizing: border-box;
 }
 
 .pg-box:hover {
-  box-shadow: 0px 0px 5px 3px #fff;
+  animation-name: border-color-change;
+  box-shadow: 0px 0px 12px 5px #fff;
+}
+
+@keyframes border-color-change {
+  0% {
+    border: 5px solid #9dbebb;
+  }
+
+  25% {
+    border: 5px solid #8acaed;
+  }
+
+  50% {
+    border: 5px solid #61e687;
+  }
+
+  75% {
+    border: 5px solid #cdea77;
+  }
+
+  100% {
+    border: 5px solid #52d3be;
+  }
 }
 
 .pg-user {
@@ -135,8 +167,6 @@
   font-weight: 900;
   padding-bottom: 1rem;
 }
-
-/* .pglogin */
 
 .pg-status {
   color: #1c6721;
@@ -158,10 +188,6 @@
   position: relative;
 }
 
-/* .user-info-display {
-
-} */
-
 .avatar-container {
   width: 10vw;
   height: 10vw;
@@ -171,7 +197,6 @@
 
 .user-info-display {
   margin: px 20px;
-
 }
 
 .general-info {
@@ -179,14 +204,9 @@
   font-size: 1.2vw;
 }
 
-
-/* .user-info {
-  
-} */
-
 .edit-delete-btn-gp {
   position: absolute;
-  left: 42.5vw;
+  left: 40vw;
   top: 1.1vw;
   font-size: 1.1vw;
 }

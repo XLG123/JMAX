@@ -23,15 +23,17 @@ const Profile = () => {
 
   const currentUser = useSelector(state => state.session.user);
   const allProblems = useSelector(state => Object.values(state.problems.all));
+  console.log(allProblems);
   const userProblemIds = 
     useSelector(state => state.problems.userProblems)
+  // console.log(userProblemIds);
 
   useEffect(() => {
     dispatch(sessionActions.fetchAllUsers())
     dispatch(fetchProblems());
     dispatch(fetchUserProblems(userId));
     return () => dispatch(clearProblemErrors());
-  }, [userId, dispatch]);
+  }, [userId, dispatch, allProblems.length]);
 
   if (!userProblemIds) {
     return [];
@@ -41,6 +43,40 @@ const Profile = () => {
 
   const allRequestsOffers = (e) => {
     e.preventDefault();
+  }
+
+  const allRequests = (e) => {
+    e.preventDefault();
+  }
+
+  const showOpenRequests = (e) => {
+    e.preventDefault();
+  }
+
+  const showResolvedRequests = (e) => {
+    e.preventDefault();
+  }
+
+  const allOffers = (e) => {
+    e.preventDefault();
+  }
+
+  const showAcceptedOffers = (e) => {
+    e.preventDefault();
+  }
+
+  const showPendingOffers = (e) => {
+    e.preventDefault();
+  }
+  // debugger
+  // if (allProblems.length === 0)return null
+
+  const noRequestsMsg = () => {
+    return (<div className='no-requests-container'>
+      <h1 className='no-requests-msg' style={{color: 'green'}}>
+        No requests yet.
+      </h1>
+    </div>)
   }
 
   return (
@@ -58,33 +94,49 @@ const Profile = () => {
             </div>
 
             <div className='pg-requester-btn-gp'>
-              <div className='requester-btn'>Requester</div>
+
+              <div className='requester-btn'
+                onClick={(e) => {allRequests(e)}}>Requests</div>
 
               <div className='linebreak'></div>
-              <div className='pg-requester-open-status-btn'>
+
+              <div className='pg-requester-open-status-btn'
+                onClick={(e) => {showOpenRequests(e)}}>
                 Open
               </div>
 
-              <div className='pg-requester-resolved-status-btn'>
+              <div className='pg-requester-resolved-status-btn'
+                onClick={(e) => {showResolvedRequests(e)}}>
                 Resolved
               </div>
+
             </div>
 
             <div className='pg-helper-btn-gp'>
-              <div className="helper-btn">Helper</div>
+
+              <div className="helper-btn"
+                onClick={(e) => {allOffers(e)}}>Offers</div>
+
               <div className='linebreak'></div>
-              <div className='helper-accepted-filter-btn'>
+
+              <div className='helper-accepted-filter-btn'
+                onClick={(e) => {showAcceptedOffers(e)}}>
                 Accepted
               </div>
 
-              <div className='helper-pending-filter-btn'>
+              <div className='helper-pending-filter-btn'
+                onClick={(e) => {showPendingOffers(e)}}>
                 Pending
               </div>
+
             </div>
           </div>
         </div>
 
         <div className="pg-middle-section">
+          {userProblemIds.length === 0 ? <div className='no-request-container'>
+            No requests
+          </div> : <></>}
           {allProblems
             .filter((problem) => userProblemIds.includes(problem._id))
             .map((problem)=> (<ProfileBox key={problem._id} 
