@@ -4,6 +4,7 @@ import * as problemActions from "../store/problems"
 import ProblemBox from './ProblemBox';
 import * as sessionActions from "../store/session"
 const Problems = () => {
+  // debugger
   const dispatch = useDispatch();
   const problems = useSelector(state => Object.values(state.problems.all));
 
@@ -19,7 +20,11 @@ const Problems = () => {
     <div className='container'>
       <h2 className='title'>All  Requests</h2>
       {problems.map(problem => (
+        problem.status === "open" &&  (
         <ProblemBox key={problem._id} problem={problem} />
+        
+      
+      )
       ))}
     </div>
   );

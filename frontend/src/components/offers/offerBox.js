@@ -12,13 +12,19 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import "./offer.css"
 const OfferBox = ({ offer: {description ,price,status ,helper ,_id ,problem} }) => {
-  debugger
+  // debugger
+const user= useSelector(state=>state.session.user)
   const [show,setShow]=useState(false)
   const history=useHistory()
   // const [offer,setOffer]=useState("")
   const dispatch=useDispatch()
   useEffect(()=>{
     dispatch(sessionActions.fetchAllUsers())
+    // dispatch(problemActions.fetchUserProblems(user._id))
+
+dispatch(offerActions.fetchUserOffers(user._id))
+
+
   },[dispatch])
   const offerOwner= useSelector(state=> state.session.users)
   function handelSubmit(e){
@@ -37,8 +43,11 @@ dispatch(offerActions.fetchDeleteOffer(_id))
 
 function handelTakingOffer(e){
 e.preventDefault()
-dispatch(offerActions.fetchUpdateOffer(_id, {status: "accepted"}))
 dispatch(problemActions.fetchUpdateProblem(problem,{status: "closed"}))
+dispatch(offerActions.fetchUpdateOffer(_id, {status: "accepted"})).then(()=>{
+  history.push(`/users/${helper}`)
+})
+
 }
 
 
