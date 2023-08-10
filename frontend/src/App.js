@@ -11,6 +11,7 @@ import SignupForm from "./components/SessionForms/SignUpForm/SignUpForm";
 import Problems from "./components/Problems/Problems";
 import { getCurrentUser } from "./components/store/session";
 import AboutPage from "./components/About/AboutPage";
+import LivePrivateChat from "./components/LiveChat/LiveChat"
 
 // import Problems from './components/Problem/Problems';
 import Profile from './components/Profile/Profile';
@@ -35,7 +36,7 @@ function App() {
 
         {/* <ProtectedRoute exact path="/problems" component={Problems} /> */}
         <ProtectedRoute exact path="/users/:userId" component={Profile} />
-        {/* <ProtectedRoute exact path="/problems/new" component={ProblemCompose} 
+        {/* <ProtectedRoute exact path="/problems/new" component={ProblemCompose}
         /> */}
       </Switch>
     </>
