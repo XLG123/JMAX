@@ -60,7 +60,7 @@ export const fetchUserProblems = id => async dispatch => {
 };
 
 export const updateProblem = (problem) => async (dispatch) => {
-  debugger
+  // debugger
   try {
     const res = await jwtFetch(`/api/problems/${problem.id}`, {
       method: 'PATCH',

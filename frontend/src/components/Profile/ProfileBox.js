@@ -55,8 +55,8 @@ const ProfileBox = ({ problem: { category, author, description,
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(updateProblem({id: id, category: editCategory, 
-      address: editZipCode, description: editDescription}));
+    // dispatch(updateProblem({id: id, category: editCategory, 
+    //   address: editZipCode, description: editDescription}));
     setShowRequestForm(false);
   }
 
