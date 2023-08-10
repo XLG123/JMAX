@@ -15,7 +15,7 @@ const LivePrivateChat = () => {
 
     setTypingTimeout(
       setTimeout(() => {
-        socket.emit("stop typing");
+        if (socket) socket.emit("stop typing");
       }, 500)
     );
   };
@@ -27,24 +27,15 @@ const LivePrivateChat = () => {
       setChat([...chat, msg]);
     });
 
-    // socket.on("typing", (user) => {
-    //   setTyping(user + " is typing...");
-    // });
     socket.on("typing", () => {
       console.log("Typing event received");
-    //   debugger
       setTyping("A user is typing...");
     });
 
     socket.on("stop typing", () => {
       console.log("Stop typing event received");
-    //    debugger
       setTyping(""); // Clear the message
     });
-
-    // socket.on("stop typing", () => {
-    //   setTyping(false);
-    // });
 
     return () => socket.disconnect();
   }, [chat]);
@@ -53,26 +44,22 @@ const LivePrivateChat = () => {
     setMessage(e.target.value);
     if (typingTimeout) clearTimeout(typingTimeout);
     if (e.target.value.trim() === "") {
-      socket.emit("stop typing");
+      if (socket) socket.emit("stop typing");
     } else {
       setTypingTimeout(
         setTimeout(() => {
-          socket.emit("stop typing");
+          if (socket) socket.emit("stop typing");
         }, 500)
       );
-      socket.emit("typing");
+      if (socket) socket.emit("typing");
     }
   };
 
-//   const handleInputBlur = () => {
-//     socket.emit("stop typing"); // Send stop typing event when the input loses focus
-//   };
-
   const sendMessage = (e) => {
     e.preventDefault();
-    socket.emit("chat message", message);
+    if (socket) socket.emit("chat message", message);
     setMessage("");
-    socket.emit("stop typing");
+    if (socket) socket.emit("stop typing");
   };
 
   return (
@@ -92,10 +79,10 @@ const LivePrivateChat = () => {
         />
         <button type="submit">Send</button>
       </form>
-      <button onClick={() => socket.emit("typing")}>Test Typing</button>
-      <button onClick={() => socket.emit("stop typing")}>
+      {/* <button onClick={() => socket && socket.emit("typing")}>Test Typing</button>
+      <button onClick={() => socket && socket.emit("stop typing")}>
         Test Stop Typing
-      </button>
+      </button> */}
     </div>
   );
 };
