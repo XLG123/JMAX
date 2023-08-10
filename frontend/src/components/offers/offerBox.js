@@ -44,8 +44,9 @@ dispatch(offerActions.fetchDeleteOffer(_id))
 function handelTakingOffer(e){
 e.preventDefault()
 dispatch(problemActions.fetchUpdateProblem(problem,{status: "closed"}))
-dispatch(offerActions.fetchUpdateOffer(_id, {status: "accepted"}))
-// dispatch(offersActions.fetchUserOffers(user._id))
+dispatch(offerActions.fetchUpdateOffer(_id, {status: "accepted"})).then(()=>{
+  history.push(`/users/${helper}`)
+})
 
 }
 
