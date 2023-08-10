@@ -11,6 +11,7 @@ router.post("/create", requireUser, async (req, res) => {
     reviewer: req.user._id,
     reviewee: req.body.reviewee,
     offerId: req.body.offerId,
+    status: req.body.status,
   });
 
   try {
