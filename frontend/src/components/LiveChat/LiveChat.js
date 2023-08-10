@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import io from "socket.io-client";
+import "./LiveChat.css"
 
 let socket;
 
@@ -23,11 +24,11 @@ const LivePrivateChat = () => {
     setMessage("");
   };
   return (
-    <div>
-      <ul>
+    <div className="live-private-chat-container">
+      <ul className="live-private-chat-messages">
         {chat.map((msg, index) => <li key={index}>{msg}</li>)}
       </ul>
-      <form onSubmit={sendMessage}>
+      <form onSubmit={sendMessage} className="live-private-chat-input-form">
         <input
           value={message}
           onChange={e => setMessage(e.target.value)}
