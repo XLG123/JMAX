@@ -13,7 +13,12 @@ import "./NavBar.css";
 import OfferModal from "../offerModal/index"
 import Offers from "../offers/offers";
 
+
+
 import * as offersActions from "../store/offers"
+
+
+
 
 
 function NavBar() {

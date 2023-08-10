@@ -301,6 +301,15 @@ input[type="file"] {
 
 }
 
+
+/* #selected-requests-btn,
+#selected-profile-btn,
+.selected-about-btn {
+  background-color: #9DBEBB;
+  color: #031926;
+} */
+
+
 .shaking {
   animation: shake 0.60s ease-in-out infinite, changeColor 0.60s alternate infinite;
 }

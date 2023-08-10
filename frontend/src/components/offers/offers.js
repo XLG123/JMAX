@@ -26,14 +26,18 @@ debugger
       {/* <h2 className='title'>All Offers</h2> */}
       {reqIds?.map(reqId => (
         <div key={reqId}>
-            {/* {requests[reqId].status== "open"} */}
-          <ProblemBox problem={requests[reqId]} />
-          {Object.values(reqOffers[reqId])?.map(offer => (
-            offer.status === "pending"&&
-            <OfferBox key={offer._id} offer={offer} />
-
-           
-          ))}
+            {/* {requests}[reqId].status== "open" &&  */}
+            <ProblemBox problem={requests[reqId]} />
+            
+            {Object.values(reqOffers[reqId])?.map(offer => (
+              // {console.log(requests[reqId])}
+              // offer.status === "pending"&&
+              <OfferBox key={offer._id} offer={offer} />
+  
+             
+            ))}
+            
+          
 
         </div>
 
