@@ -153,6 +153,13 @@
 .notify-icon {
   transition: box-shadow 2s;
   border-radius: 5px;
+
+}
+.red{
+  color:red;
+}
+.white{
+  color:white
 }
 
 .notify-icon:hover {
@@ -282,15 +289,35 @@ input[type="file"] {
 }
 
 .offerbox{
-  background-color: #e0e0e0;
+  background-color: #F3E9CD;
   width:100%;
-  height: 7rem;
+  height: 100vh;
+  overflow:auto;
 
 }
 
-/* #selected-requests-btn,
-#selected-profile-btn,
-.selected-about-btn {
-  background-color: #9DBEBB;
-  color: #031926;
-} */
+.shaking {
+  animation: shake 0.60s ease-in-out infinite, changeColor 0.60s alternate infinite;
+}
+
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  10%, 30%, 50%, 70%, 90% {
+    transform: translateX(-3px);
+  }
+  20%, 40%, 60%, 80% {
+    transform: translateX(3px);
+  }
+}
+
+@keyframes changeColor {
+  from {
+    color: red;
+  }
+  to {
+    color: #F4E9CD; /* Change it to the original color or any other color */
+  }
+}
+
