@@ -83,6 +83,7 @@ const PrivateChat = () => {
 
   useEffect(() => {
     socket = io("http://localhost:4000");
+    socket.emit("register user", userId)
 
     socket.on("private message", (msg) => {
       if (

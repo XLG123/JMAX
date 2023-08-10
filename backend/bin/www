@@ -19,21 +19,14 @@ const io = require("socket.io")(server, {
 // connection to socket.io
 io.on("connection", (socket) => {
   console.log("a user connected through sockets");
-
-  // This is creating a connection to "room" so eventually you're only talking to someone separated from public
-  socket.on("join room", (roomId) => {
-    socket.join(roomId);
-  });
-
-  // This is like a main page public chat, all users can message to the chat, the front end needs to css and show the current user typing"
   socket.on("chat message", (msg) => {
     io.emit("chat message", msg);
   });
-
-  //this is just sending a message but its private to the room, just like above but without the room. Roomm means that the user is in the room and can send messages to that specific chat/group
-  // This is for sending a private message to a specific room
+  socket.on("register user", (userId) => {
+    socket.join(userId);
+  })
   socket.on("private message", (msg) => {
-    if (!msg.content || !msg.sender || !msg.receiver || !msg.roomId) {
+    if (!msg.content || !msg.sender || !msg.receiver) {
       console.error("Missing required fields in message:", msg);
       return;
     }
@@ -42,13 +35,14 @@ io.on("connection", (socket) => {
       sender: msg.sender,
       receiver: msg.receiver,
       content: msg.content,
-      roomId: msg.roomId, // Include roomId in the message creation
     });
 
     message
       .save()
       .then(() => {
-        io.to(msg.roomId).emit("private message", msg); // Emit the message to the specific room
+        // Emit the message to the sender and receiver only
+        io.to(msg.sender).emit("private message", msg);
+        io.to(msg.receiver).emit("private message", msg);
       })
       .catch((err) => {
         console.error("Error saving message:", err);
