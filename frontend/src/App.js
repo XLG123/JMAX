@@ -36,6 +36,7 @@ function App() {
 
         {/* <ProtectedRoute exact path="/problems" component={Problems} /> */}
         <ProtectedRoute exact path="/users/:userId" component={Profile} />
+        <ProtectedRoute exact path="/chat" component={LivePrivateChat} />
         {/* <ProtectedRoute exact path="/problems/new" component={ProblemCompose}
         /> */}
       </Switch>
