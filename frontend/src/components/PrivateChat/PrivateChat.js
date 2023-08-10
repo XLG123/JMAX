@@ -20,7 +20,8 @@ const PrivateChat = ({ userId, receiverId }) => {
     };
   }, [userId, receiverId, socket]);
 
-  const sendMessage = () => {
+  const sendMessage = (e) => {
+    e.preventDefault();
     const message = {
       sender: userId,
       receiver: receiverId,
@@ -37,16 +38,16 @@ const PrivateChat = ({ userId, receiverId }) => {
 
   return (
     <div className="live-private-chat-container">
-    <div className="live-private-chat-messages">
-      {messages.map((msg, index) => (
-        <div key={index} className={msg.sender === userId ? "sent" : "received"}>{msg.content}</div>
-      ))}
+      <div className="live-private-chat-messages">
+        {messages.map((msg, index) => (
+          <div key={index} className={msg.sender === userId ? "sent" : "received"}>{msg.content}</div>
+        ))}
+      </div>
+      <form onSubmit={sendMessage} className="live-private-chat-input-form">
+        <input type="text" value={inputMessage} onChange={(e) => setInputMessage(e.target.value)} placeholder="Enter a message" />
+        <button type="submit">Send</button>
+      </form>
     </div>
-    <div className="input-container">
-      <input type="text" value={inputMessage} onChange={(e) => setInputMessage(e.target.value)} placeholder="Enter a message" />
-      <button onClick={sendMessage}>Send</button>
-    </div>
-  </div>
   );
 };
 
