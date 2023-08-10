@@ -30,10 +30,10 @@ io.on("connection", (socket) => {
     io.emit("chat message", msg);
   });
 
-
   //this is just sending a message but its private to the room, just like above but without the room. Roomm means that the user is in the room and can send messages to that specific chat/group
+  // This is for sending a private message to a specific room
   socket.on("private message", (msg) => {
-    if (!msg.content || !msg.sender || !msg.receiver) {
+    if (!msg.content || !msg.sender || !msg.receiver || !msg.roomId) {
       console.error("Missing required fields in message:", msg);
       return;
     }
@@ -42,13 +42,15 @@ io.on("connection", (socket) => {
       sender: msg.sender,
       receiver: msg.receiver,
       content: msg.content,
+      roomId: msg.roomId, // Include roomId in the message creation
     });
 
-    message.save()
+    message
+      .save()
       .then(() => {
-        socket.to(msg.receiver).emit("private message", msg);
+        io.to(msg.roomId).emit("private message", msg); // Emit the message to the specific room
       })
-      .catch(err => {
+      .catch((err) => {
         console.error("Error saving message:", err);
       });
   });
