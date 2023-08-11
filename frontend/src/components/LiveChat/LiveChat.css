@@ -1,5 +1,5 @@
 .chat-box-container {
-  width: 43em;
+  width: 40vw;
   max-width: 50vw;
   height: 60vh;
   margin-top: 18vh;
@@ -11,6 +11,24 @@
   border-radius: 5px;
 }
 
+@media screen and (width > 1440px) {
+  .chat-box-container {
+    width: 38vw;
+  }
+}
+
+@media screen and (width < 1440px) {
+  .chat-box-container {
+    width: 48vw;
+  }
+}
+
+@media screen and (width: 1440px) {
+  .chat-box-container {
+    width: 45vw;
+  }
+}
+
 .chat-user {
   margin-bottom: 1em;
 }
@@ -18,11 +36,16 @@
 .scrollable-chat {
   overflow-y: auto;
   color: #031926;
-  font-size: 1.3vw;
+  font-size: 1.5vw;
   font-weight: 100;
-  display: grid;
-  grid-gap: 0.6rem;
+  height: 23.65vw;
+  /* grid-gap: 0.6rem; */
+  margin-bottom: 1vh;
+}
+
+.chat {
   row-gap: 0;
+  display: grid;
 }
 
 .scrollable-chat::-webkit-scrollbar {
@@ -51,7 +74,7 @@
 
 .sticky-input {
   position: absolute;
-  bottom: 2vw;
+  bottom: 1.2vw;
   width: inherit;
 }
 
@@ -60,12 +83,31 @@
   margin: 0px auto;
   display: grid;
   grid-template-columns: 88% 12%;
+  height: 5vh;
+  font-size: 1.5vw;
+}
+
+.sticky-input form input:focus {
+  box-shadow: none !important;
 }
 
 .sticky-input form input {
-
+  font-size: inherit;
+  border: none;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
 }
 
 .sticky-input form button {
+  font-size: inherit;
+  background-color: rgba(192, 192, 192, 0.8);
+  outline: none;
+  border: none;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  cursor: pointer;
+}
 
+.sticky-input form button:hover {
+  background-color: rgba(115, 182, 230, 0.9);
 }

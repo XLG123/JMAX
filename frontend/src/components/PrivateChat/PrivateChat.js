@@ -122,21 +122,25 @@ const PrivateChat = () => {
   return (
     <div className="chat-box-container">
       <div className="chat-user">
-        {currentUser?.email}
+        {/* {currentUser?.email} */}
+        Other User
       </div>
 
       <div className="scrollable-chat">
-        {messages.receiverId}
-        {messages.map((msg, index) => (
-          <div
-            key={index}
-            className={msg.sender === userId ?
-              "sent talk-bubble" : "received talk-bubble tri-left border round btm-right-in"}
-          >
-            {msg.content}
-            {msg.timestamps}
-          </div>
-        ))}
+        <div className="chat">
+          {messages.receiverId}
+          {messages.map((msg, index) => (
+            <div
+              key={index}
+              className={msg.sender === userId ?
+                "sent talk-bubble" : "received talk-bubble tri-left border round btm-right-in"}
+            >
+              {msg.content}
+              {msg.timestamps}
+            </div>
+          ))}
+      </div>
+
       </div>
 
       <div className="sticky-input">
