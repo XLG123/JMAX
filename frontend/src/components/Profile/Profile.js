@@ -9,6 +9,7 @@ import { clearProblemErrors, fetchProblems, fetchUserProblems } from '../store/p
 import { useParams } from 'react-router-dom';
 import CommentIcon from '@mui/icons-material/Comment';
 import { useHistory } from 'react-router-dom';
+import Avatar from '@mui/material/Avatar';
 // All classnames are declared with the prefix pg which stands for profile page, instead of pp.
 
 const Profile = () => {
@@ -81,8 +82,9 @@ const Profile = () => {
       </h1>
     </div>)
   }
+
   function handelText(){
-history.push(`/chat/private/${currentUser._id}/${userId}`) 
+    history.push(`/chat/private/${currentUser._id}/${userId}`) 
   }
 
   return (
@@ -153,7 +155,13 @@ history.push(`/chat/private/${currentUser._id}/${userId}`)
           <div className='user-info-display'>
             <div className='avatar-container'>
               <div className='pg-profile'>
-                <div className='pg-class'></div>
+                <Avatar sx={{
+                  bgcolor: '#77ACA2',
+                  width: "7vw", height: '7vw', margin: '15% auto'
+                }}
+                  className='avatar'>
+                  <h1 className='avatar-letter'>{user?.username[0]}</h1>
+                </Avatar>
               </div>
             </div>
 

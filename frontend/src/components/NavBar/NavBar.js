@@ -14,6 +14,7 @@ import "./NavBar.css";
 import OfferModal from "../offerModal/index"
 import Offers from "../offers/offers";
 import * as offersActions from "../store/offers"
+import Tooltip from '@mui/material/Tooltip';
 
 function NavBar() {
   const loggedIn = useSelector((state) => !!state.session.user);
@@ -79,73 +80,88 @@ useEffect(() => {
         <>
 
           <div className="links-nav">
-            <NavLink to="/requests" className={currentUrl === "/requests" ?
-              "nav-btn-gp2 all-requests-btn selected-nav-btn" :
-              "nav-btn-gp2 all-requests-btn"}>
-              All Requests
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-              {/* the empty spans are for css styling effects */}
-            </NavLink>
+            <Tooltip title="All Requests">
+              <NavLink to="/requests" className={currentUrl === "/requests" ?
+                "nav-btn-gp2 all-requests-btn selected-nav-btn" :
+                "nav-btn-gp2 all-requests-btn"}>
+                All Requests
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                {/* the empty spans are for css styling effects */}
+              </NavLink>
+            </Tooltip>
 
-            <IconButton className="public-chat-btn" onClick={goToPublicChat}>
-              <SmsIcon sx={{ color: "#F4E9CD", fontSize: "2.5vw", 
-                position: "absolute", bottom: "0.2vw"}} 
-                className="public-chat-icon"/>
-            </IconButton>
-
-            {notify === false &&
-              <IconButton className="notify-btn" onClick={handleShowOffer}>
-                <NotificationsActiveIcon
-                  className="notify-icon"
-                  sx={{ color: "#F4E9CD", fontSize: "2.5vw", position: "absolute", bottom: "0.2vw" }}
-                />
+            <Tooltip title="Public Chat Room">
+              <IconButton className="public-chat-btn" onClick={goToPublicChat}>
+                <SmsIcon sx={{ color: "#F4E9CD", fontSize: "2.5vw", 
+                  position: "absolute", bottom: "0.2vw"}} 
+                  className="public-chat-icon"/>
               </IconButton>
-            }
+            </Tooltip>
 
-            {notify === true &&
-              <IconButton className={`notify-btn ${notify ? "shaking" : ""}`} onClick={handleShowOffer}>
-                <NotificationsActiveIcon
-                  className="notify-icon"
-                  sx={{ color: "red", fontSize: "2.5vw", position: "absolute", bottom: "0.2vw" }}
-                />
-              </IconButton>
-            }
+            <Tooltip title="Notification">
+              {notify === false &&
+                <IconButton className="notify-btn" onClick={handleShowOffer}>
+                  <NotificationsActiveIcon
+                    className="notify-icon"
+                    sx={{ color: "#F4E9CD", fontSize: "2.5vw", position: "absolute", bottom: "0.2vw" }}
+                  />
+                </IconButton>
+              }
+            </Tooltip>
 
-            <NavLink to={`/users/${user?._id}`} className={currentUrl ===
-              `/users/${user?._id}` ?
-              "nav-btn-gp2 user-profile-btn selected-nav-btn" :
-              "nav-btn-gp2 user-profile-btn"}>
-              Profile
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-              {/* the empty spans are for css styling effects */}
-            </NavLink>
+            <Tooltip title="Notification">
+              {notify === true &&
+                <IconButton className={`notify-btn ${notify ? "shaking2" : ""}`} onClick={handleShowOffer}>
+                  <NotificationsActiveIcon
+                    className="notify-icon"
+                    sx={{ color: "red", fontSize: "2.5vw", position: "absolute", bottom: "0.2vw" }}
+                  />
+                </IconButton>
+              }
+            </Tooltip>
 
-            <div onClick={handleShowForm}
-              className="nav-btn-gp2 new-request-btn">
-              Write a Request
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-              {/* the empty spans are for css styling effects */}
-            </div>
+            <Tooltip title="Profile Page">
+              <NavLink to={`/users/${user?._id}`} className={currentUrl ===
+                `/users/${user?._id}` ?
+                "nav-btn-gp2 user-profile-btn selected-nav-btn" :
+                "nav-btn-gp2 user-profile-btn"}>
+                Profile
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                {/* the empty spans are for css styling effects */}
+              </NavLink>
+            </Tooltip>
+
+            <Tooltip title="Create a new request">
+              <div onClick={handleShowForm}
+                className="nav-btn-gp2 new-request-btn">
+                Write a Request
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                {/* the empty spans are for css styling effects */}
+              </div>
+            </Tooltip>
 
             {/* TODO: CATEGORY FILTER */}
 
-            <IconButton onClick={logoutUser} className="logout-btn" >
-              <LogoutIcon className="logout-icon"
-                sx={{
-                  color: '#F4E9CD', fontSize: "2.5vw",
-                  position: "absolute", bottom: "0.2vw", borderRadius: '5px'
-                }}
-              />
-            </IconButton>
+            <Tooltip title="Log Out">
+              <IconButton onClick={logoutUser} className="logout-btn" >
+                <LogoutIcon className="logout-icon"
+                  sx={{
+                    color: '#F4E9CD', fontSize: "2.5vw",
+                    position: "absolute", bottom: "0.2vw", borderRadius: '5px'
+                  }}
+                />
+              </IconButton>
+            </Tooltip>
+
           </div>
           <SearchBar />
         </>
@@ -155,45 +171,53 @@ useEffect(() => {
         <>
 
           <div className="links-auth">
-            <div className="nav-btn" id="demo-login" onClick={demoLogin}>
-              Demo
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-              {/* the empty spans are for css styling effects */}
-            </div>
+            <Tooltip title="Demo User Login">
+              <div className="nav-btn" id="demo-login" onClick={demoLogin}>
+                Demo
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                {/* the empty spans are for css styling effects */}
+              </div>
+            </Tooltip>
 
-            <NavLink to="/signup" className={currentUrl === "/signup" ?
-              "nav-btn selected-nav-btn" : "nav-btn"}>
-              Sign Up
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-              {/* the empty spans are for css styling effects */}
-            </NavLink>
+            <Tooltip title="Sign Up">
+              <NavLink to="/signup" className={currentUrl === "/signup" ?
+                "nav-btn selected-nav-btn" : "nav-btn"}>
+                Sign Up
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                {/* the empty spans are for css styling effects */}
+              </NavLink>
+            </Tooltip>
 
-            <NavLink to="/login" className={currentUrl === "/login" ?
-              "nav-btn selected-nav-btn" : "nav-btn"}>
-              Log In
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-              {/* the empty spans are for css styling effects */}
-            </NavLink>
+            <Tooltip title="Login">
+              <NavLink to="/login" className={currentUrl === "/login" ?
+                "nav-btn selected-nav-btn" : "nav-btn"}>
+                Log In
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                {/* the empty spans are for css styling effects */}
+              </NavLink>
+            </Tooltip>
 
-            <div className={currentUrl === "/about" ?
-              "nav-btn selected-nav-btn" : "nav-btn"} id="about-btn"
-              onClick={goToAbout}>
-              About
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-              {/* the empty spans are for css styling effects */}
-            </div>
+            <Tooltip title="about page">
+              <div className={currentUrl === "/about" ?
+                "nav-btn selected-nav-btn" : "nav-btn"} id="about-btn"
+                onClick={goToAbout}>
+                About
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                {/* the empty spans are for css styling effects */}
+              </div>
+            </Tooltip>
 
           </div>
         </>

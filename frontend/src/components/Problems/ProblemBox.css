@@ -17,6 +17,9 @@
     margin: auto;
     border-radius: 1rem;
     border: none;
+    transition: box-shadow 0.5s;
+    animation-duration: 6s;
+    animation-iteration-count: infinite;
 
 }
 .noproblem{

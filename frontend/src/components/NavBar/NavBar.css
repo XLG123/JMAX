@@ -177,11 +177,13 @@
   top: 2.45vw;
 }
 
-.logout-icon {
+.logout-icon,
+.public-chat-icon {
   transition: box-shadow 2s;
 }
 
-.logout-icon:hover {
+.logout-icon:hover,
+.public-chat-icon:hover {
   box-shadow: 0px 0px 5px 3px #fff;
 }
 
@@ -189,6 +191,10 @@
   position: relative;
   left: 76vw;
   top: 2.65vw;
+}
+
+.public-chat-icon {
+  border-radius: 5px;
 }
 
 @media screen and (width > 1440px) {

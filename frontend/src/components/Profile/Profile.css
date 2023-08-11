@@ -125,7 +125,8 @@
   box-sizing: border-box;
 }
 
-.pg-box:hover {
+.pg-box:hover,
+.box:hover {
   animation-name: border-color-change;
   box-shadow: 0px 0px 12px 5px #fff;
 }
@@ -192,11 +193,14 @@
   width: 10vw;
   height: 10vw;
   margin: 0px auto;
-  border: 2px solid green;;
+}
+
+.avatar-letter {
+  font-size: 3vw;
 }
 
 .user-info-display {
-  margin: px 20px;
+  margin: 0px 20px;
 }
 
 .general-info {

@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import SearchIcon from "@mui/icons-material/Search";
 // import { searchResults } from "./searchResults";
 import "./SearchBar.css";
+import Tooltip from '@mui/material/Tooltip';
 
 const SearchBar = () => {
   const history = useHistory();
@@ -30,22 +31,24 @@ const SearchBar = () => {
   
   return (
     <div className="search-bar-container">
-      <form className="search-bar-form" onSubmit={(e) => handleSearchSubmit(e)}>
-        <input
-          type="text"
-          placeholder="Others might also share the same issues as you"
-          id="search-bar"
-          value={searchText}
-          onChange={(e) => setSearchText(e.target.value)}
-        />
-        <div className="search-bar-btn">
-          <div type="submit"
-            onClick={(e) => handleSearchSubmit(e)}
-            onKeyDown={(e) => handleSearchSubmit(e)}>
-            <SearchIcon className="search-icon" />
+      <Tooltip title="Search">
+        <form className="search-bar-form" onSubmit={(e) => handleSearchSubmit(e)}>
+          <input
+            type="text"
+            placeholder="Others might also share the same issues as you"
+            id="search-bar"
+            value={searchText}
+            onChange={(e) => setSearchText(e.target.value)}
+          />
+          <div className="search-bar-btn">
+            <div type="submit"
+              onClick={(e) => handleSearchSubmit(e)}
+              onKeyDown={(e) => handleSearchSubmit(e)}>
+              <SearchIcon className="search-icon" />
+            </div>
           </div>
-        </div>
-      </form>
+        </form>
+      </Tooltip>
     </div>
   );
 };
