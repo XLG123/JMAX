@@ -243,3 +243,7 @@
 .text-me{
   font-size: 7rem;
 }
+
+.private-chat-room {
+  position: absolute;
+}
