@@ -50,7 +50,7 @@ export const clearProblemErrors = errors => ({
 });
 
 export const fetchProblems = () => async dispatch => {
-  // debugger
+
   try {
     const res = await jwtFetch('/api/problems');
     const problems = await res.json();

@@ -5,12 +5,15 @@ import errors from './errors';
 import problemsReducer from './problems';
 import offersReducer from "./offers"
 import reviewsReducer from "./reviews"
+import messagesReducer from "./messages"
+
 const rootReducer = combineReducers({
   session,
   errors,
   problems: problemsReducer,
   offers:offersReducer,
-  reviews:reviewsReducer
+  reviews:reviewsReducer,
+  messages:messagesReducer
 });
 
 let enhancer;

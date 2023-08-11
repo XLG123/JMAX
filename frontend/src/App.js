@@ -40,7 +40,7 @@ function App() {
           {/* <ProtectedRoute exact path="/problems" component={Problems} /> */}
           <ProtectedRoute
             exact
-            path="/chat/private/:userId/:receiverId"
+            path="/chat/private/:userId/:otherUserId"
             component={PrivateChat}
           />
 

@@ -14,9 +14,11 @@ const SearchBar = () => {
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
-        history.push("/search-results", { searchResults: data });
+        history.push("/search-results", {searchResults: data });
       });
   };
+
+  
 
   return (
     <div className="search-bar-container">

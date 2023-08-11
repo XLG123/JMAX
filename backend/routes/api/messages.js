@@ -2,19 +2,60 @@ const express = require("express");
 const router = express.Router();
 const Message = require("../../models/Message");
 
-router.get("/messages/:userId/:otherUserId", (req, res) => {
+// router.get("/:userId/:otherUserId", (req, res) => {
+//   const { userId, otherUserId } = req.params;
+
+//   Message.find({
+//     $or: [
+//       { sender: userId, receiver: otherUserId },
+//       { sender: otherUserId, receiver: userId },
+//     ],
+//   })
+//     .sort({ createdAt: 1 }) // Sort by createdAt in ascending order
+//     .then((messages) => res.json(messages))
+//     .catch((err) => res.status(400).json("Error: " + err));
+// });
+
+
+// router.get("/:userId/:otherUserId", (req, res) => {
+//   const { userId, otherUserId } = req.params;
+
+//   Message.find({
+//     $or: [
+//       { sender: userId, receiver: otherUserId },
+//       { sender: otherUserId, receiver: userId },
+//     ],
+//   })
+//     .sort({ createdAt: 1 }) // Sort by createdAt in ascending order
+//     .then((messages) => {
+//       const messagesArray = messages.map((message) => {
+//         return { [message._id]: message };
+//       });
+
+//       res.json(messagesArray);
+//     })
+//     .catch((err) => res.status(400).json("Error: " + err));
+// });
+
+router.get("/:userId/:otherUserId", (req, res) => {
   const { userId, otherUserId } = req.params;
 
   Message.find({
     $or: [
       { sender: userId, receiver: otherUserId },
-      { sender: otherUserId, receiver: userId }
-    ]
+      { sender: otherUserId, receiver: userId },
+    ],
   })
-  .then(messages => res.json(messages))
-  .catch(err => res.status(400).json("Error: " + err));
+    .sort({ createdAt: 1 }) // Sort by createdAt in ascending order
+    .then((messages) => {
+      res.json(messages);
+    })
+    .catch((err) => res.status(400).json("Error: " + err));
 });
-router.post("/messages", (req, res) => {
+
+
+
+router.post("/", (req, res) => {
   const { sender, receiver, content } = req.body;
 
   // Validate the required fields
@@ -27,63 +68,14 @@ router.post("/messages", (req, res) => {
     sender,
     receiver,
     content,
+    timestamps
   });
 
   // Save the new message to the database
-  newMessage.save()
+  newMessage
+    .save()
     .then(() => res.json("Message sent!"))
-    .catch(err => res.status(400).json("Error: " + err));
+    .catch((err) => res.status(400).json("Error: " + err));
 });
 
-
 module.exports = router;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// router.get("/messages/:userId/:otherUserId", (req, res) => {
-//   const { userId, otherUserId } = req.params;
-//   Message.find({
-//     $or: [
-//       { sender: userId, receiver: otherUserId },
-//       { sender: otherUserId, receiver: userId }
-//     ]
-//   })
-//     .sort("timestamp")
-//     .then(messages => res.json(messages))
-//     .catch(err => res.status(400).json("Error: " + err));
-// });
-
-// module.exports = router;
