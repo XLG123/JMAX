@@ -4,6 +4,7 @@ import session from './session';
 import errors from './errors';
 import problemsReducer from './problems';
 import offersReducer from "./offers"
+import reviewsReducer from "./reviews"
 import messagesReducer from "./messages"
 
 const rootReducer = combineReducers({
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
   errors,
   problems: problemsReducer,
   offers:offersReducer,
+  reviews:reviewsReducer,
   messages:messagesReducer
 });
 

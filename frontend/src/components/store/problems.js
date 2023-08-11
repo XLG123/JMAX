@@ -2,6 +2,8 @@ import jwtFetch from './jwt';
 import * as offerActions from "./offers"
 import { RECEIVE_USER_LOGOUT } from './session';
 const RECEIVE_PROBLEMS = "problems/RECEIVE_PROBLEMS";
+const RECEIVE_PROBLEM = "problems/RECEIVE_PROBLEM";
+
 const RECEIVE_USER_PROBLEMS = "problems/RECEIVE_USER_PROBLEMS";
 const RECEIVE_NEW_PROBLEM = "problems/RECEIVE_NEW_PROBLEM";
 export const REMOVE_PROBLEM = "problems/REMOVE_PROBLEM"; 
@@ -14,7 +16,10 @@ const updateProblem = (id, updatedProblem) => ({
   id,
   updatedProblem
 });
-
+const receiveProblem = problem => ({
+  type: RECEIVE_PROBLEM,
+  problem
+});
 const receiveProblems = problems => ({
   type: RECEIVE_PROBLEMS,
   problems
@@ -63,6 +68,19 @@ export const fetchUserProblems = id => async dispatch => {
     const res = await jwtFetch(`/api/users/${id}/problems`);
     const problems = await res.json();
     dispatch(receiveUserProblems(problems));
+  } catch (err) {
+    const resBody = await err.json();
+    if (resBody.statusCode === 400) {
+      return dispatch(receiveErrors(resBody.errors));
+    }
+  }
+};
+
+export const fetchProblem = id => async dispatch => {
+  try {
+    const res = await jwtFetch(`/api/problems/${id}`);
+    const problem = await res.json();
+    dispatch(receiveProblem(problem));
   } catch (err) {
     const resBody = await err.json();
     if (resBody.statusCode === 400) {
@@ -153,6 +171,8 @@ const problemsReducer = (state = { all: {}, user: [], new: undefined }, action) 
   switch (action.type) {
     case RECEIVE_PROBLEMS:
       return { ...state, all: action.problems, new: undefined };
+      case RECEIVE_PROBLEM:
+      return { ...state, all: action.problem, new: undefined };
     case RECEIVE_USER_PROBLEMS:
       return { ...state, userProblems: action.problems, new: undefined };
     case RECEIVE_NEW_PROBLEM:

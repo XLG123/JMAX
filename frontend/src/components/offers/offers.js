@@ -10,8 +10,6 @@ const Offers = () => {
   const reqOffers = useSelector(state => state.offers.user);
   const requests = useSelector(state => state.problems.all);
   const reqIds = Object.keys(reqOffers);
-debugger
-// console.log(requests["64d3d7432d8fd365efa770fe"])
   useEffect(() => {
     dispatch(problemActions.fetchUserProblemsOpen(user._id))
 
@@ -20,9 +18,10 @@ debugger
 
 
   }, [dispatch]);
-debugger
-if (requests === undefined)return null 
-  if (reqIds.length=== 0 || !requests || reqIds === {message: 'Problem updated successfully'}) {
+if (Object.keys(requests).length === 0) {
+  return null;
+}
+  if (reqIds.length=== 0) {
     return null
   }
 

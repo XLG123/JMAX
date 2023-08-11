@@ -12,7 +12,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import "./offer.css"
 const OfferBox = ({ offer: {description ,price,status ,helper ,_id ,problem} }) => {
-  // debugger
 const user= useSelector(state=>state.session.user)
   const [show,setShow]=useState(false)
   const history=useHistory()

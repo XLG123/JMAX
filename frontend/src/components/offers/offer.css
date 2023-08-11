@@ -36,3 +36,25 @@ box-shadow: 0px 0px 50px #F4E9CD;
     /* color:red; */
     font-size: x-large;
 }
+.accepted-offers{
+    margin: auto;
+    margin-top: 5rem;
+
+    width: 50%;
+}
+.center{
+    align-items: center;
+    text-align: center;
+    align-content: center;
+}
+.review{
+/* background-color: #9DBEBB; */
+padding: .5rem;
+border:3px solid black;
+/* background-color: whitesmoke; */
+}
+.req{
+    font-size: xx-large;
+    cursor: pointer;
+    color: #9DBEBB;
+}
