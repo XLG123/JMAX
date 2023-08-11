@@ -8,6 +8,14 @@ const AboutPage = () => {
         <div className='image-container'>
           <img src={webAppLogo} alt='app-logo' className='splash-logo' />
         </div>
+
+        <div className='app-description'>
+
+        </div>
+
+        <div className='team-members-info'>
+          
+        </div>
       </div>
     </>
   );

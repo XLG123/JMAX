@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import io from "socket.io-client";
-import "./PrivateChat.css";
+import "../LiveChat/LiveChat.css";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchMessages } from "../store/messages";
@@ -66,7 +66,7 @@ const PrivateChat = () => {
           {messages.map((msg, idx) => (
             <div
               key={idx}
-              className={msg.sender === userId ? "sent" : "received"}
+              className={msg.sender === userId ? "sent chat-bubble-right" : "received chat-bubble-left"}
             >
               {msg.content}
             </div>
