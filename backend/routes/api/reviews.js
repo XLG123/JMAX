@@ -6,7 +6,7 @@ const { requireUser } = require("../../config/passport");
 
 router.post("/create", requireUser, async (req, res) => {
   const newReview = new Review({
-    rating: req.body.rating,
+    // rating: req.body.rating,
     description: req.body.description,
     reviewer: req.user._id,
     reviewee: req.body.reviewee,
