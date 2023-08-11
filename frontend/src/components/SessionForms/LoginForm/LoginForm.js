@@ -25,33 +25,38 @@ function LoginForm() {
   }, [dispatch]);
 
   const update = (field) => {
+    const setErrorState = setLoginError;
     const setState = field === "email" ? setEmail : setPassword;
-    return (e) => setState(e.currentTarget.value);
+    return (e) => {
+      setLoginError("");
+      setEmailError("");
+      setPasswordError("");
+      setErrorState(null);
+      setState(e.currentTarget.value);
+    };
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     let errors = false;
 
-
     if (!email) {
       setEmailError("Email is required");
       errors = true;
-    }else {
+    } else {
       setEmailError("");
     }
     if (!password) {
       setPasswordError("Password is required");
       errors = true;
-    }else {
+    } else {
       setPasswordError("");
     }
     if (!errors) {
       dispatch(login({ email, password })).then(() => {
         history.push("/requests");
       });
-    }else {
-
+    } else if (emailError) {
       setLoginError("User credentials are incorrect");
     }
   };
@@ -77,7 +82,6 @@ function LoginForm() {
           {loginError && <div className="error-message">{loginError}</div>}
           {emailError && <div className="error-message">{emailError}</div>}
 
-
           <input
             type="text"
             className="signup-input"
@@ -87,7 +91,9 @@ function LoginForm() {
           />
 
           <div className="errors">{errors?.password}</div>
-          {passwordError && <div className="error-message">{passwordError}</div>}
+          {passwordError && (
+            <div className="error-message">{passwordError}</div>
+          )}
 
           <input
             type="password"
