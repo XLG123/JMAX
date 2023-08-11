@@ -131,7 +131,7 @@ function SignupForm() {
     } else {
       setAgeError(null);
     }
-    if (address !== 5) {
+    if (address.length !== 5) {
       setZipError("Zip code must be 5 digits");
       errors = true;
     } else {
