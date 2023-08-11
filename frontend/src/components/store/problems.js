@@ -45,7 +45,7 @@ export const clearProblemErrors = errors => ({
 });
 
 export const fetchProblems = () => async dispatch => {
-  // debugger
+
   try {
     const res = await jwtFetch('/api/problems');
     const problems = await res.json();
@@ -71,7 +71,6 @@ export const fetchUserProblems = id => async dispatch => {
   }
 };
 export const fetchUserProblemsOpen = id => async dispatch => {
-  debugger
   try {
     const res = await jwtFetch(`/api/users/${id}/problems/open`);
     const problems = await res.json();
