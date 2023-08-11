@@ -16,6 +16,7 @@ function LoginForm() {
   // error handling
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
+  const [loginError, setLoginError] = useState("");
 
   useEffect(() => {
     return () => {
@@ -32,18 +33,26 @@ function LoginForm() {
     e.preventDefault();
     let errors = false;
 
+
     if (!email) {
       setEmailError("Email is required");
       errors = true;
+    }else {
+      setEmailError("");
     }
     if (!password) {
       setPasswordError("Password is required");
       errors = true;
+    }else {
+      setPasswordError("");
     }
     if (!errors) {
       dispatch(login({ email, password })).then(() => {
         history.push("/requests");
       });
+    }else {
+
+      setLoginError("User credentials are incorrect");
     }
   };
 
@@ -65,7 +74,9 @@ function LoginForm() {
           </h1>
 
           <div className="errors">{errors?.email}</div>
+          {loginError && <div className="error-message">{loginError}</div>}
           {emailError && <div className="error-message">{emailError}</div>}
+
 
           <input
             type="text"
