@@ -10,9 +10,9 @@ let socket;
 const PrivateChat = () => {
   const { userId, otherUserId } = useParams();
   const [inputMessage, setInputMessage] = useState("");
-  const currentUser = useSelector(state => state.session.user);
   const dispatch = useDispatch();
   const messagesFromStore = useSelector((state) => state.messages);
+  const currentUser = useSelector(state => state.session.user);
 
   useEffect(() => {
     dispatch(fetchMessages(userId, otherUserId));
@@ -58,35 +58,24 @@ const PrivateChat = () => {
   return (
     <div className="chat-box-container">
       <div className="chat-user">
-        {messages.map((msg) => (
-          <div
-            key={msg.messageId}
-            className={msg.sender === userId ? "sent" : "received"}
-          >
-            {msg.content}
-          </div>
-        ))}
+        {currentUser.username}
       </div>
 
       <div className="scrollable-chat">
         <div className="chat">
-          {messages.receiverId}
-          {messages.map((msg, index) => (
+          {messages.map((msg, idx) => (
             <div
-              key={index}
-              className={msg.sender === userId ?
-                "sent talk-bubble" : "received talk-bubble tri-left border round btm-right-in"}
+              key={idx}
+              className={msg.sender === userId ? "sent" : "received"}
             >
               {msg.content}
-              {msg.timestamps}
             </div>
           ))}
-      </div>
-
+        </div>
       </div>
 
       <div className="sticky-input">
-        <form onSubmit={sendMessage}>
+        <form onSubmit={sendMessage} className="live-private-chat-input-form">
           <input
             type="text"
             value={inputMessage}
@@ -96,9 +85,7 @@ const PrivateChat = () => {
           <button type="submit">Send</button>
         </form>
       </div>
-
     </div>
   );
 };
-
 export default PrivateChat;
