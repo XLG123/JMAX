@@ -23,7 +23,7 @@ const LivePrivateChat = () => {
   };
 
   useEffect(() => {
-    socket = io("http://localhost:4000");
+    socket = io("https://jmax.onrender.com");
 
     socket.on("chat message", (msg) => {
       setChat([...chat, msg]);
@@ -70,7 +70,7 @@ const LivePrivateChat = () => {
 
       <div className="scrollable-chat">
         <div className="chat">
-          
+
           {chat.map((msg, index) => (
             <div key={index}>{msg}</div>
           ))}

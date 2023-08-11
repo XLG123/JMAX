@@ -17,7 +17,7 @@ const PrivateChat = () => {
   useEffect(() => {
     dispatch(fetchMessages(userId, otherUserId));
 
-    socket = io("http://localhost:4000");
+    socket = io("https://jmax.onrender.com");
     socket.emit("register user", userId);
 
     socket.on("private message", (msg) => {
