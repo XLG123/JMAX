@@ -109,9 +109,7 @@ const ProfileBox = ({ problem: { category, author, description,
       </div>
       {showRequestForm && <Modal onClose={handleClose}>
         <form onSubmit={handleSubmit}>
-          <label>
-            Select a Category:
-            <br/>
+          <label htmlFor="category" className="title space" >Select a Category:</label>
             <select id="category" className="select signup-input selecr-font"
               name="category" value={editCategory}
               onChange={(e) => setEditCategory(e.target.value)}>
@@ -119,8 +117,6 @@ const ProfileBox = ({ problem: { category, author, description,
                 <option value="Delivery">Delivery</option>
                 <option value="Driver">Driver</option>
             </select>
-
-          </label>
 
           <input type="number"
             className='signup-input'
@@ -138,13 +134,13 @@ const ProfileBox = ({ problem: { category, author, description,
             onChange={(e) => setEditDescription(e.target.value)}
           />
 
-          <label className="img-input"> Add image
+          {/* <label className="img-input"> Add image
             <input type="file"
               id="file"
               className='signup-input'
               placeholder="Add an image"
             />
-          </label>
+          </label> */}
 
           <button className="sign-up-btn ">Edit Request</button>
 

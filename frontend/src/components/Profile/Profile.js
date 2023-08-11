@@ -188,7 +188,8 @@ const Profile = () => {
                 Age: &nbsp;&nbsp;{user?.age}
               </div>
             </div>
-            <CommentIcon sx={{fontSize: "5rem", marginLeft: "6rem"}} onClick={handelText}/>
+            <CommentIcon sx={{fontSize: "5rem", marginLeft: "4.5rem", 
+            width: "30%"}} onClick={handelText} className='private-chat-room'/>
           </div>
         </div>
 
