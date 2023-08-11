@@ -14,6 +14,15 @@ function SignupForm() {
   const [address,setAddress]=useState('')
   const [age,setAge]=useState('')
   const history=useHistory()
+
+  // error handling for signup form
+  const [emailError, setEmailError] = useState(false);
+  const [usernameError, setUsernameError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
+  const [password2Error, setPassword2Error] = useState(false);
+  const [ageError, setAgeError] = useState(false);
+  const [zipError, setZipError] = useState(false)
+
   // const [validZip,setValidZip]=useState(false)
   const errors = useSelector(state => state.errors.session);
   const year=Number(age)
@@ -69,9 +78,9 @@ function SignupForm() {
       dispatch(signup(user)).then(()=>{
         history.push("/requests")
       })
-    } 
-    
-    
+    }
+
+
     // else {
     //   // Properly set the error message in the Redux store
     //   dispatch(clearSessionErrors()); // Clear any previous errors
@@ -90,7 +99,7 @@ function SignupForm() {
     <form className="session-form" onSubmit={handleSubmit}>
       <div className='sign-up-form-container'>
 
-        <h1 className='sign-up-title'> 
+        <h1 className='sign-up-title'>
           {/* <img src={logo} alt="session-form-logo" className="logo"/>  */}
           Register for a new account on Problem Solver
         </h1>
@@ -98,36 +107,36 @@ function SignupForm() {
         <div className='sign'>
 
           <div className="errors">{errors?.email}</div>
-      
+
           <input type="text"
             className='signup-input'
             value={email}
             onChange={update('email')}
             placeholder="Email"
           />
-        
+
           <div className="errors">{errors?.username}</div>
-        
+
           <input type="text"
             className='signup-input'
             value={username}
             onChange={update('username')}
             placeholder="Username"
           />
-      
+
           <div className="errors">{errors?.password}</div>
-          
+
           <input type="password"
             className='signup-input'
             value={password}
             onChange={update('password')}
             placeholder="Password"
           />
-      
+
           <div className="errors">
             {password !== password2 && 'Confirm Password field must match'}
           </div>
-      
+
           <input type="password"
             className='signup-input'
             value={password2}
@@ -152,9 +161,9 @@ function SignupForm() {
             onChange={update('address')}
             placeholder="Zip code"
           />
-            
+
           <div className="errors"></div>
-        
+
           <input
             className='sign-up-btn'
             type="submit"
