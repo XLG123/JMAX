@@ -57,7 +57,6 @@ function SignupForm() {
   const handleSubmit = e => {
     e.preventDefault();
 
-    let inputErrors = [];
 
     if (address.length >= 5 && address >= 0 && address ) {
       const user = {
@@ -73,11 +72,11 @@ function SignupForm() {
     } 
     
     
-    else {
-      // Properly set the error message in the Redux store
-      dispatch(clearSessionErrors()); // Clear any previous errors
-      dispatch(receiveErrors( 'Zip code is not correct') );
-    }
+    // else {
+    //   // Properly set the error message in the Redux store
+    //   dispatch(clearSessionErrors()); // Clear any previous errors
+    //   dispatch(receiveErrors( 'Zip code is not correct') );
+    // }
 }
   // const zipCodeLen=String.valueOf(address).length()
   // console.log(zipCodeLen)
@@ -160,6 +159,8 @@ function SignupForm() {
             className='sign-up-btn'
             type="submit"
             value="Register"
+            // disabled={!email || !username || !password || password !== password2}
+
           />
 
         </div>

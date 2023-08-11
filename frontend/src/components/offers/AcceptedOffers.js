@@ -6,7 +6,6 @@ function AcceptedOffers(){
     const user=useSelector(state=>state.session.user)
     const dispatch=useDispatch()
     const offers=useSelector(state=> state.offers.all)
-    // console.log(offers)
     useEffect(() => {
         dispatch(offerActions.fetchAcceptedOffers(user._id));
       }, [user, dispatch]);
