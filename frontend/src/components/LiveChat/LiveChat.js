@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import io from "socket.io-client";
 import "./LiveChat.css";
+import { useSelector } from 'react-redux';
 
 let socket;
 
@@ -9,6 +10,7 @@ const LivePrivateChat = () => {
   const [chat, setChat] = useState([]);
   const [typing, setTyping] = useState(false);
   const [typingTimeout, setTypingTimeout] = useState(null);
+  // const currentUser = useSelector(state => state.session.user);
 
   const handleKeyUp = () => {
     if (typingTimeout) clearTimeout(typingTimeout);
@@ -62,23 +64,32 @@ const LivePrivateChat = () => {
     if (socket) socket.emit("stop typing");
   };
 
+  // console.log(chat);
   return (
-    <div className="live-private-chat-container">
-      <ul className="live-private-chat-messages">
-        {chat.map((msg, index) => (
-          <li key={index}>{msg}</li>
-        ))}
-      </ul>
+    <div className="chat-box-container">
+
+      <div className="scrollable-chat">
+        <div className="chat">
+          
+          {chat.map((msg, index) => (
+            <div key={index}>{msg}</div>
+          ))}
+        </div>
+      </div>
+
       <p className="typing-message">{typing && typing}</p>
-      <form onSubmit={sendMessage} className="live-private-chat-input-form">
-        <input
-          value={message}
-          onChange={handleInputChange}
-          onKeyUp={handleKeyUp}
-          placeholder="Enter a message"
-        />
-        <button type="submit">Send</button>
-      </form>
+
+      <div className="sticky-input">
+        <form onSubmit={sendMessage} className="live-private-chat-input-form">
+          <input
+            value={message}
+            onChange={handleInputChange}
+            onKeyUp={handleKeyUp}
+            placeholder="Enter a message"
+          />
+          <button type="submit">Send</button>
+        </form>
+      </div>
       {/* <button onClick={() => socket && socket.emit("typing")}>Test Typing</button>
       <button onClick={() => socket && socket.emit("stop typing")}>
         Test Stop Typing

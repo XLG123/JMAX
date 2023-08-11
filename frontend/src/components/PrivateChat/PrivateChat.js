@@ -12,6 +12,7 @@ const PrivateChat = () => {
   const [inputMessage, setInputMessage] = useState("");
   const dispatch = useDispatch();
   const messagesFromStore = useSelector((state) => state.messages);
+  const currentUser = useSelector(state => state.session.user);
 
   useEffect(() => {
     dispatch(fetchMessages(userId, otherUserId));
@@ -55,28 +56,36 @@ const PrivateChat = () => {
   };
 
   return (
-    <div className="live-private-chat-container">
-      <div className="live-private-chat-messages">
-        {messages.map((msg) => (
-          <div
-            key={msg.messageId}
-            className={msg.sender === userId ? "sent" : "received"}
-          >
-            {msg.content}
-          </div>
-        ))}
+    <div className="chat-box-container">
+      <div className="chat-user">
+        {currentUser.username}
       </div>
-      <form onSubmit={sendMessage} className="live-private-chat-input-form">
-        <input
-          type="text"
-          value={inputMessage}
-          onChange={(e) => setInputMessage(e.target.value)}
-          placeholder="Enter a message"
-        />
-        <button type="submit">Send</button>
-      </form>
+
+      <div className="scrollable-chat">
+        <div className="chat">
+          {messages.map((msg, idx) => (
+            <div
+              key={idx}
+              className={msg.sender === userId ? "sent" : "received"}
+            >
+              {msg.content}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="sticky-input">
+        <form onSubmit={sendMessage} className="live-private-chat-input-form">
+          <input
+            type="text"
+            value={inputMessage}
+            onChange={(e) => setInputMessage(e.target.value)}
+            placeholder="Enter a message"
+          />
+          <button type="submit">Send</button>
+        </form>
+      </div>
     </div>
   );
 };
-
 export default PrivateChat;
