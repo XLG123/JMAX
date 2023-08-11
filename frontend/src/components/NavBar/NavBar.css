@@ -185,6 +185,24 @@
   box-shadow: 0px 0px 5px 3px #fff;
 }
 
+.public-chat-btn {
+  position: relative;
+  left: 76vw;
+  top: 2.65vw;
+}
+
+@media screen and (width > 1440px) {
+  .public-chat-btn {
+    top: 2.75vw;
+  }
+}
+
+@media screen and (width < 1440px) {
+  .public-chat-btn {
+    top: 2.5vw;
+  }
+}
+
 @media screen and (width > 1440px) {
   .logout-btn, .notify-btn {
     top: 2.8vw;

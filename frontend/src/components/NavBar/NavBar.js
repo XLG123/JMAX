@@ -8,6 +8,7 @@ import * as problemActions from "../store/problems"
 import SearchBar from "../SearchBar/SearchBar";
 import IconButton from '@mui/material/IconButton';
 import LogoutIcon from '@mui/icons-material/Logout';
+import SmsIcon from '@mui/icons-material/Sms';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import "./NavBar.css";
 import OfferModal from "../offerModal/index"
@@ -50,6 +51,10 @@ function NavBar() {
     history.push("/about");
   };
   const reqOffers=useSelector(state=>state.offers.user)
+
+  const goToPublicChat = () => {
+    history.push("/chat");
+  }
  
   
 useEffect(() => {
@@ -84,6 +89,12 @@ useEffect(() => {
               <span></span>
               {/* the empty spans are for css styling effects */}
             </NavLink>
+
+            <IconButton className="public-chat-btn" onClick={goToPublicChat}>
+              <SmsIcon sx={{ color: "#F4E9CD", fontSize: "2.5vw", 
+                position: "absolute", bottom: "0.2vw"}} 
+                className="public-chat-icon"/>
+            </IconButton>
 
             {notify === false &&
               <IconButton className="notify-btn" onClick={handleShowOffer}>
