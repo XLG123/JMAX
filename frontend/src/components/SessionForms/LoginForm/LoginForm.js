@@ -13,6 +13,9 @@ function LoginForm() {
   const errors = useSelector(state => state.errors.session);
   const dispatch = useDispatch();
 
+  // error handling
+  
+
   useEffect(() => {
     return () => {
       dispatch(clearSessionErrors());
@@ -36,35 +39,35 @@ function LoginForm() {
     <form className="session-form" onSubmit={handleSubmit}>
       <div className='sign-in-form-container'>
 
-        <h2 className='sign-in-title'> 
+        <h2 className='sign-in-title'>
           {/* <img src={logo} alt="session-form-logo" className="logo"/> */}
           Log In to Problem Solver
         </h2>
 
         <div className='sign'>
 
-          <h1 className='title'>New to Problem Solver? 
+          <h1 className='title'>New to Problem Solver?
             <Link to="signup" className='register'> Register </Link>
           </h1>
 
           <div className="errors">{errors?.email}</div>
-    
+
           <input type="text"
             className='signup-input'
             value={email}
             onChange={update('email')}
             placeholder="Email"
           />
-      
+
           <div className="errors">{errors?.password}</div>
-      
+
           <input type="password"
             className='signup-input'
             value={password}
             onChange={update('password')}
             placeholder="Password"
           />
-        
+
           <input
             className='sign-up-btn'
             type="submit"
