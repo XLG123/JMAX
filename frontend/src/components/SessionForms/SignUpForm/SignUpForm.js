@@ -66,8 +66,68 @@ function SignupForm() {
   const handleSubmit = e => {
     e.preventDefault();
 
+    let errors = false;
 
-    if (address.length >= 5 && address >= 0 && address ) {
+    if (!email) {
+      setEmailError("Email is required");
+      errors = true;
+    }else {
+      setEmailError(null);
+    }
+    if (!username) {
+      setUsernameError("Username is required");
+      errors = true;
+    }else {
+      setUsernameError(null);
+    }
+    if (!password) {
+      setPasswordError("Password is required");
+      errors = true;
+    }else {
+      setPasswordError(null);
+    }
+    // if (!password2) {
+    //   setPassword2Error("Confirm password is required");
+    //   errors = true;
+    // }else {
+    //   setPassword2Error(null);
+    // }
+    if (!age) {
+      setAgeError("Age is required");
+      errors = true;
+    }else {
+      setAgeError(null);
+    }
+    if (password!== password2) {
+      setPassword2Error("Passwords do not match");
+      errors = true;
+    }else {
+      setPassword2Error(null);
+    }
+    if (!age) {
+      setAgeError("Age must be required");
+      errors = true;
+    }else if (password.length < 8) {}
+    if (age < 12) {
+      setAgeError("Age must be at least 12 years old");
+      errors = true;
+    }else if (age > 120) {
+      setAgeError("Age must be at most 120 years old");
+      errors = true;
+    }else if (age < 12){
+      setAgeError("Age must be at least 12 years old");
+      errors = true;
+    }else {
+      setAgeError(null);
+    }
+    if (address!== 5) {
+      setZipError("Zip code must be 5 digits");
+      errors = true;
+    }else {
+      setZipError(null);
+    }
+
+    if (!errors) {
       const user = {
         email,
         username,
@@ -105,7 +165,7 @@ function SignupForm() {
         </h1>
 
         <div className='sign'>
-
+         {emailError && <div className="error-message">{emailError}</div>}
           <div className="errors">{errors?.email}</div>
 
           <input type="text"
@@ -116,6 +176,7 @@ function SignupForm() {
           />
 
           <div className="errors">{errors?.username}</div>
+          {usernameError && <div className="error-message">{usernameError}</div>}
 
           <input type="text"
             className='signup-input'
@@ -125,6 +186,7 @@ function SignupForm() {
           />
 
           <div className="errors">{errors?.password}</div>
+          {passwordError && <div className="error-message">{passwordError}</div>}
 
           <input type="password"
             className='signup-input'
@@ -136,6 +198,7 @@ function SignupForm() {
           <div className="errors">
             {password !== password2 && 'Confirm Password field must match'}
           </div>
+          {/* {password2Error && <div className="error-message">{password2Error}</div>} */}
 
           <input type="password"
             className='signup-input'
@@ -145,6 +208,7 @@ function SignupForm() {
           />
 
           <div className="errors">{errors?.age}</div>
+          {ageError && <div className="error-message">{ageError}</div>}
 
           <input type="text"
             className='signup-input'
@@ -154,6 +218,7 @@ function SignupForm() {
           />
 
           <div className="errors">{errors}</div>
+          {zipError && <div className="error-message">{zipError}</div>}
 
           <input type="number"
             className='signup-input'
