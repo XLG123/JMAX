@@ -4,12 +4,14 @@ import session from './session';
 import errors from './errors';
 import problemsReducer from './problems';
 import offersReducer from "./offers"
+import messagesReducer from "./messages"
 
 const rootReducer = combineReducers({
   session,
   errors,
   problems: problemsReducer,
-  offers:offersReducer
+  offers:offersReducer,
+  messages:messagesReducer
 });
 
 let enhancer;

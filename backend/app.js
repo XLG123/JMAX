@@ -6,6 +6,7 @@ require("./models/Problem");
 require("./models/User");
 require("./models/Offer");
 require("./models/Message");
+require("./models/Review");
 const cors = require("cors");
 const csurf = require("csurf");
 const { isProduction } = require("./config/keys");
@@ -16,6 +17,7 @@ const csrfRouter = require("./routes/api/csrf");
 const testUserRouter = require("./routes/api/test");
 const offersRouter = require("./routes/api/offers");
 const messagesRouter = require("./routes/api/messages");
+const reviewsRouter = require("./routes/api/reviews");
 
 require("./config/passport");
 const passport = require("passport");
@@ -60,6 +62,7 @@ app.use("/api/offers", offersRouter);
 app.use("/api/csrf", csrfRouter);
 app.use("/api/test", testUserRouter);
 app.use("/api/messages", messagesRouter);
+app.use("/api/reviews", reviewsRouter);
 
 if (isProduction) {
   const path = require('path');
