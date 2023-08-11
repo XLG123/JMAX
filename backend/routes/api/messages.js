@@ -27,6 +27,7 @@ router.post("/messages", (req, res) => {
     sender,
     receiver,
     content,
+    timestamps
   });
 
   // Save the new message to the database

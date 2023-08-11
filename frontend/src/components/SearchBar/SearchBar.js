@@ -18,6 +18,8 @@ const SearchBar = () => {
       });
   };
 
+  
+
   return (
     <div className="search-bar-container">
       <form className="search-bar-form" onSubmit={(e) => handleSearchSubmit(e)}>
