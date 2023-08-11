@@ -9,17 +9,25 @@ const SearchBar = () => {
   const [searchText, setSearchText] = useState("");
   const handleSearchSubmit = (e) => {
     e.preventDefault();
+    // console.log(parseInt(searchText[0]));
+    if (isNaN(parseInt(searchText[0]))) {
+      fetch(`/api/problems/search/category/${searchText}`)
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          history.push("/search-results", { searchResults: data });
+        });
+    } else {
+      fetch(`/api/problems/search/address/${searchText}`)
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          history.push("/search-results", {searchResults: data });
+        });
+    }
     setSearchText("");
-    fetch(`/api/problems/search/address/${searchText}`)
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        history.push("/search-results", {searchResults: data });
-      });
   };
-
   
-
   return (
     <div className="search-bar-container">
       <form className="search-bar-form" onSubmit={(e) => handleSearchSubmit(e)}>

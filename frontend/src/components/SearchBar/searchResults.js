@@ -11,8 +11,8 @@ const SearchResults = () => {
   return (
     <div className="search-result">
 
-      {Object.values(searchResults).map((result) => (
-          <ProblemBox problem={result}/>
+      {Object.values(searchResults).map((result, idx) => (
+          <ProblemBox key={idx} problem={result}/>
       ))}
     </div>
   );

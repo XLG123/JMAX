@@ -94,12 +94,12 @@ history.push(`/chat/private/${currentUser._id}/${userId}`)
           <div className='pg-filter-gp'>
 
             {/* By default, the users will see the all requests they made */}
-            <div className='pg-filter-btn' 
+            {/* <div className='pg-filter-btn' 
               onClick={(e) => {allRequestsOffers(e)}}>
               ALL
-            </div>
+            </div> */}
 
-            <div className='pg-requester-btn-gp'>
+            {/* <div className='pg-requester-btn-gp'>
 
               <div className='requester-btn'
                 onClick={(e) => {allRequests(e)}}>Requests</div>
@@ -116,7 +116,7 @@ history.push(`/chat/private/${currentUser._id}/${userId}`)
                 Resolved
               </div>
 
-            </div>
+            </div> */}
 
             <div className='pg-helper-btn-gp'>
 
@@ -130,10 +130,10 @@ history.push(`/chat/private/${currentUser._id}/${userId}`)
                 Accepted
               </div>
 
-              <div className='helper-pending-filter-btn'
+              {/* <div className='helper-pending-filter-btn'
                 onClick={(e) => {showPendingOffers(e)}}>
                 Pending
-              </div>
+              </div> */}
 
             </div>
           </div>
