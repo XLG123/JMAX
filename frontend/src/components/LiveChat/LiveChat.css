@@ -55,7 +55,7 @@
 }
 
 .sent, .received {
-  width: fit-content;
+  width: 21vw;
   max-width: 75%;
   height: fit-content;
   margin-bottom: 1em;
@@ -63,7 +63,7 @@
   text-align: center;
   border: 2px solid #031926;
   border-radius: 20px;
-  padding: 0.5em;
+  padding: 1em;
 }
 
 .sent {

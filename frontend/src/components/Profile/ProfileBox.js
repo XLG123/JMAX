@@ -111,7 +111,7 @@ const ProfileBox = ({ problem: { category, author, description,
         <form onSubmit={handleSubmit}>
           <label>
             Select a Category:
-
+            <br/>
             <select id="category" className="select signup-input selecr-font"
               name="category" value={editCategory}
               onChange={(e) => setEditCategory(e.target.value)}>
