@@ -39,7 +39,7 @@
   color: #031926;
   font-size: 1.5vw;
   font-weight: 100;
-  height: 49vh;
+  height: 51vh;
   /* grid-gap: 0.6rem; */
   margin-bottom: 1vh;
   border-top: 2px solid #999;
@@ -115,4 +115,11 @@
 
 .sticky-input form button:hover {
   background-color: rgba(115, 182, 230, 0.9);
+}
+
+.typing-message-private-container {
+  width: max-content;
+  position: fixed;
+  position: absolute;
+  bottom: 60px;
 }

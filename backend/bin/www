@@ -49,6 +49,14 @@ io.on("connection", (socket) => {
       });
   });
 
+  socket.on("typing in private", (typingInfo) => {
+    io.to(typingInfo.receiver).emit("typing in private", typingInfo);
+  });
+  
+  socket.on("stop typing in private", (typingInfo) => {
+    io.to(typingInfo.receiver).emit("stop typing in private");
+  });
+
   socket.on("typing", () => {
     socket.broadcast.emit("typing");
   });
