@@ -15,6 +15,7 @@ const PrivateChat = () => {
   const currentUser = useSelector((state) => state.session.user);
   const [isTyping, setIsTyping] = useState(false);
   const [typingUsername, setTypingUsername] = useState("");
+  const [typingTimeout, setTypingTimeout] = useState(null);
 
   useEffect(() => {
     dispatch(fetchMessages(userId, otherUserId));
@@ -22,19 +23,24 @@ const PrivateChat = () => {
     socket = io("http://localhost:4000");
     socket.emit("register user", userId);
 
+    socket.on("private message", (msg) => {
+      setMessages((prevMessages) => [...prevMessages, msg]);
+    });
+
     socket.on("typing in private", (typingInfo) => {
       if (typingInfo.sender === otherUserId) {
         setIsTyping(true);
-        setTypingUsername(typingInfo.username); // set the username of the person typing
+        setTypingUsername(typingInfo.username);
       }
     });
 
     socket.on("stop typing in private", () => {
       setIsTyping(false);
-      setTypingUsername(""); // clear the username when typing stops
+      setTypingUsername("");
     });
 
     return () => {
+      if (typingTimeout) clearTimeout(typingTimeout);
       socket.disconnect();
     };
   }, [userId, otherUserId, dispatch]);
@@ -44,6 +50,28 @@ const PrivateChat = () => {
   }, [messagesFromStore]);
 
   const [messages, setMessages] = useState([]);
+
+  const handleInputChange = (e) => {
+    setInputMessage(e.target.value);
+
+    if (typingTimeout) clearTimeout(typingTimeout);
+
+    if (e.target.value.trim() === "") {
+      socket.emit("stop typing in private", { sender: userId, receiver: otherUserId });
+    } else {
+      socket.emit("typing in private", {
+        sender: userId,
+        receiver: otherUserId,
+        username: currentUser.username,
+      });
+
+      setTypingTimeout(
+        setTimeout(() => {
+          socket.emit("stop typing in private", { sender: userId, receiver: otherUserId });
+        }, 500)
+      );
+    }
+  };
 
   const sendMessage = (e) => {
     e.preventDefault();
@@ -64,44 +92,26 @@ const PrivateChat = () => {
 
   return (
     <div className="chat-box-container">
-      <div className="chat-user">
-        {currentUser.username}
-
-        {/* display the typing username */}
-      </div>
+      <div className="chat-user">{currentUser.username}</div>
       <div className="scrollable-chat">
         <div className="chat">
           {messages.map((msg, idx) => (
             <div
               key={idx}
-              className={
-                msg.sender === userId
-                  ? "sent chat-bubble-right"
-                  : "received chat-bubble-left"
-              }
+              className={msg.sender === userId ? "sent chat-bubble-right" : "received chat-bubble-left"}
             >
               {msg.content}
             </div>
           ))}
         </div>
       </div>
-
-      <p className="typing-message">{isTyping && <span> {typingUsername} is typing...</span>}{" "}</p>
-
+      <p className="typing-message-private-container">{isTyping && <span> {typingUsername} is typing...</span>}{" "}</p>
       <div className="sticky-input">
         <form onSubmit={sendMessage} className="live-private-chat-input-form">
           <input
             type="text"
             value={inputMessage}
-            onKeyDown={() =>
-              socket.emit("typing in private", {
-                sender: userId,
-                receiver: otherUserId,
-                username: currentUser.username,
-              })
-            }
-            onKeyUp={() => socket.emit("stop typing in private")} // Add this line
-            onChange={(e) => setInputMessage(e.target.value)}
+            onChange={handleInputChange}
             placeholder="Enter a message"
           />
           <button type="submit">Send</button>
