@@ -12,7 +12,9 @@ const PrivateChat = () => {
   const [inputMessage, setInputMessage] = useState("");
   const dispatch = useDispatch();
   const messagesFromStore = useSelector((state) => state.messages);
-  const currentUser = useSelector(state => state.session.user);
+  const currentUser = useSelector((state) => state.session.user);
+  const [isTyping, setIsTyping] = useState(false);
+  const [typingUsername, setTypingUsername] = useState("");
 
   useEffect(() => {
     dispatch(fetchMessages(userId, otherUserId));
@@ -20,11 +22,16 @@ const PrivateChat = () => {
     socket = io("http://localhost:4000");
     socket.emit("register user", userId);
 
-    socket.on("private message", (msg) => {
-      if (msg.sender === otherUserId && msg.receiver === userId) {
-        // Fetch updated messages and setMessages
-        dispatch(fetchMessages(userId, otherUserId));
+    socket.on("typing in private", (typingInfo) => {
+      if (typingInfo.sender === otherUserId) {
+        setIsTyping(true);
+        setTypingUsername(typingInfo.username); // set the username of the person typing
       }
+    });
+
+    socket.on("stop typing in private", () => {
+      setIsTyping(false);
+      setTypingUsername(""); // clear the username when typing stops
     });
 
     return () => {
@@ -59,14 +66,19 @@ const PrivateChat = () => {
     <div className="chat-box-container">
       <div className="chat-user">
         {currentUser.username}
-      </div>
 
+        {/* display the typing username */}
+      </div>
       <div className="scrollable-chat">
         <div className="chat">
           {messages.map((msg, idx) => (
             <div
               key={idx}
-              className={msg.sender === userId ? "sent chat-bubble-right" : "received chat-bubble-left"}
+              className={
+                msg.sender === userId
+                  ? "sent chat-bubble-right"
+                  : "received chat-bubble-left"
+              }
             >
               {msg.content}
             </div>
@@ -74,11 +86,21 @@ const PrivateChat = () => {
         </div>
       </div>
 
+      <p className="typing-message">{isTyping && <span> {typingUsername} is typing...</span>}{" "}</p>
+
       <div className="sticky-input">
         <form onSubmit={sendMessage} className="live-private-chat-input-form">
           <input
             type="text"
             value={inputMessage}
+            onKeyDown={() =>
+              socket.emit("typing in private", {
+                sender: userId,
+                receiver: otherUserId,
+                username: currentUser.username,
+              })
+            }
+            onKeyUp={() => socket.emit("stop typing in private")} // Add this line
             onChange={(e) => setInputMessage(e.target.value)}
             placeholder="Enter a message"
           />
