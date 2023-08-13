@@ -129,4 +129,5 @@
 .chat-bubble-owner-private-chat {
   display: flex;
   justify-content: end;
+  font-size: 10px;
 }
