@@ -4,6 +4,8 @@ import "../LiveChat/LiveChat.css";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchMessages } from "../store/messages";
+import { useRef } from "react";
+
 
 let socket;
 
@@ -16,6 +18,8 @@ const PrivateChat = () => {
   const [isTyping, setIsTyping] = useState(false);
   const [typingUsername, setTypingUsername] = useState("");
   const [typingTimeout, setTypingTimeout] = useState(null);
+  const scrollableChatRef = useRef(null);
+
 
   useEffect(() => {
     dispatch(fetchMessages(userId, otherUserId));
@@ -24,7 +28,9 @@ const PrivateChat = () => {
     socket.emit("register user", userId);
 
     socket.on("private message", (msg) => {
-      setMessages((prevMessages) => [...prevMessages, msg]);
+      if (msg.sender !== userId) {
+        setMessages((prevMessages) => [...prevMessages, msg]);
+      }
     });
 
     socket.on("typing in private", (typingInfo) => {
@@ -49,7 +55,13 @@ const PrivateChat = () => {
     setMessages(messagesFromStore);
   }, [messagesFromStore]);
 
+
   const [messages, setMessages] = useState([]);
+
+  useEffect(() => {
+    const chatContainer = scrollableChatRef.current;
+    chatContainer.scrollTop = chatContainer.scrollHeight;
+  }, [messages]);
 
   const handleInputChange = (e) => {
     setInputMessage(e.target.value);
@@ -57,7 +69,10 @@ const PrivateChat = () => {
     if (typingTimeout) clearTimeout(typingTimeout);
 
     if (e.target.value.trim() === "") {
-      socket.emit("stop typing in private", { sender: userId, receiver: otherUserId });
+      socket.emit("stop typing in private", {
+        sender: userId,
+        receiver: otherUserId,
+      });
     } else {
       socket.emit("typing in private", {
         sender: userId,
@@ -67,8 +82,11 @@ const PrivateChat = () => {
 
       setTypingTimeout(
         setTimeout(() => {
-          socket.emit("stop typing in private", { sender: userId, receiver: otherUserId });
-        }, 500)
+          socket.emit("stop typing in private", {
+            sender: userId,
+            receiver: otherUserId,
+          });
+        }, 1000)
       );
     }
   };
@@ -91,21 +109,27 @@ const PrivateChat = () => {
   };
 
   return (
-    <div className="chat-box-container">
+    <div className="chat-box-container" >
       <div className="chat-user">{currentUser.username}</div>
-      <div className="scrollable-chat">
+      <div className="scrollable-chat" ref={scrollableChatRef}>
         <div className="chat">
           {messages.map((msg, idx) => (
             <div
               key={idx}
-              className={msg.sender === userId ? "sent chat-bubble-right" : "received chat-bubble-left"}
+              className={
+                msg.sender === userId
+                  ? "sent chat-bubble-right"
+                  : "received chat-bubble-left"
+              }
             >
               {msg.content}
             </div>
           ))}
         </div>
       </div>
-      <p className="typing-message-private-container">{isTyping && <span> {typingUsername} is typing...</span>}{" "}</p>
+      <p className="typing-message-private-container">
+        {isTyping && <span> {typingUsername} is typing...</span>}{" "}
+      </p>
       <div className="sticky-input">
         <form onSubmit={sendMessage} className="live-private-chat-input-form">
           <input
