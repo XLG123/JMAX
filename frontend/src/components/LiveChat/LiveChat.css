@@ -39,7 +39,7 @@
   color: #031926;
   font-size: 1.5vw;
   font-weight: 100;
-  height: 51vh;
+  height: 50vh;
   /* grid-gap: 0.6rem; */
   margin-bottom: 1vh;
   border-top: 2px solid #999;
@@ -48,6 +48,7 @@
 .chat {
   row-gap: 0;
   display: grid;
+  width: fit-content;
 }
 
 .scrollable-chat::-webkit-scrollbar {
@@ -122,4 +123,11 @@
   position: fixed;
   position: absolute;
   bottom: 60px;
+}
+
+
+.chat-bubble-owner-private-chat {
+  display: flex;
+  justify-content: end;
+  font-size: 10px;
 }

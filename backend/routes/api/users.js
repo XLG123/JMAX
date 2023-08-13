@@ -10,6 +10,7 @@ const { loginUser, restoreUser } = require("../../config/passport");
 const { isProduction } = require("../../config/keys");
 const validateRegisterInput = require("../../validations/register");
 const validateLoginInput = require("../../validations/login");
+const Message = require("../../models/Message");
 
 // router.get("/", async (req, res)=>{
 //   const users = await User.find().populate("_id", "username email address");
@@ -209,7 +210,7 @@ router.get("/:userId/offers/accepted", async (req, res) => {
   const user = await User.findById(userId);
   if (!user) {
     return res.status(404).json({ error: "User not found" });
-  } 
+  }
   const offers = await user.getOffers();
   const acceptedOffers = Object.values(offers).filter(
     (offer) => offer.status === "accepted"
@@ -222,7 +223,7 @@ router.get("/:userId/offers/pending", async (req, res) => {
   const user = await User.findById(userId);
   if (!user) {
     return res.status(404).json({ error: "User not found" });
-  } 
+  }
   const offers = await user.getOffers();
   const pendingOffers = Object.values(offers).filter(
     (offer) => offer.status === "pending"
