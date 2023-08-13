@@ -111,15 +111,19 @@ const PrivateChat = () => {
       <div className="scrollable-chat" ref={scrollableChatRef}>
         <div className="chat">
           {messages.map((msg, idx) => (
-            <div
-              key={idx}
-              className={
-                msg.sender === userId
-                  ? "sent chat-bubble-right"
-                  : "received chat-bubble-left"
-              }
-            >
-              {msg.content}
+            <div key={idx}>
+              <div className="chat-bubble-owner-private-chat">
+                {msg.sender === userId ? currentUser.username : typingUsername}
+              </div>
+              <div
+                className={
+                  msg.sender === userId
+                    ? "sent chat-bubble-right"
+                    : "received chat-bubble-left"
+                }
+              >
+                {msg.content}
+              </div>
             </div>
           ))}
         </div>

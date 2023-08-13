@@ -48,6 +48,7 @@
 .chat {
   row-gap: 0;
   display: grid;
+  width: fit-content;
 }
 
 .scrollable-chat::-webkit-scrollbar {
@@ -68,7 +69,7 @@
 
 .sent {
   background-color: #6BBBAE;
-  margin-left: 60%;
+  margin-left: 69%;
   justify-self: right;
 }
 
@@ -122,4 +123,10 @@
   position: fixed;
   position: absolute;
   bottom: 60px;
+}
+
+
+.chat-bubble-owner-private-chat {
+  display: flex;
+  justify-content: end;
 }
