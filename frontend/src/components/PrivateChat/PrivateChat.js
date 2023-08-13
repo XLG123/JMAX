@@ -17,6 +17,7 @@ const PrivateChat = () => {
   const [isTyping, setIsTyping] = useState(false);
   const [typingUsername, setTypingUsername] = useState("");
   const [typingTimeout, setTypingTimeout] = useState(null);
+  const [otherUserUsername, setOtherUserUsername] = useState("");
   const scrollableChatRef = useRef(null);
 
   useEffect(() => {
@@ -113,7 +114,9 @@ const PrivateChat = () => {
           {messages.map((msg, idx) => (
             <div key={idx}>
               <div className="chat-bubble-owner-private-chat">
-                {msg.sender === userId ? currentUser.username : typingUsername}
+                {msg.sender === userId
+                  ? currentUser.username
+                  : otherUserUsername}
               </div>
               <div
                 className={
