@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchMessages } from "../store/messages";
 import { useRef } from "react";
 
-
 let socket;
 
 const PrivateChat = () => {
@@ -19,7 +18,6 @@ const PrivateChat = () => {
   const [typingUsername, setTypingUsername] = useState("");
   const [typingTimeout, setTypingTimeout] = useState(null);
   const scrollableChatRef = useRef(null);
-
 
   useEffect(() => {
     dispatch(fetchMessages(userId, otherUserId));
@@ -54,7 +52,6 @@ const PrivateChat = () => {
   useEffect(() => {
     setMessages(messagesFromStore);
   }, [messagesFromStore]);
-
 
   const [messages, setMessages] = useState([]);
 
@@ -109,7 +106,7 @@ const PrivateChat = () => {
   };
 
   return (
-    <div className="chat-box-container" >
+    <div className="chat-box-container">
       <div className="chat-user">{currentUser.username}</div>
       <div className="scrollable-chat" ref={scrollableChatRef}>
         <div className="chat">
