@@ -17,6 +17,15 @@
 
 ## Actual Web App
 
+### Splash Page and demo login
+![Splash Page](splash:demo.gif)
+
+### All Requests Page and Profile Page
+![All Requests Page/Profile Page](allRequests:profile.gif)
+
+### Reviews Page
+![Reviews Page](reviews.gif)
+
 ## Code Snippets
 ### This was the backend to setup the handshake between the client and the server-side.
 
