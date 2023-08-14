@@ -1,15 +1,21 @@
 # JMAX
 
 ## Background
-[JMAX](https://jmax.onrender.com/) is a problem solver web app that allows users to share problems they face in their daily life and look for helps from other people.
+[JMAX](https://jmax.onrender.com/) is a problem solver web app that allows users to share problems they face in their daily life and look for helps from other people. It's a platform where everyone is included, they can post their problems as requests under three categories, Home Repair, Delivery, and Driver. And others might respond with offers if they can help. The requesters can then choose either to accept the offers or just ignore them.
 
 ## Functionality & MVPS
-
-## Instructions
+- Users can post, read, update and delete requests
+- Users can view other users'profile page but have no permission to edit/modify any parts of it
+- Users can respond to other users' problems by giving an offer to them.
+- Users can add comments to the offers they accept.
+- All users can chat openly in the public chat room by clicking on the chat button in the navigation bar.
+- User can also chat privately with another user by clicking onto another user's profile page.
 
 ## Wireframes
 ![JMAX Wireframe](jmaxWireframe.png)
 [Figma Wireframe](https://www.figma.com/file/cfMrJpV8rWh5eTn9W9nTJH/MERN-Wireframe?type=design&node-id=9%3A2&mode=design&t=Pfhp7PTICqIa2JkT-1)(Actual web app looks similar to the wireframe but with more features added)
+
+## Actual Web App
 
 ## Code Snippets
 ### This was the backend to setup the handshake between the client and the server-side.
