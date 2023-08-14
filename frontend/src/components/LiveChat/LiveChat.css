@@ -1,3 +1,4 @@
+/* Private chat styling */
 .chat-box-container {
   width: 40vw;
   max-width: 50vw;
@@ -35,20 +36,20 @@
 }
 
 .scrollable-chat {
+  font-family: Helvetica, Arial, sans-serif;
   overflow-y: auto;
   color: #031926;
-  font-size: 1.5vw;
-  font-weight: 100;
-  height: 50vh;
+  font-size: 1.3vw;
+  font-weight: 500;
+  height: 49vh;
   /* grid-gap: 0.6rem; */
-  margin-bottom: 1vh;
+  padding-top: 1vh;
   border-top: 2px solid #999;
 }
 
 .chat {
   row-gap: 0;
   display: grid;
-  width: fit-content;
 }
 
 .scrollable-chat::-webkit-scrollbar {
@@ -56,25 +57,29 @@
 }
 
 .sent, .received {
-  width: 21vw;
+  width: fit-content;
   max-width: 75%;
   height: fit-content;
   margin-bottom: 1em;
   word-wrap: break-word;
-  text-align: center;
   border: 2px solid #031926;
-  border-radius: 20px;
-  padding: 1em;
+  padding: 0.2em 1em;
 }
 
 .sent {
   background-color: #6BBBAE;
+  border-top-right-radius: 15px;
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
   margin-left: 60%;
   justify-self: right;
 }
 
 .received {
   background-color: #CADFF1;
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
+  border-top-left-radius: 15px;
   justify-self: left;
 }
 
@@ -93,6 +98,12 @@
   font-size: 1.5vw;
 }
 
+@media screen and (width < 1000px) {
+  .sticky-input form {
+    height: 3vh;
+  }
+}
+
 .sticky-input form input:focus {
   box-shadow: none !important;
 }
@@ -102,6 +113,7 @@
   border: none;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
+  padding-left: 0.3em;
 }
 
 .sticky-input form button {
@@ -120,14 +132,28 @@
 
 .typing-message-private-container {
   width: max-content;
-  position: fixed;
   position: absolute;
-  bottom: 60px;
+  font-size: 1vw;
 }
 
+@media screen and (width > 1440px) {
+  .typing-message-private-container {
+    bottom: 4.0vw;
+  }
+}
 
-.chat-bubble-owner-private-chat {
-  display: flex;
-  justify-content: end;
-  font-size: 10px;
+@media screen and (width <= 1440px) {
+  .typing-message-private-container {
+    bottom: 4.3vw;
+  }
+}
+
+/* Public chat styling */
+.public-chat-msg {
+  font-size: 1.3vw;
+  background-color:rgba(192, 192, 192, 0.8);
+  margin-bottom: 0.5em;
+  border-radius: 5px;
+  padding: 0.3em 0.6em;
+  width: fit-content;
 }

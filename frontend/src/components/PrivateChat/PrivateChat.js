@@ -108,32 +108,25 @@ const PrivateChat = () => {
 
   return (
     <div className="chat-box-container">
+
       <div className="chat-user">{currentUser.username}</div>
+
       <div className="scrollable-chat" ref={scrollableChatRef}>
         <div className="chat">
           {messages.map((msg, idx) => (
-            <div key={idx}>
-              <div className="chat-bubble-owner-private-chat">
-                {msg.sender === userId
-                  ? currentUser.username
-                  : otherUserUsername}
-              </div>
-              <div
-                className={
-                  msg.sender === userId
-                    ? "sent chat-bubble-right"
-                    : "received chat-bubble-left"
-                }
-              >
-                {msg.content}
-              </div>
+            <div key={idx}
+              className={
+                msg.sender === userId ? "sent" : "received"} >
+              {msg.content}
             </div>
           ))}
         </div>
       </div>
+
       <p className="typing-message-private-container">
         {isTyping && <span> {typingUsername} is typing...</span>}{" "}
       </p>
+
       <div className="sticky-input">
         <form onSubmit={sendMessage} className="live-private-chat-input-form">
           <input
@@ -145,6 +138,7 @@ const PrivateChat = () => {
           <button type="submit">Send</button>
         </form>
       </div>
+
     </div>
   );
 };
