@@ -71,7 +71,7 @@ if (!offerOwner)return null
 if(Object.values(reqForOffer).length === 0) return null
   return (
     <>
-    <div className="offer-container center">
+    <div className="offer-box center">
     <form onSubmit={handelShowAddReview}>
     {/* <div className=""> */}
       <h3 onClick={redirectToHelper} className="user bigger">{offerOwner[helper].username}</h3>

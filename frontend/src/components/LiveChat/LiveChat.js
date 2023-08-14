@@ -68,7 +68,7 @@ const LivePrivateChat = () => {
         <div className="chat">
 
           {chat.map((msg, index) => (
-            <div key={index}>{msg}</div>
+            <div key={index} className="public-chat-msg">{msg}</div>
           ))}
         </div>
       </div>
