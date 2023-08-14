@@ -8,7 +8,7 @@
 ## Instructions
 
 ## Wireframes
-![]
+![jmaxWireframe.png]
 [Figma Wireframe](https://www.figma.com/file/cfMrJpV8rWh5eTn9W9nTJH/MERN-Wireframe?type=design&node-id=9%3A2&mode=design&t=Pfhp7PTICqIa2JkT-1)(Actual web app looks similar to the wireframe but with more features added)
 
 ## Code Snippets
