@@ -10,8 +10,6 @@ const LivePrivateChat = () => {
   const [chat, setChat] = useState([]);
   const [typing, setTyping] = useState(false);
   const [typingTimeout, setTypingTimeout] = useState(null);
-  // const currentUser = useSelector(state => state.session.user);
-
   const handleKeyUp = () => {
     if (typingTimeout) clearTimeout(typingTimeout);
 
@@ -63,8 +61,6 @@ const LivePrivateChat = () => {
     setMessage("");
     if (socket) socket.emit("stop typing");
   };
-
-  // console.log(chat);
   return (
     <div className="chat-box-container">
 
@@ -72,7 +68,7 @@ const LivePrivateChat = () => {
         <div className="chat">
 
           {chat.map((msg, index) => (
-            <div key={index}>{msg}</div>
+            <div key={index} className="public-chat-msg">{msg}</div>
           ))}
         </div>
       </div>
@@ -90,10 +86,6 @@ const LivePrivateChat = () => {
           <button type="submit">Send</button>
         </form>
       </div>
-      {/* <button onClick={() => socket && socket.emit("typing")}>Test Typing</button>
-      <button onClick={() => socket && socket.emit("stop typing")}>
-        Test Stop Typing
-      </button> */}
     </div>
   );
 };
