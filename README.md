@@ -18,10 +18,10 @@
 ## Actual Web App
 
 ### Splash Page and demo login
-![Splash Page](splash:demo.gif)
+![Splash Page](splashAnddemo.gif)
 
 ### All Requests Page and Profile Page
-![All Requests Page/Profile Page](allRequests:profile.gif)
+![All Requests Page/Profile Page](allRequestsAndprofile.gif)
 
 ### Reviews Page
 ![Reviews Page](reviews.gif)
