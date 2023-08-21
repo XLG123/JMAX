@@ -42,27 +42,42 @@ export const sendMessage = async (message) => {
   }
 };
 
+// Fetching Ids associated with a user
+export const SET_ASSOCIATED_IDS = "SET_ASSOCIATED_IDS";
+
+// Action Creator
+export const setAssociatedIds = (associatedIds) => ({
+  type: SET_ASSOCIATED_IDS,
+  associatedIds,
+});
+
+// Thunk to Fetch Associated IDs
+export const fetchAssociatedIds = (userId) => async (dispatch) => {
+  try {
+    const response = await jwtFetch(`/api/associatedIds/${userId}`);
+    if (!response.ok) {
+      throw new Error("Error fetching associated IDs");
+    }
+    const associatedIds = await response.json();
+
+    dispatch(setAssociatedIds(associatedIds));
+  } catch (error) {
+    throw new Error("Error fetching associated IDs: " + error.message);
+  }
+};
+
 const initialState = [];
-
-// const messagesReducer = (state = initialState, action) => {
-//   switch (action.type) {
-//     case SET_MESSAGES:
-//       return { ...state, ...action.messages };
-//     default:
-//       return state;
-//   }
-// };
-
 const messagesReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_MESSAGES:
       // Convert the object values to an array
       const messagesArray = Object.values(action.messages);
       return messagesArray;
+    case SET_ASSOCIATED_IDS:
+      return action.associatedIds;
     default:
       return state;
   }
 };
-
 
 export default messagesReducer;
