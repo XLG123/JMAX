@@ -10,6 +10,7 @@ const SearchBar = () => {
   const handleSearchSubmit = (e) => {
     e.preventDefault();
     // console.log(parseInt(searchText[0]));
+    
     if (isNaN(parseInt(searchText[0]))) {
       fetch(`/api/problems/search/category/${searchText}`)
         .then((response) => response.json())

@@ -10,6 +10,7 @@ import IconButton from "@mui/material/IconButton";
 import LogoutIcon from "@mui/icons-material/Logout";
 import SmsIcon from "@mui/icons-material/Sms";
 import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
+import LoginIcon from '@mui/icons-material/Login';
 import "./NavBar.css";
 import OfferModal from "../offerModal/index";
 import Offers from "../offers/offers";
@@ -136,6 +137,7 @@ function NavBar() {
 
             {showChat && <div className="private-chat-history">
               <ul>
+                Click to enter chat
                 {chatHistory.map((user) => (
                   <li key={user._id}>
                     <NavLink to=      
@@ -146,7 +148,7 @@ function NavBar() {
                         {user.username}
                       </span>
                       <span className="enter-private-chat">
-                        click to enter chat
+                        <LoginIcon />
                       </span>
                     </NavLink>
                   </li>

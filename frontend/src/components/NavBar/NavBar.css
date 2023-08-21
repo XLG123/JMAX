@@ -300,6 +300,7 @@
 .private-chat-link {
   text-decoration: none;
   color: inherit;
+  align-items: center;
   display: grid;
   grid-template-columns: auto auto;
 }
