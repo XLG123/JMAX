@@ -12,7 +12,7 @@ const PrivateChat = () => {
   const { userId, otherUserId } = useParams();
   const [inputMessage, setInputMessage] = useState("");
   const dispatch = useDispatch();
-  const messagesFromStore = useSelector((state) => state.messages);
+  const messagesFromStore = useSelector((state) => state.messages.messages);
   const currentUser = useSelector((state) => state.session.user);
   const [isTyping, setIsTyping] = useState(false);
   const [typingUsername, setTypingUsername] = useState("");
@@ -113,7 +113,7 @@ const PrivateChat = () => {
 
       <div className="scrollable-chat" ref={scrollableChatRef}>
         <div className="chat">
-          {messages.map((msg, idx) => (
+          {Object.values(messages).map((msg, idx) => (
             <div key={idx}
               className={
                 msg.sender === userId ? "sent" : "received"} >
