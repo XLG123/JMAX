@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const { mongoURI: db } = require('../config/keys.js');
 const Problem = require('../models/Problem.js');
 
-export const DEFAULT_PROBLEM_IMAGE_URL = 'https://my-jmax.s3.us-east-2.amazonaws.com/public/tools.svg'; // <- Insert the S3 URL that you copied above here
+; // <- Insert the S3 URL that you copied above here
 
 // Connect to database
 mongoose

@@ -3,11 +3,13 @@ const router = express.Router();
 const mongoose = require("mongoose");
 const Problem = mongoose.model("Problem");
 const { requireUser } = require("../../config/passport");
-const DEFAULT_PROBLEM_IMAGE_URL = 'https://my-jmax.s3.us-east-2.amazonaws.com/public/tools.svg';
+// const { DEFAULT_PROBLEM_IMAGE_URL } = require("../../seeders/images");
+const DEFAULT_PROBLEM_IMAGE_URL = 'https://my-jmax.s3.us-east-2.amazonaws.com/public/tools.svg'
 const {
   multipleFilesUpload,
   multipleMulterUpload,
   singleFileUpload,
+  singleMulterUpload,
 } = require("../../../backend/awsS3");
 
 router.get("/", async (req, res) => {
@@ -110,7 +112,7 @@ router.get("/closed", async (req, res) => {
 
 router.post(
   "/create",
-  multipleMulterUpload("images"),
+  singleMulterUpload("images"),
   requireUser,
   async (req, res) => {
     console.log(req.file);
@@ -119,9 +121,15 @@ router.post(
     //   file: req.file,
     //   public: true,
     // });
-    const imageUrls = req.file ?
-            await singleFileUpload({ file: req.file, public: true }) :
-            DEFAULT_PROBLEM_IMAGE_URL;
+    let imageUrls;
+
+    if (req.body.problemImageUrl) {
+        imageUrls = req.body.problemImageUrl;
+    } else if (req.file) {
+        imageUrls = await singleFileUpload({ file: req.file, public: true });
+    } else {
+        imageUrls = DEFAULT_PROBLEM_IMAGE_URL;
+    }
 
     const newProblem = new Problem({
       category: req.body.category,
