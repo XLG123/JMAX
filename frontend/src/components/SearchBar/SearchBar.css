@@ -84,3 +84,13 @@
 .search-result {
   margin-top: 7vw;
 }
+
+.not-found-msg {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 1.3vw;
+  text-align: center;
+}
+
+.zipcode-search, .category-search {
+  color:rgb(255, 255, 255);
+}

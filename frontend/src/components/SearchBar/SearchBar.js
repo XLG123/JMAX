@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import SearchIcon from "@mui/icons-material/Search";
-// import { searchResults } from "./searchResults";
 import "./SearchBar.css";
 import Tooltip from '@mui/material/Tooltip';
 
@@ -15,14 +14,14 @@ const SearchBar = () => {
       fetch(`/api/problems/search/category/${searchText}`)
         .then((response) => response.json())
         .then((data) => {
-          console.log(data);
+          // console.log(data);
           history.push("/search-results", { searchResults: data });
         });
     } else {
       fetch(`/api/problems/search/address/${searchText}`)
         .then((response) => response.json())
         .then((data) => {
-          console.log(data);
+          // console.log(data);
           history.push("/search-results", {searchResults: data });
         });
     }
@@ -36,7 +35,7 @@ const SearchBar = () => {
           onSubmit={(e) => handleSearchSubmit(e)}>
           <input
             type="text"
-            placeholder="Others might also share the same issues as you"
+            placeholder="Enter a zip code or a category name"
             id="search-bar"
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
