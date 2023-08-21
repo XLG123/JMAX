@@ -6,9 +6,7 @@ import "./SearchBar.css";
 
 const SearchResults = () => {
   const location = useLocation();
-  console.log(location);
   const searchResults = location.state.searchResults;
-  console.log(searchResults);
 
   return (
     <div className="search-result">

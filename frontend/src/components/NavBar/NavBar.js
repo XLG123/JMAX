@@ -221,8 +221,6 @@ function NavBar() {
               </div>
             </Tooltip>
 
-            {/* TODO: CATEGORY FILTER */}
-
             <Tooltip title="Log Out">
               <IconButton onClick={logoutUser} className="logout-btn">
                 <LogoutIcon

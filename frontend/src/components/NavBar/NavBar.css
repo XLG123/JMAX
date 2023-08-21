@@ -249,14 +249,20 @@
   width: fit-content;
   height: fit-content;
   position: absolute;
-  background-color: #0c5078ca;
-  right: 13vw;
+  background-color: #0c5078da;
+  right: 11.5vw;
   top: 4vw;
   font-size: 1.1vw;
   border-radius: 5px;
   padding: 0.5em;
   z-index: 10;
   letter-spacing: 0.05em;
+}
+
+@media screen and (width < 800px) {
+  .private-chat-history {
+    right: 10vw;
+  }
 }
 
 .private-chat-history ul li {
@@ -282,6 +288,10 @@
 .private-chat-other-username {
   margin-right: 1em;
   color: #ead39a;
+}
+
+.private-chat-link .enter-private-chat {
+  text-align: right;
 }
 
 @media screen and (width > 1440px) {
