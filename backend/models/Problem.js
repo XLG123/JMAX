@@ -25,7 +25,7 @@ const problemSchema = new Schema(
       default: "open",
     },
     problemImageUrl: {
-      type: [String],
+      type: String,
       required: false,
     },
   },

@@ -3,9 +3,11 @@ const router = express.Router();
 const mongoose = require("mongoose");
 const Problem = mongoose.model("Problem");
 const { requireUser } = require("../../config/passport");
+const DEFAULT_PROBLEM_IMAGE_URL = 'https://my-jmax.s3.us-east-2.amazonaws.com/public/tools.svg';
 const {
   multipleFilesUpload,
   multipleMulterUpload,
+  singleFileUpload,
 } = require("../../../backend/awsS3");
 
 router.get("/", async (req, res) => {
@@ -111,11 +113,16 @@ router.post(
   multipleMulterUpload("images"),
   requireUser,
   async (req, res) => {
-    console.log(req.files);
-    const imageUrls = await multipleFilesUpload({
-      files: req.files,
-      public: true,
-    });
+    console.log(req.file);
+    // // console.log("🚀 ~ file: problems.js:116 ~ i:", i)
+    // const imageUrls = await singleFileUpload({  // Use the S3 upload function
+    //   file: req.file,
+    //   public: true,
+    // });
+    const imageUrls = req.file ?
+            await singleFileUpload({ file: req.file, public: true }) :
+            DEFAULT_PROBLEM_IMAGE_URL;
+
     const newProblem = new Problem({
       category: req.body.category,
       description: req.body.description,
