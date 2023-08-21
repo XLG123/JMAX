@@ -191,11 +191,35 @@
 .nav-chat-btn {
   position: relative;
   left: 76vw;
-  top: 2.65vw;
+  top: 2.85vw;
 }
 
 .nav-chat-icon {
   border-radius: 5px;
+}
+
+@media screen and (width < 800px) {
+  .nav-chat-btn {
+    top: 1.5vw;
+  }
+}
+
+@media screen and (width <= 1300px) {
+  .nav-chat-btn {
+    top: 2.05vw;
+  }
+}
+
+@media screen and (width > 1300px) {
+  .nav-chat-btn {
+    top: 2.55vw;
+  }
+}
+
+@media screen and (width > 1440px) {
+  .nav-chat-btn {
+    top: 2.85vw;
+  }
 }
 
 .private-chat-history {

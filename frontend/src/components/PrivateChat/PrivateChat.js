@@ -3,7 +3,7 @@ import io from "socket.io-client";
 import "../LiveChat/LiveChat.css";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchMessages } from "../store/messages";
+import { fetchAssociatedIds, fetchMessages } from "../store/messages";
 import { useRef } from "react";
 
 let socket;
@@ -104,6 +104,7 @@ const PrivateChat = () => {
     socket.emit("private message", message);
     setMessages((prevMessages) => [...prevMessages, message]);
     setInputMessage("");
+    dispatch(fetchAssociatedIds(userId));
   };
 
   return (
