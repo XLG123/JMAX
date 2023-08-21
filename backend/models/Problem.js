@@ -24,10 +24,10 @@ const problemSchema = new Schema(
       required: true,
       default: "open",
     },
-    // problemImageUrl: {
-    //   type: [String],
-    //   required: false,
-    // },
+    problemImageUrl: {
+      type: [String],
+      required: false,
+    },
   },
 
   {
