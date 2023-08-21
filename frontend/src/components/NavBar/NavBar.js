@@ -103,39 +103,35 @@ function NavBar() {
         <>
           <div className="links-nav">
             <Tooltip title="All Requests">
-              <>
-                <NavLink
-                  to="/requests"
-                  className={
-                    currentUrl === "/requests"
-                      ? "nav-btn-gp2 all-requests-btn selected-nav-btn"
-                      : "nav-btn-gp2 all-requests-btn"
-                  }
-                >
-                  All Requests
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                  {/* the empty spans are for css styling effects */}
-                </NavLink>
-              </>
+              <NavLink
+                to="/requests"
+                className={
+                  currentUrl === "/requests"
+                    ? "nav-btn-gp2 all-requests-btn selected-nav-btn"
+                    : "nav-btn-gp2 all-requests-btn"
+                }
+              >
+                All Requests
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                {/* the empty spans are for css styling effects */}
+              </NavLink>
             </Tooltip>
 
             <Tooltip title="Chat History">
-              <>
-                <IconButton className="nav-chat-btn" onClick={showPrivateChat} ref={ref}>
-                  <SmsIcon
-                    sx={{
-                      color: "#F4E9CD",
-                      fontSize: "2.5vw",
-                      position: "absolute",
-                      bottom: "0.2vw",
-                    }}
-                    className="nav-chat-icon"
-                  />
-                </IconButton>
-              </>
+              <IconButton className="nav-chat-btn" onClick={showPrivateChat} ref={ref}>
+                <SmsIcon
+                  sx={{
+                    color: "#F4E9CD",
+                    fontSize: "2.5vw",
+                    position: "absolute",
+                    bottom: "0.2vw",
+                  }}
+                  className="nav-chat-icon"
+                />
+              </IconButton>
             </Tooltip>
 
             {showChat && <div className="private-chat-history">
@@ -157,99 +153,89 @@ function NavBar() {
                 ))}
               </ul>
             </div>}
-
-            <Tooltip title="Notification">
-              <>
-                {notify === false && (
-                  <IconButton className="notify-btn" onClick={handleShowOffer}>
-                    <NotificationsActiveIcon
-                      className="notify-icon"
-                      sx={{
-                        color: "#F4E9CD",
-                        fontSize: "2.5vw",
-                        position: "absolute",
-                        bottom: "0.2vw",
-                      }}
-                    />
-                  </IconButton>
-                )}
-              </>
-            </Tooltip>
-
-            <Tooltip title="Notification">
-              <>
-                {notify === true && (
-                  <IconButton
-                    className={`notify-btn ${notify ? "shaking2" : ""}`}
-                    onClick={handleShowOffer}
-                  >
-                    <NotificationsActiveIcon
-                      className="notify-icon"
-                      sx={{
-                        color: "red",
-                        fontSize: "2.5vw",
-                        position: "absolute",
-                        bottom: "0.2vw",
-                      }}
-                    />
-                  </IconButton>
-                )}
-              </>
-            </Tooltip>
-
-            <Tooltip title="Profile Page">
-              <>
-                <NavLink
-                  to={`/users/${currentUser?._id}`}
-                  className={
-                    currentUrl === `/users/${currentUser?._id}`
-                      ? "nav-btn-gp2 user-profile-btn selected-nav-btn"
-                      : "nav-btn-gp2 user-profile-btn"
-                  }
-                >
-                  Profile
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                  {/* the empty spans are for css styling effects */}
-                </NavLink>
-              </>
-            </Tooltip>
-
-            <Tooltip title="Create a new request">
-              <>
-                <div
-                  onClick={handleShowForm}
-                  className="nav-btn-gp2 new-request-btn"
-                >
-                  Write a Request
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                  {/* the empty spans are for css styling effects */}
-                </div>
-              </>
-            </Tooltip>
-
-            {/* TODO: CATEGORY FILTER */}
-
-            <Tooltip title="Log Out">
-              <>
-                <IconButton onClick={logoutUser} className="logout-btn">
-                  <LogoutIcon
-                    className="logout-icon"
+        
+            {notify === false && (
+              <Tooltip title="Notification">
+                <IconButton className="notify-btn" onClick={handleShowOffer}>
+                  <NotificationsActiveIcon
+                    className="notify-icon"
                     sx={{
                       color: "#F4E9CD",
                       fontSize: "2.5vw",
                       position: "absolute",
                       bottom: "0.2vw",
-                      borderRadius: "5px",
                     }}
                   />
                 </IconButton>
-              </>
+              </Tooltip>
+            )}
+
+            {notify === true && (
+              <Tooltip title="Notification">
+                <IconButton
+                  className={`notify-btn ${notify ? "shaking2" : ""}`}
+                  onClick={handleShowOffer}
+                >
+                  <NotificationsActiveIcon
+                    className="notify-icon"
+                    sx={{
+                      color: "red",
+                      fontSize: "2.5vw",
+                      position: "absolute",
+                      bottom: "0.2vw",
+                    }}
+                  />
+                </IconButton>
+              </Tooltip>
+            )}
+
+            <Tooltip title="Profile Page">
+              <NavLink
+                to={`/users/${currentUser?._id}`}
+                className={
+                  currentUrl === `/users/${currentUser?._id}`
+                    ? "nav-btn-gp2 user-profile-btn selected-nav-btn"
+                    : "nav-btn-gp2 user-profile-btn"
+                }
+              >
+                Profile
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                {/* the empty spans are for css styling effects */}
+              </NavLink>
+            </Tooltip>
+
+            <Tooltip title="Create a new request">
+              <div
+                onClick={handleShowForm}
+                className="nav-btn-gp2 new-request-btn"
+              >
+                Write a Request
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                {/* the empty spans are for css styling effects */}
+              </div>
+            </Tooltip>
+
+            {/* TODO: CATEGORY FILTER */}
+
+            <Tooltip title="Log Out">
+              <IconButton onClick={logoutUser} className="logout-btn">
+                <LogoutIcon
+                  className="logout-icon"
+                  sx={{
+                    color: "#F4E9CD",
+                    fontSize: "2.5vw",
+                    position: "absolute",
+                    bottom: "0.2vw",
+                    borderRadius: "5px",
+                  }}
+                />
+              </IconButton>
             </Tooltip>
           </div>
           <SearchBar />

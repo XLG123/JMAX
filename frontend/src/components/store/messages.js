@@ -3,9 +3,19 @@ import jwtFetch from "./jwt";
 
 export const SET_MESSAGES = "SET_MESSAGES";
 
-export const setMessages = (messages) => ({
+export const setMessages = (messages, userId) => ({
   type: SET_MESSAGES,
   messages,
+  userId
+});
+
+// Fetching Ids associated with a user
+export const SET_ASSOCIATED_IDS = "SET_ASSOCIATED_IDS";
+
+// Action Creator
+export const setAssociatedIds = (associatedIds) => ({
+  type: SET_ASSOCIATED_IDS,
+  associatedIds,
 });
 
 export const fetchMessages = (userId, otherUserId) => async (dispatch) => {
@@ -16,7 +26,7 @@ export const fetchMessages = (userId, otherUserId) => async (dispatch) => {
     }
     const messages = await response.json();
 
-    dispatch(setMessages(messages));
+    dispatch(setMessages(messages, userId));
 
     //   return messages;
   } catch (error) {
@@ -42,15 +52,6 @@ export const sendMessage = async (message) => {
   }
 };
 
-// Fetching Ids associated with a user
-export const SET_ASSOCIATED_IDS = "SET_ASSOCIATED_IDS";
-
-// Action Creator
-export const setAssociatedIds = (associatedIds) => ({
-  type: SET_ASSOCIATED_IDS,
-  associatedIds,
-});
-
 // Thunk to Fetch Associated IDs
 export const fetchAssociatedIds = (userId) => async (dispatch) => {
   try {
@@ -72,6 +73,7 @@ const messagesReducer = (state = {users: {}, messages: {}}, action) => {
     case SET_MESSAGES:
       // Convert the object values to an array
       const messagesArray = Object.values(action.messages);
+      const userId = action.userId;
       return {...state, messages: messagesArray};
     case SET_ASSOCIATED_IDS:
       return {...state, users: action.associatedIds};
