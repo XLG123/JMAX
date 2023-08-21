@@ -32,7 +32,8 @@ const SearchBar = () => {
   return (
     <div className="search-bar-container">
       <Tooltip title="Search">
-        <form className="search-bar-form" >
+        <form className="search-bar-form" 
+          onSubmit={(e) => handleSearchSubmit(e)}>
           <input
             type="text"
             placeholder="Others might also share the same issues as you"
