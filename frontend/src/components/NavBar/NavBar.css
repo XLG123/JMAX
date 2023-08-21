@@ -249,8 +249,7 @@
   width: fit-content;
   height: fit-content;
   position: absolute;
-  background-color: #0c5078da;
-  right: 11.5vw;
+  background-color: #356066f1;
   top: 4vw;
   font-size: 1.1vw;
   border-radius: 5px;
@@ -259,9 +258,33 @@
   letter-spacing: 0.05em;
 }
 
+@media screen and (width > 1440px) {
+  .private-chat-history {
+    right: 12.5vw;
+  }
+}
+
+@media screen and (width: 1440px) {
+  .private-chat-history {
+    right: 12vw;
+  }
+}
+
+@media screen and (width < 1440px) {
+  .private-chat-history {
+    right: 10.5vw;
+  }
+}
+
 @media screen and (width < 800px) {
   .private-chat-history {
     right: 10vw;
+  }
+}
+
+@media screen and (width < 600px) {
+  .private-chat-history {
+    right: 7.5vw;
   }
 }
 
@@ -271,7 +294,7 @@
 }
 
 .private-chat-history ul li:hover {
-  background-color: #052e46;
+  background-color: rgba(5, 46, 70, 0.65);
 }
 
 .private-chat-link {
