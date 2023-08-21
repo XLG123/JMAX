@@ -178,6 +178,12 @@
   }
 }
 
+@media screen and (width < 600px) {
+  .user-profile-btn {
+    right: 1vw;
+  }
+}
+
 .logout-btn {
   position: relative;
   left: 94.5vw;
@@ -230,6 +236,12 @@
 @media screen and (width < 800px) {
   .nav-chat-btn {
     top: 1.65vw;
+  }
+}
+
+@media screen and (width < 600px) {
+  .nav-chat-btn {
+    top: 0.75vw;
   }
 }
 
@@ -292,7 +304,7 @@
 
 @media screen and (width < 600px) {
   .logout-btn, .notify-btn {
-    top: 0.1vw;
+    top: 0.5vw;
   }
 }
 

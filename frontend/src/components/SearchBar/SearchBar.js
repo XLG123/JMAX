@@ -32,7 +32,7 @@ const SearchBar = () => {
   return (
     <div className="search-bar-container">
       <Tooltip title="Search">
-        <form className="search-bar-form" onSubmit={(e) => handleSearchSubmit(e)}>
+        <form className="search-bar-form" >
           <input
             type="text"
             placeholder="Others might also share the same issues as you"
@@ -40,13 +40,9 @@ const SearchBar = () => {
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
           />
-          <div className="search-bar-btn">
-            <div type="submit"
-              onClick={(e) => handleSearchSubmit(e)}
-              onKeyDown={(e) => handleSearchSubmit(e)}>
-              <SearchIcon className="search-icon" />
-            </div>
-          </div>
+          <button className="search-bar-btn">
+            <SearchIcon className="search-icon" sx={{fontSize: "1.5vw"}}/>
+          </button>
         </form>
       </Tooltip>
     </div>
