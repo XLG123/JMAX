@@ -54,7 +54,7 @@ export const setAssociatedIds = (associatedIds) => ({
 // Thunk to Fetch Associated IDs
 export const fetchAssociatedIds = (userId) => async (dispatch) => {
   try {
-    const response = await jwtFetch(`/api/associatedIds/${userId}`);
+    const response = await jwtFetch(`/api/messages/${userId}`);
     if (!response.ok) {
       throw new Error("Error fetching associated IDs");
     }
@@ -67,14 +67,14 @@ export const fetchAssociatedIds = (userId) => async (dispatch) => {
 };
 
 const initialState = [];
-const messagesReducer = (state = initialState, action) => {
+const messagesReducer = (state = {users: {}, messages: {}}, action) => {
   switch (action.type) {
     case SET_MESSAGES:
       // Convert the object values to an array
       const messagesArray = Object.values(action.messages);
-      return messagesArray;
+      return {...state, messages: messagesArray};
     case SET_ASSOCIATED_IDS:
-      return action.associatedIds;
+      return {...state, users: action.associatedIds};
     default:
       return state;
   }

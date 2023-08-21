@@ -167,7 +167,7 @@ router.patch("/:id", requireUser, async (req, res) => {
     }
     await Problem.updateOne({ _id: req.params.id }, { $set: req.body });
 
-    // return res.json({ message: "Problem updated successfully" });
+    return res.json({ message: "Problem updated successfully" });
   } catch (error) {
     return res.status(500).json({
       error: error.message,
