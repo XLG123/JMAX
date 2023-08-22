@@ -32,7 +32,8 @@
 
 .chat-user {
   margin-bottom: 1em;
-  margin-left: 88%;
+  margin-left: 90%;
+  font-size: 1.2vw;
 }
 
 .scrollable-chat {
@@ -120,7 +121,7 @@
 
 .sticky-input form button {
   font-size: inherit;
-  background-color: rgba(192, 192, 192, 0.8);
+  background-color: #9DBEBB;
   outline: none;
   border: none;
   border-top-right-radius: 5px;
