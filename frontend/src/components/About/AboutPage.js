@@ -5,6 +5,8 @@ import avatar3 from "../../assets/images/avatar3.png";
 import avatar4 from "../../assets/images/avatar4.png";
 import "./AboutPage.css";
 import Avatar from "@mui/material/Avatar";
+import GitHubIcon from '@mui/icons-material/GitHub';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
 
 const AboutPage = () => {
   const gitHubLinks = [
@@ -12,6 +14,20 @@ const AboutPage = () => {
     "https://github.com/Manel-Oulds",
     "https://github.com/AsmaaEliwa",
     "https://github.com/XLG123",
+  ];
+
+  const linkedInLinks = [
+    "https://www.linkedin.com/in/jcorporan/",
+    "https://www.linkedin.com/in/manel-ould-saada/",
+    "https://www.linkedin.com/in/asmaa-eliwa-38a38621a/",
+    "https://www.linkedin.com/in/xiaolinguan/"
+  ];
+
+  const portfolioLinks = [
+    "https://j-corp-25.github.io/Portfolio/",
+    "https://manel-oulds.github.io/",
+    "https://asmaaeliwa.github.io/",
+    "https://xlg123.github.io/"
   ];
 
   const lightUpJMAX = () => {
@@ -64,11 +80,6 @@ const AboutPage = () => {
 
   return (
     <div className="about-page-container">
-      <div className="splash-container">
-        <div className="image-container">
-          <img src={webAppLogo} alt="app-logo" className="splash-logo" />
-        </div>
-      </div>
 
       <div className="app-description-container">
         <p className="app-description">
@@ -77,19 +88,15 @@ const AboutPage = () => {
           helps to other users. Everyone will feel included in this platform 
           and will always find others that experienced the same issues.
         </p>
-      </div>
 
-      <div className="team-members-info">
-        <div className="member-box-container">
+        <div className="team-members-info">
           <div className="member-box">
-            <div className="member-name">
+            <div className="member-info">
               <div className="member-name">
                 <span id="change-J">J</span>ordy
               </div>
-              <br />
               <div className="member-pos">Backend Lead</div>
-              <br />
-              <a href={gitHubLinks[0]}>
+              <a href={portfolioLinks[0]}>
                 <Avatar
                   alt="jor-profile"
                   src={avatar1}
@@ -99,16 +106,23 @@ const AboutPage = () => {
                   onMouseLeave={undoLightUp}
                 />
               </a>
+              <div className="online-presence-links">
+                <a href={gitHubLinks[0]}>
+                  <GitHubIcon sx={{fontSize: "2vw"}}/>
+                </a>
+
+                <a href={linkedInLinks[0]}>
+                  <LinkedInIcon sx={{fontSize: "2vw"}}/>
+                </a>
+              </div>
             </div>
 
-            <div className="member-name">
+            <div className="member-info">
               <div className="member-name">
                 <span id="change-M">M</span>anel
               </div>
-              <br />
-              <div className="member-pos">Backend Lead</div>
-              <br />
-              <a href={gitHubLinks[1]}>
+              <div className="member-pos">Flex Lead</div>
+              <a href={portfolioLinks[1]}>
                 <Avatar
                   alt="mal-profile"
                   src={avatar2}
@@ -118,16 +132,23 @@ const AboutPage = () => {
                   onMouseLeave={undoLightUp}
                 />
               </a>
+              <div className="online-presence-links">
+                <a href={gitHubLinks[1]}>
+                  <GitHubIcon sx={{fontSize: "2vw"}}/>
+                </a>
+
+                <a href={linkedInLinks[1]}>
+                  <LinkedInIcon sx={{fontSize: "2vw"}}/>
+                </a>
+              </div>
             </div>
 
-            <div className="member-name">
+            <div className="member-info">
               <div className="member-name">
                 <span id="change-A">A</span>smaa
               </div>
-              <br />
               <div className="member-pos">Frontend Lead</div>
-              <br />
-              <a href={gitHubLinks[2]}>
+              <a href={portfolioLinks[2]}>
                 <Avatar
                   alt="asm-profile"
                   src={avatar3}
@@ -137,16 +158,23 @@ const AboutPage = () => {
                   onMouseLeave={undoLightUp}
                 />
               </a>
+              <div className="online-presence-links">
+                <a href={gitHubLinks[2]}>
+                  <GitHubIcon sx={{fontSize: "2vw"}}/>
+                </a>
+
+                <a href={linkedInLinks[2]}>
+                  <LinkedInIcon sx={{fontSize: "2vw"}}/>
+                </a>
+              </div>
             </div>
 
-            <div className="member-name">
+            <div className="member-info">
               <div className="member-name">
                 <span id="change-X">X</span>iao Lin
               </div>
-              <br />
-              <div className="member-pos">Frontend Lead</div>
-              <br />
-              <a href={gitHubLinks[3]}>
+              <div className="member-pos">Team Lead</div>
+              <a href={portfolioLinks[3]}>
                 <Avatar
                   alt="xlg-profile"
                   src={avatar4}
@@ -156,9 +184,19 @@ const AboutPage = () => {
                   onMouseLeave={undoLightUp}
                 />
               </a>
+              <div className="online-presence-links">
+                <a href={gitHubLinks[3]}>
+                  <GitHubIcon sx={{fontSize: "2vw"}}/>
+                </a>
+
+                <a href={linkedInLinks[3]}>
+                  <LinkedInIcon sx={{fontSize: "2vw"}}/>
+                </a>
+              </div>
             </div>
           </div>
         </div>
+
       </div>
 
       <a href="https://github.com/XLG123/JMAX" className="source-code-btn">
