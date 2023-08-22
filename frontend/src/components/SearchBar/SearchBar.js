@@ -12,7 +12,9 @@ const SearchBar = () => {
     const wordCount = searchText.split(" ").length;
     let caseInsensitive = "";
     if (isNaN(parseInt(searchText[0]))) {
-      if (wordCount === 1) {
+      if (searchText === "") {
+        caseInsensitive = "placeholder";
+      } else if (wordCount === 1) {
         caseInsensitive =
           searchText[0].toUpperCase() + searchText.substring(1).toLowerCase();
       } else if (wordCount === 2) {
