@@ -3,6 +3,7 @@ import jwtFetch from './jwt';
 const RECEIVE_NEW_REVIEW = "reviews/RECEIVE_NEW_REVIEW";
 const GET_REVIEWS = 'reviews/GET_REVIEWS';
 const UPDATE_REVIEW="reviews/UPDATE_REVIEW"
+const REMOVE_REVIEW="reviews/REMOVE_REVIEW"
 const receiveNewReview = review => ({
   type: RECEIVE_NEW_REVIEW,
   review
@@ -43,6 +44,7 @@ export const composeReview = data => async dispatch => {
 
 
 export const fetchUpdateReview = (reviewId, updatedData) => async (dispatch,getState) => {
+  debugger
   try {
     const res = await jwtFetch(`/api/reviews/${reviewId}`, {
       method: 'PATCH',
@@ -50,11 +52,9 @@ export const fetchUpdateReview = (reviewId, updatedData) => async (dispatch,getS
     });
     const user = getState().session.user;  
     if (res.ok) {
+      debugger
       const updatedReview = await res.json();
       dispatch(updateReview(updatedReview));
-      // dispatch(fetchUserProblems(user._id));
-      // dispatch(offerActions.fetchUserOffers(user._id));
-      // dispatch(fetchUserProblems(user._id));
     } else {
       console.error("Request not OK");
     }
@@ -64,7 +64,19 @@ export const fetchUpdateReview = (reviewId, updatedData) => async (dispatch,getS
 };
 
 
+export const deleteReview = (id) => async (dispatch, getState) => {
+  await jwtFetch(`/api/reviews/${id}`, {
+    method: 'DELETE',
+  });
 
+  const user = getState().session.user
+  dispatch({
+    type: REMOVE_REVIEW,
+     id,
+  });
+
+  dispatch(fetchReviews())
+}
 
 
 
@@ -97,6 +109,10 @@ const reviewsReducer = (state = initialState, action) => {
           ...state.all,
           [action.review._id]: action.review,
         }}
+      case REMOVE_REVIEW:
+        let newState = { ...state };
+        delete newState[action.id];
+        return { ...newState };
     default:
       return state;
   }

@@ -25,6 +25,9 @@ const AcceptedOfferBox = ({ offer: {description ,price,status ,helper ,_id ,prob
   const history=useHistory()
   const [review,setReview]=useState("")
   const [showEditReview,setShowEditReview]=useState(false)
+  const [reviewId,setReviewId]=useState()
+  const [reviewdes,setReviewDes]=useState("")
+
   const dispatch=useDispatch()
   useEffect(()=>{
     dispatch(sessionActions.fetchAllUsers())
@@ -73,17 +76,27 @@ e.preventDefault()
 dispatch(problemActions.fetchProblem(problem))
 setShowReq(true)
 }
-function handelEdit(id){
+function handelEdit(){
 const updateData={
   description: review,
+  reviewer: user._id,
+  offerId:_id
 }
-  dispatch(reviweActions.fetchUpdateReview(id,updateData))
+
+  dispatch(reviweActions.fetchUpdateReview(reviewId,updateData))
+  setShowEditReview(false)
 }
-function handelDelete(e){
+function handelDelete(e,id){
 e.preventDefault();
+dispatch(reviweActions.deleteReview(id))
 
 }
-
+function handelShowEdit(e,review){
+e.preventDefault()
+setReviewId(review._id)
+setReviewDes(review.description)
+setShowEditReview(true)
+}
 
 const reqForOffer=useSelector(state=> state.problems.new)
 if (!offerOwner)return null
@@ -108,10 +121,13 @@ if(reqForOffer===undefined)return null
 {reviews.map(ele=>(
 ele.offerId === _id &&
  <div className="review"> {ele.description}
- <div className="edit-delete">
- <FontAwesomeIcon icon={faEdit} className="padding" onClick={()=>setShowEditReview(true)} /> 
-  <FontAwesomeIcon icon={faTrashAlt} className="padding" onClick={(e)=>handelDelete(ele._id)} />
- </div>
+ {ele.reviewer._id==user._id &&
+  <div className="edit-delete">
+  <FontAwesomeIcon icon={faEdit} className="padding" onClick={(e)=>handelShowEdit(e,ele)} /> 
+   <FontAwesomeIcon icon={faTrashAlt} className="padding" onClick={(e)=>handelDelete(e,ele._id)} />
+  </div>
+}
+
   </div>
 ))}
 </div>
@@ -120,7 +136,7 @@ ele.offerId === _id &&
               type="text"
               onChange={(e) => setReview(e.target.value)}
               className='signup-input'
-              value={review}
+              placeholder={reviewdes}
               required
             />
             <button className="sign-up-btn"  type="submit" onClick={handelEdit}>Save</button>

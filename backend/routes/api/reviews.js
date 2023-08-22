@@ -44,9 +44,9 @@ router.patch("/:reviewId", requireUser, async (req, res) => {
     if (!review) {
       throw new Error("Review not found");
     }
-    if (req.user._id.toString() !== review.reviewer.toString()) {
-      throw new Error("You are not authorized to edit this review");
-    }
+    // if (req.user._id.toString() !== review.reviewer.toString()) {
+    //   throw new Error("You are not authorized to edit this review");
+    // }
 
     await Review.updateOne({ _id: req.params.reviewId }, { $set: req.body });
 
@@ -66,11 +66,11 @@ router.delete("/:reviewId", requireUser, async (req, res) => {
     if (!review) {
       return res.status(404).json({ error: "Review not found" });
     }
-    if (req.user._id.toString() !== review.reviewer.toString()) {
-      return res
-        .status(403)
-        .json({ error: "You are not authorized to delete this review" });
-    }
+    // if (req.user._id.toString() !== review.reviewer.toString()) {
+    //   return res
+    //     .status(403)
+    //     .json({ error: "You are not authorized to delete this review" });
+    // }
 
     await Review.deleteOne({ _id: req.params.reviewId });
 
