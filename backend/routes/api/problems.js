@@ -4,7 +4,8 @@ const mongoose = require("mongoose");
 const Problem = mongoose.model("Problem");
 const { requireUser } = require("../../config/passport");
 // const { DEFAULT_PROBLEM_IMAGE_URL } = require("../../seeders/images");
-const DEFAULT_PROBLEM_IMAGE_URL = 'https://my-jmax.s3.us-east-2.amazonaws.com/public/tools.svg'
+const DEFAULT_PROBLEM_IMAGE_URL =
+  "https://my-jmax.s3.us-east-2.amazonaws.com/public/tools.svg";
 const {
   multipleFilesUpload,
   multipleMulterUpload,
@@ -112,33 +113,25 @@ router.get("/closed", async (req, res) => {
 
 router.post(
   "/create",
-  singleMulterUpload("images"),
+  singleMulterUpload("image"),
   requireUser,
   async (req, res) => {
-    console.log(req.file);
-    // // console.log("🚀 ~ file: problems.js:116 ~ i:", i)
-    // const imageUrls = await singleFileUpload({  // Use the S3 upload function
-    //   file: req.file,
-    //   public: true,
-    // });
     let imageUrls;
 
-    if (req.body.problemImageUrl) {
-        imageUrls = req.body.problemImageUrl;
-    } else if (req.file) {
-        imageUrls = await singleFileUpload({ file: req.file, public: true });
-    } else {
-        imageUrls = DEFAULT_PROBLEM_IMAGE_URL;
-    }
 
-    const newProblem = new Problem({
-      category: req.body.category,
-      description: req.body.description,
-      address: req.body.address,
-      problemImageUrl: imageUrls,
-      status: req.body.status,
-      author: req.user._id,
-    });
+    const problemImageUrl = req.file ?
+      await singleFileUpload({ file: req.file, public: true }) :
+      DEFAULT_PROBLEM_IMAGE_URL;
+      const newProblem = new Problem({
+        category: req.body.category,
+        description: req.body.description,
+        address: req.body.address,
+        problemImageUrl,
+        status: req.body.status,
+        author: req.user._id,
+      });
+
+
     try {
       let savedProblem = await newProblem.save();
       savedProblem = await savedProblem.populate(
