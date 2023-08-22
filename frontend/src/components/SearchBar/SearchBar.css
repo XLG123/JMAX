@@ -51,6 +51,30 @@
   left: 50%;
 }
 
+.search-dropdown-menu {
+  position: absolute;
+  width: 29vw;
+  height: fit-content;
+  background-color: #9DBEBB;
+  z-index: 10;
+  color: #031926;
+}
+
+.dropdown-item {
+  font-size: 1.3vw;
+  padding: 5px;
+  cursor: pointer;
+  border-bottom: 1px dotted #031926;
+}
+
+.dropdown-item:last-child {
+  border-bottom: none;
+}
+
+.dropdown-item:hover {
+  background-color: #468189;
+}
+
 @media screen and (width >= 1440px) {
   .search-bar-container {
     top: 2.2vw;
