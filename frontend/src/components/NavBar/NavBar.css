@@ -249,7 +249,6 @@
   width: fit-content;
   height: fit-content;
   position: absolute;
-  /* background-color: #356066f1; */
   color: #031926;
   background-color: rgba(157, 190, 187, 0.9);
   top: 4vw;
@@ -258,41 +257,41 @@
   padding: 0.5em;
   z-index: 10;
   letter-spacing: 0.05em;
+  border: 1px solid #F4E9CD;
 }
 
 @media screen and (width > 1440px) {
   .private-chat-history {
-    right: 12.5vw;
+    right: 15.3vw;
   }
 }
 
 @media screen and (width: 1440px) {
   .private-chat-history {
-    right: 15.5vw;
+    right: 14.5vw;
   }
 }
 
 @media screen and (width < 1440px) {
   .private-chat-history {
-    right: 10.5vw;
+    right: 14vw;
   }
 }
 
 @media screen and (width < 800px) {
   .private-chat-history {
-    right: 10vw;
+    right: 12vw;
   }
 }
 
 @media screen and (width < 600px) {
   .private-chat-history {
-    right: 7.5vw;
+    right: 10vw;
   }
 }
 
 .private-chat-history ul li {
   padding: 0.3em;
-  /* border-radius: 5px; */
   border-bottom: 1px solid #031926;
 }
 

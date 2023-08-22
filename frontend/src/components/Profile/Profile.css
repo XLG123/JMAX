@@ -153,6 +153,10 @@
   }
 }
 
+.no-request-container {
+  font-size: 1.3vw;
+}
+
 .pg-user {
   font-size: 1.3vw;
 }
