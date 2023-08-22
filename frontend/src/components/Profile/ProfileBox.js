@@ -24,6 +24,7 @@ const ProfileBox = ({ problem: { category, author, description,
   console.log("userId:", userId);
   console.log("CurrentUser._id:", CurrentUser._id);
   const [showRequestForm, setShowRequestForm] = useState(false);
+  const [editStatus,setStatus]=useState(status)
 
   function sendToProf() {
     history.push(`/users/${userId}`);
@@ -42,7 +43,6 @@ const ProfileBox = ({ problem: { category, author, description,
 
   // Check if the current user is not the problem creator
   const isCurrentUserProblemCreator = userId === CurrentUser._id;
-  console.log("isCurrentUserProblemCreator:", isCurrentUserProblemCreator);
 
   const handleClose = (e) => {
     e.preventDefault();
@@ -52,6 +52,7 @@ const ProfileBox = ({ problem: { category, author, description,
   const handleSubmit = (e) => {
     e.preventDefault();
     const updatedProblem = {
+      status:editStatus,
       category: editCategory,
       address: editZipCode,
       description: editDescription
@@ -116,6 +117,13 @@ const ProfileBox = ({ problem: { category, author, description,
                 <option value="Home Repair">Home Repair</option>
                 <option value="Delivery">Delivery</option>
                 <option value="Driver">Driver</option>
+            </select>
+
+            <select id="category" className="select signup-input selecr-font"
+              name="category" value={editStatus}
+              onChange={(e) => setStatus(e.target.value)}>
+                <option value="open">Open</option>
+                <option value="closed">Closed</option>
             </select>
 
           <input type="number"
