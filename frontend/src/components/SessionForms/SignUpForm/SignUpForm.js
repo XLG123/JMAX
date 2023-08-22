@@ -82,6 +82,16 @@ function SignupForm() {
       setEmailError("Email is required");
       errors = true;
     } else {
+      // let emailRegex = new RegExp(
+      //   `([!#-'*+/-9=?A-Z^-~-]+(.[!#-'*+/-9=?A-Z^-~-]+)*|([]!#-[^-~\\t]|(\\[\\t -~]))+)@([!#-'*+/-9=?A-Z^-~-]+(.[!#-'*+/-9=?A-Z^-~-]+)*|[[\\t -Z^-~]*])`
+      //   );
+      // if (!emailRegex.test(email)) {
+      //   console.log("didn't pass the test");
+      //   setEmailError("Email format is incorrect");
+      // } else {
+      //   console.log("pass??");
+      //   setEmailError(null);
+      // }
       setEmailError(null);
     }
     if (!username) {
