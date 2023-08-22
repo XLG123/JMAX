@@ -64,6 +64,8 @@
   word-wrap: break-word;
   border: 2px solid #031926;
   padding: 0.2em 1em;
+  word-spacing: 0.05em;
+  letter-spacing: 0.01em;
 }
 
 .sent {

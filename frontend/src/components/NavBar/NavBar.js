@@ -137,8 +137,10 @@ function NavBar() {
 
             {showChat && <div className="private-chat-history">
               <ul>
-                Click to enter chat
-                {chatHistory.map((user) => (
+                <div className="private-chat-title">Click to enter chat</div>
+                {chatHistory.length === 0 ? <div>
+                  No Chat History Yet
+                </div> : chatHistory.map((user) => (
                   <li key={user._id}>
                     <NavLink to=      
                       {`/chat/private/${currentUser._id}/${user._id}`}
@@ -148,7 +150,7 @@ function NavBar() {
                         {user.username}
                       </span>
                       <span className="enter-private-chat">
-                        <LoginIcon />
+                        <LoginIcon className="enter-chat-icon"/>
                       </span>
                     </NavLink>
                   </li>
