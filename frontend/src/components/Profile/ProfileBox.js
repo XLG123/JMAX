@@ -14,7 +14,15 @@ import {
 // All classnames are declared with the prefix pg which stands for profile page, instead of pp.
 
 const ProfileBox = ({
-  problem: { category, author, description, address, status, _id: id },
+  problem: {
+    category,
+    author,
+    description,
+    address,
+    status,
+    _id: id,
+    problemImageUrl,
+  },
 }) => {
   const CurrentUser = useSelector((state) => state.session.user);
   const [editCategory, setEditCategory] = useState(category);
@@ -120,12 +128,18 @@ const ProfileBox = ({
         <div className="pg-box">
           {isCurrentUserProblemCreator ? editAndDeleteButtonGroup() : <></>}
           <h3 onClick={sendToProf} className="pg-user">
-            {" "}
             {username}
           </h3>
           <div className="pg-status"> {status}</div>
           <p className="pg-catgory">{category}</p>
           <p className="pg-des-box">{description}</p>
+          <div className="image-problem-div">
+            <img
+              className="imageProblem"
+              src={`${problemImageUrl}`}
+              alt="imageProblem"
+            />
+          </div>
           {/* <div className="pg-offer">
             {!isCurrentUserProblemCreator &&
               <button className="pg-add-offer-btn" 

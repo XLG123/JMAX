@@ -1,13 +1,15 @@
 import "./ProblemBox.css";
-import { useState } from 'react';
+import { useState } from "react";
 import Modal from "../context/model";
-import { useHistory } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import * as offerActions from "../store/offers";
 
-const ProblemBox = ({ problem: { category, author, description, status, _id: id } }) => {
+const ProblemBox = ({
+  problem: { category, author, description, status, _id: id, problemImageUrl },
+}) => {
   // debugger
-  const CurrentUser = useSelector(state => state.session.user);
+  const CurrentUser = useSelector((state) => state.session.user);
   const [show, setShow] = useState(false);
   const [price, setPrice] = useState();
   const [offer, setOffer] = useState("");
@@ -16,7 +18,7 @@ const ProblemBox = ({ problem: { category, author, description, status, _id: id 
   const { username, _id: userId } = author;
   // console.log("userId:", userId);
   // console.log("CurrentUser._id:", CurrentUser._id);
-  
+
   function sendToProf() {
     history.push(`/users/${userId}`);
   }
@@ -26,7 +28,7 @@ const ProblemBox = ({ problem: { category, author, description, status, _id: id 
     const offerData = {
       price,
       description: offer,
-      problem: id
+      problem: id,
     };
     dispatch(offerActions.composeOffer(offerData));
     history.push(`users/${userId}`);
@@ -38,14 +40,27 @@ const ProblemBox = ({ problem: { category, author, description, status, _id: id 
     <>
       <div className="problems-container">
         <div className="box">
-          <h3 onClick={sendToProf} className="user"> {username}</h3>
+          <h3 onClick={sendToProf} className="user">
+            {" "}
+            {username}
+          </h3>
           <div className="status"> {status}</div>
           <p className="catgory">{category}</p>
           <p className="des-box">{description}</p>
+          <div className="image-problem-div">
+            <img
+              className="imageProblem"
+              src={`${problemImageUrl}`}
+              alt="imageProblem"
+            />
+          </div>
           <div className="offer">
-            {!isCurrentUserProblemCreator &&
-            <button className="add-offer-btn" onClick={() => setShow(true)}> Offer Help</button>
-          }
+            {!isCurrentUserProblemCreator && (
+              <button className="add-offer-btn" onClick={() => setShow(true)}>
+                {" "}
+                Offer Help
+              </button>
+            )}
           </div>
         </div>
       </div>
@@ -56,25 +71,26 @@ const ProblemBox = ({ problem: { category, author, description, status, _id: id 
             <input
               type="text"
               onChange={(e) => setOffer(e.target.value)}
-              className='signup-input'
+              className="signup-input"
               placeholder="My Offer is ...."
               required
             />
             <input
               type="number"
               onChange={(e) => setPrice(e.target.value)}
-              className='signup-input'
+              className="signup-input"
               placeholder="Price"
               required
             />
-            
-              <button className="sign-up-btn" type="submit">Add Offer</button>
-            
+
+            <button className="sign-up-btn" type="submit">
+              Add Offer
+            </button>
           </form>
         </Modal>
       )}
     </>
   );
-}
+};
 
 export default ProblemBox;
