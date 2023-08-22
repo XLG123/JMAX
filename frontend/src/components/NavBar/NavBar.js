@@ -10,7 +10,7 @@ import IconButton from "@mui/material/IconButton";
 import LogoutIcon from "@mui/icons-material/Logout";
 import SmsIcon from "@mui/icons-material/Sms";
 import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
-import LoginIcon from '@mui/icons-material/Login';
+import LoginIcon from "@mui/icons-material/Login";
 import "./NavBar.css";
 import OfferModal from "../offerModal/index";
 import Offers from "../offers/offers";
@@ -67,10 +67,10 @@ function NavBar() {
 
   const showPrivateChat = () => {
     setShowChat(!showChat);
-  }
+  };
 
   useEffect(() => {
-    const closeChatHistory= (e) => {
+    const closeChatHistory = (e) => {
       if (showChat && ref.current && !ref.current.contains(e.target)) {
         setShowChat(false);
       }
@@ -78,7 +78,9 @@ function NavBar() {
 
     document.addEventListener("click", closeChatHistory);
 
-    return () => {document.removeEventListener("click", closeChatHistory)};
+    return () => {
+      document.removeEventListener("click", closeChatHistory);
+    };
   }, [showChat]);
 
   useEffect(() => {
@@ -122,7 +124,11 @@ function NavBar() {
             </Tooltip>
 
             <Tooltip title="Chat History">
-              <IconButton className="nav-chat-btn" onClick={showPrivateChat} ref={ref}>
+              <IconButton
+                className="nav-chat-btn"
+                onClick={showPrivateChat}
+                ref={ref}
+              >
                 <SmsIcon
                   sx={{
                     color: "#F4E9CD",
@@ -135,29 +141,36 @@ function NavBar() {
               </IconButton>
             </Tooltip>
 
-            {showChat && <div className="private-chat-history">
-              <ul>
-                <div className="private-chat-title">Click to enter chat</div>
-                {chatHistory.length === 0 ? <div>
-                  No Chat History Yet
-                </div> : chatHistory.map((user) => (
-                  <li key={user._id}>
-                    <NavLink to=      
-                      {`/chat/private/${currentUser._id}/${user._id}`}
-                        className="private-chat-link" 
-                        onClick={showPrivateChat}>
-                      <span className="private-chat-other-username">
-                        {user.username}
-                      </span>
-                      <span className="enter-private-chat">
-                        <LoginIcon className="enter-chat-icon"/>
-                      </span>
-                    </NavLink>
-                  </li>
-                ))}
-              </ul>
-            </div>}
-        
+            {showChat && (
+              <div className="private-chat-history">
+                <ul>
+                  {chatHistory.length === 0 ? (
+                    <div>No Chat History Yet</div>
+                  ) : (
+                    <div className="private-chat-title">
+                      Click to enter chat
+                    </div>
+                  )}
+                  {chatHistory.map((user) => (
+                    <li key={user._id}>
+                      <NavLink
+                        to={`/chat/private/${currentUser._id}/${user._id}`}
+                        className="private-chat-link"
+                        onClick={showPrivateChat}
+                      >
+                        <span className="private-chat-other-username">
+                          {user.username}
+                        </span>
+                        <span className="enter-private-chat">
+                          <LoginIcon className="enter-chat-icon" />
+                        </span>
+                      </NavLink>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
             {notify === false && (
               <Tooltip title="Notification">
                 <IconButton className="notify-btn" onClick={handleShowOffer}>
