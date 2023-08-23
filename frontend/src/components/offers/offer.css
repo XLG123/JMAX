@@ -67,6 +67,9 @@
   color: #031926;
   margin: 1em;
   font-size: 1.2vw;
+  /* text-align: start; */
+  display: flex;
+  justify-content: space-between;
   /* background-color: whitesmoke; */
 }
 
@@ -81,4 +84,14 @@
   position: fixed;
   left: 67vw;
   bottom: 10vw;
+}
+.edit-delete{
+  text-align: end;
+  /* background-color: aliceblue; */
+  display: inline-block;
+  /* margin-left: 18rem; */
+}
+.padding{
+padding: .3rem;
+cursor: pointer;
 }

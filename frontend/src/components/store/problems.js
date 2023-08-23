@@ -11,9 +11,8 @@ const RECEIVE_PROBLEM_ERRORS = "problems/RECEIVE_PROBLEM_ERRORS";
 const CLEAR_PROBLEM_ERRORS = "problems/CLEAR_PROBLEM_ERRORS";
 const UPDATE_PROBLEM= "problems/UPDATE_PROBLEM"
 const RECEIVE_USER_PROBLEMS_OPEN="problems/RECEIVE_USER_PROBLEMS_OPEN"
-const updateProblem = (id, updatedProblem) => ({
+const updateProblem = (updatedProblem) => ({
   type: UPDATE_PROBLEM,
-  id,
   updatedProblem
 });
 const receiveProblem = problem => ({
@@ -113,6 +112,7 @@ export const deleteProblem = (id) => async (dispatch, getState) => {
   });
 
   dispatch(fetchUserProblems(user._id))
+  dispatch(fetchProblems())
 }
 
 export const composeProblem = data => async dispatch => {
@@ -139,15 +139,18 @@ export const fetchUpdateProblem = (problemId, updatedData) => async (dispatch,ge
       method: 'PATCH',
       body: JSON.stringify(updatedData)
     });
-    const user=getState().session.user
+    const user = getState().session.user;  
     if (res.ok) {
       const updatedProblem = await res.json();
-      dispatch(updateProblem(problemId, updatedProblem));
+      dispatch(updateProblem(updatedProblem));
       dispatch(fetchUserProblems(user._id));
-      dispatch(offerActions.fetchUserOffers(user._id))
+      dispatch(offerActions.fetchUserOffers(user._id));
       dispatch(fetchUserProblems(user._id));
+    } else {
+      console.error("Request not OK");
     }
   } catch (err) {
+    console.error("Error:", err);
     // Handle error
   }
 };
@@ -167,14 +170,14 @@ export const problemErrorsReducer = (state = nullErrors, action) => {
   }
 };
 
-const problemsReducer = (state = { all: {}, user: [], new: undefined }, action) => {
+const problemsReducer = (state = { all: {}, user: [], new: {} }, action) => {
   switch (action.type) {
     case RECEIVE_PROBLEMS:
-      return { ...state, all: action.problems, new: undefined };
+      return { ...state, all: action.problems, new: {} };
       case RECEIVE_PROBLEM:
-      return { ...state, all: action.problem, new: undefined };
+      return { ...state, new: action.problem };
     case RECEIVE_USER_PROBLEMS:
-      return { ...state, userProblems: action.problems, new: undefined };
+      return { ...state, userProblems: action.problems, new: {} };
     case RECEIVE_NEW_PROBLEM:
       return { ...state, new: action.problem };
     case REMOVE_PROBLEM:
@@ -182,9 +185,16 @@ const problemsReducer = (state = { all: {}, user: [], new: undefined }, action) 
       delete newState[action.problemId];
       return { ...newState };
     case RECEIVE_USER_LOGOUT:
-      return { ...state, user: [], new: undefined }
-    case UPDATE_PROBLEM:
-      return { ...state, all: action.updatedProblem, new: undefined };
+      return { ...state, user: [], new: {} }
+      case UPDATE_PROBLEM:
+        return {
+          ...state,
+          all: {
+            ...state.all,
+            [action.updatedProblem._id]: action.updatedProblem,
+          },
+          new: {},
+        };
     default:
       return state;
   }
