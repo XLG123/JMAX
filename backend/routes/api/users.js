@@ -204,6 +204,7 @@ router.get("/current", restoreUser, async (req, res) => {
     email: req.user.email,
     address: req.user.address,
     age: req.user.age,
+    profileImageUrl: req.user.profileImageUrl,
   });
 });
 
