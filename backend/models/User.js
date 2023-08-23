@@ -25,13 +25,10 @@ const userSchema = new Schema(
     },
     reviewsWritten: [{ type: Schema.Types.ObjectId, ref: "Review" }],
     reviewsReceived: [{ type: Schema.Types.ObjectId, ref: "Review" }],
-  },
-  {
-    profileImageUrl:{
+    profileImageUrl: {
       type: String,
       required: true,
-    }
-
+    },
   },
   {
     timestamps: true,
@@ -43,11 +40,15 @@ userSchema.methods.toSafeObject = function () {
   delete user.hashedPassword;
   return user;
 };
-userSchema.methods.getProblems = function() {
-  return mongoose.model('Problem').find({ author: this._id }).select('_id').populate();
+userSchema.methods.getProblems = function () {
+  return mongoose
+    .model("Problem")
+    .find({ author: this._id })
+    .select("_id")
+    .populate();
 };
 
-userSchema.methods.getOffers = async function() {
+userSchema.methods.getOffers = async function () {
   const offers = await mongoose.model("Offer").find({
     helper: this._id,
   });

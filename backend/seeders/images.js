@@ -1,7 +1,7 @@
 require('dotenv').config();
 const mongoose = require("mongoose");
 const { mongoURI: db } = require('../config/keys.js');
-const Problem = require('../models/Problem.js');
+const User = require('../models/User.js');
 
 ; // <- Insert the S3 URL that you copied above here
 
@@ -21,12 +21,12 @@ mongoose
   // Initialize image fields in db
   const initializeImages = async () => {
     console.log("Initializing problem avatars...");
-    await Problem.updateMany({}, { problemImageUrl: DEFAULT_PROBLEM_IMAGE_URL });
+    await User.updateMany({}, { profileImageUrl: DEFAULT_PROFILE_IMAGE_URL });
 
     console.log("Done!");
     mongoose.disconnect();
   }
 
   module.exports = {
-    DEFAULT_PROBLEM_IMAGE_URL,
+    DEFAULT_PROFILE_IMAGE_URL,
   };
