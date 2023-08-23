@@ -1,17 +1,28 @@
 import "./ProblemBox.css";
-import { useState,useEffect } from 'react';
+import { useState, useEffect } from "react";
 import Modal from "../context/model";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import * as offerActions from "../store/offers";
-import { deleteProblem, fetchUpdateProblem, fetchUserProblems } from '../store/problems';
-
+import {
+  deleteProblem,
+  fetchUpdateProblem,
+  fetchUserProblems,
+} from "../store/problems";
 
 const ProblemBox = ({
-  problem: { category, author, description, status, _id: id, problemImageUrl, address },
+  problem: {
+    category,
+    author,
+    description,
+    status,
+    _id: id,
+    problemImageUrl,
+    address,
+  },
 }) => {
   const [showRequestForm, setShowRequestForm] = useState(false);
-  const CurrentUser = useSelector(state => state.session.user);
+  const CurrentUser = useSelector((state) => state.session.user);
 
   const [show, setShow] = useState(false);
   const [price, setPrice] = useState();
@@ -22,12 +33,11 @@ const ProblemBox = ({
   const [editCategory, setEditCategory] = useState(category);
   const [editDescription, setEditDescription] = useState(description);
   const [editZipCode, setEditZipCode] = useState(address);
-  const [editStatus,setStatus]=useState(status)
+  const [editStatus, setStatus] = useState(status);
   // console.log("userId:", userId);
   // console.log("CurrentUser._id:", CurrentUser._id);
 
   const isCurrentUserProblemCreator = userId === CurrentUser._id;
-
 
   function sendToProf() {
     history.push(`/users/${userId}`);
@@ -46,61 +56,59 @@ const ProblemBox = ({
   const editCurrentRequest = (e) => {
     e.preventDefault();
     setShowRequestForm(true);
-    console.log("editCurrentRequest called", "true:",showRequestForm);
-  }
+    console.log("editCurrentRequest called", "true:", showRequestForm);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const updatedProblem = {
-      status:editStatus,
+      status: editStatus,
       category: editCategory,
       address: editZipCode,
-      description: editDescription
-    }
+      description: editDescription,
+    };
     dispatch(fetchUpdateProblem(id, updatedProblem)).then(() => {
-      debugger
+      // debugger;
       setShowRequestForm(false);
-      console.log("showRequestForm should be false:", "false" ,showRequestForm);
+      console.log("showRequestForm should be false:", "false", showRequestForm);
     });
-  }
+  };
   const deleteCurrentRequest = (id) => {
     dispatch(deleteProblem(id));
-  }
-  function handelClose(e){
+  };
+  function handelClose(e) {
     e.preventDefault();
-    setShowRequestForm(false)
+    setShowRequestForm(false);
   }
 
   return (
     <>
       <div className="problems-container">
         <div className="box">
+          <h3 onClick={sendToProf} className="user">
+            {" "}
+            {username}
+          </h3>
+          {isCurrentUserProblemCreator && (
+            <div className="edit-delete-btn-gp">
+              <div className="pg-edit-btn" onClick={editCurrentRequest}>
+                Edit
+              </div>
 
-          <h3 onClick={sendToProf} className="user"> {username}</h3>
-{isCurrentUserProblemCreator&&
-   <div className='edit-delete-btn-gp'>
-   <div className='pg-edit-btn'
-     onClick={editCurrentRequest}>
-     Edit
-   </div>
-
-   <div className='pg-delete-btn'
-     onClick={() => deleteCurrentRequest(id)}>
-     Delete
-   </div>
- </div>
-
-}
+              <div
+                className="pg-delete-btn"
+                onClick={() => deleteCurrentRequest(id)}
+              >
+                Delete
+              </div>
+            </div>
+          )}
 
           <div className="status"> {editStatus}</div>
           <p className="catgory">{editCategory}</p>
           <p className="des-box">{editDescription}</p>
-					<div className="image-problem-div">
-            <img
-              className="imageProblem"
-              src={`${problemImageUrl}`}
-              alt="imageProblem"
-            />
+          <div className="image-problem-div">
+            <img className="imageProblem" src={`${problemImageUrl}`} alt="" />
           </div>
 
           <div className="offer">
@@ -138,46 +146,58 @@ const ProblemBox = ({
           </form>
         </Modal>
       )}
-       {showRequestForm && <Modal onClose={handelClose}>
-
-        <form onSubmit={handleSubmit}>
-          <label htmlFor="category" className="title space" >Select a Category:</label>
-            <select id="category" className="select signup-input selecr-font"
-              name="category" value={editCategory}
-              onChange={(e) => setEditCategory(e.target.value)}>
-                <option value="Home Repair">Home Repair</option>
-                <option value="Delivery">Delivery</option>
-                <option value="Driver">Driver</option>
+      {showRequestForm && (
+        <Modal onClose={handelClose}>
+          <form onSubmit={handleSubmit}>
+            <label htmlFor="category" className="title space">
+              Select a Category:
+            </label>
+            <select
+              id="category"
+              className="select signup-input selecr-font"
+              name="category"
+              value={editCategory}
+              onChange={(e) => setEditCategory(e.target.value)}
+            >
+              <option value="Home Repair">Home Repair</option>
+              <option value="Delivery">Delivery</option>
+              <option value="Driver">Driver</option>
             </select>
 
-            <select id="category" className="select signup-input selecr-font"
-              name="category" value={editStatus}
-              onChange={(e) => setStatus(e.target.value)}>
-                <option value="open">Open</option>
-                <option value="closed">Closed</option>
+            <select
+              id="category"
+              className="select signup-input selecr-font"
+              name="category"
+              value={editStatus}
+              onChange={(e) => setStatus(e.target.value)}
+            >
+              <option value="open">Open</option>
+              <option value="closed">Closed</option>
             </select>
 
-          <input type="number"
-            className='signup-input'
-            value={editZipCode}
-            placeholder="1"
-            required
-            onChange={(e) => setEditZipCode(e.target.value)}
-          />
+            <input
+              type="number"
+              className="signup-input"
+              value={editZipCode}
+              placeholder="1"
+              required
+              onChange={(e) => setEditZipCode(e.target.value)}
+            />
 
-          <textarea
-            className='signup-input'
-            value={editDescription}
-            placeholder="Description"
-            required
-            onChange={(e) => setEditDescription(e.target.value)}
-          />
+            <textarea
+              className="signup-input"
+              value={editDescription}
+              placeholder="Description"
+              required
+              onChange={(e) => setEditDescription(e.target.value)}
+            />
 
-
-          <button type="submit" className="sign-up-btn ">Update</button>
-
-        </form>
-      </Modal>}
+            <button type="submit" className="sign-up-btn ">
+              Update
+            </button>
+          </form>
+        </Modal>
+      )}
     </>
   );
 };

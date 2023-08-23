@@ -83,6 +83,7 @@ const SearchBar = () => {
         });
     }
     setSearchText("");
+    setDropdownItem("");
   };
 
   return (
@@ -96,6 +97,7 @@ const SearchBar = () => {
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
             onInput={(e) => setDropdownItem(e.target.value)}
+            autoComplete="off"
           />
           <button className="search-bar-btn">
             <SearchIcon className="search-icon" sx={{ fontSize: "1.5vw" }} />

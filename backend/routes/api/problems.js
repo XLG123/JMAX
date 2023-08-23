@@ -120,7 +120,7 @@ router.post(
 
     const problemImageUrl = req.file
       ? await singleFileUpload({ file: req.file, public: true })
-      : DEFAULT_PROBLEM_IMAGE_URL;
+      : null;
     const newProblem = new Problem({
       category: req.body.category,
       description: req.body.description,

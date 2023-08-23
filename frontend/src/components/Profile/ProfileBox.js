@@ -37,7 +37,7 @@ const ProfileBox = ({
   console.log("userId:", userId);
   console.log("CurrentUser._id:", CurrentUser._id);
   const [showRequestForm, setShowRequestForm] = useState(false);
-  const [editStatus,setStatus]=useState(status)
+  const [editStatus, setStatus] = useState(status);
 
   function sendToProf() {
     history.push(`/users/${userId}`);
@@ -77,7 +77,7 @@ const ProfileBox = ({
     e.preventDefault();
 
     const updatedProblem = {
-      status:editStatus,
+      status: editStatus,
       category: editCategory,
       address: editZipCode,
       description: editDescription,
@@ -119,8 +119,6 @@ const ProfileBox = ({
     );
   };
 
-
-
   return (
     <>
       <div className="pg-problems-container">
@@ -133,11 +131,7 @@ const ProfileBox = ({
           <p className="pg-catgory">{category}</p>
           <p className="pg-des-box">{description}</p>
           <div className="image-problem-div">
-            <img
-              className="imageProblem"
-              src={`${problemImageUrl}`}
-              alt="imageProblem"
-            />
+            <img className="imageProblem" src={`${problemImageUrl}`} alt="" />
           </div>
           {/* <div className="pg-offer">
             {!isCurrentUserProblemCreator &&
@@ -165,29 +159,33 @@ const ProfileBox = ({
               <option value="Driver">Driver</option>
             </select>
 
-
-            <select id="category" className="select signup-input selecr-font"
-              name="category" value={editStatus}
-              onChange={(e) => setStatus(e.target.value)}>
-                <option value="open">Open</option>
-                <option value="closed">Closed</option>
+            <select
+              id="category"
+              className="select signup-input selecr-font"
+              name="category"
+              value={editStatus}
+              onChange={(e) => setStatus(e.target.value)}
+            >
+              <option value="open">Open</option>
+              <option value="closed">Closed</option>
             </select>
 
-          <input type="number"
-            className='signup-input'
-            value={editZipCode}
-            placeholder="1"
-            required
-            onChange={(e) => setEditZipCode(e.target.value)}
-          />
+            <input
+              type="number"
+              className="signup-input"
+              value={editZipCode}
+              placeholder="1"
+              required
+              onChange={(e) => setEditZipCode(e.target.value)}
+            />
 
-          <textarea
-            className='signup-input'
-            value={editDescription}
-            placeholder="Description"
-            required
-            onChange={(e) => setEditDescription(e.target.value)}
-          />
+            <textarea
+              className="signup-input"
+              value={editDescription}
+              placeholder="Description"
+              required
+              onChange={(e) => setEditDescription(e.target.value)}
+            />
             <label className="img-input">
               {" "}
               Add image
@@ -202,8 +200,6 @@ const ProfileBox = ({
             <button className="sign-up-btn ">Edit Request</button>
           </form>
         </Modal>
-
-
       )}
     </>
   );
