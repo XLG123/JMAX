@@ -23,8 +23,6 @@ const SearchBar = () => {
     }
   });
 
-  console.log(allDropdownItems);
-
   const dropdownSearch = (dropdownItem, e) => {
     e.preventDefault();
     if (isNaN(parseInt(dropdownItem[0]))) {
@@ -41,6 +39,7 @@ const SearchBar = () => {
         });
     }
     setSearchText("");
+    setDropdownItem("");
   };
 
   const handleSearch = (e) => {
