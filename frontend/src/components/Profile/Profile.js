@@ -66,7 +66,7 @@ const Profile = () => {
 
   const showAcceptedOffers = (e) => {
     // e.preventDefault();
-    history.push("/accepted/offers")
+    history.push(`/offers/${userId}`)
   }
 
   const showPendingOffers = (e) => {

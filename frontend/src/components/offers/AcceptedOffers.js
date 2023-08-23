@@ -5,20 +5,19 @@ import AcceptedOfferBox from "./AcceptedOfferBox";
 import Fab from "@mui/material/Fab";
 import KeyboardDoubleArrowUpIcon from "@mui/icons-material/KeyboardDoubleArrowUp";
 import { Tooltip } from "@mui/material";
+import { useParams } from 'react-router-dom';
 
 function AcceptedOffers() {
-  const user = useSelector((state) => state.session.user);
+  const {userId}=useParams()
   const dispatch = useDispatch();
   const offers = useSelector((state) => state.offers.all);
   const [visible, setVisible] = useState(false);
-
+// debugger
   useEffect(() => {
-    dispatch(offerActions.fetchAcceptedOffers(user._id));
-  }, [user, dispatch]);
+    dispatch(offerActions.fetchAcceptedOffers(userId));
+  }, [userId, dispatch]);
 
-  if (Object.keys(offers).length === 0) {
-    return null;
-  }
+
 
   const toggleVisible = () => {
     const scrolled = document.documentElement.scrollTop;
@@ -38,12 +37,15 @@ function AcceptedOffers() {
   };
   
   window.addEventListener('scroll', toggleVisible);
-
+  if (Object.keys(offers).length === 0) {
+    // debugger
+    return null;
+  }
   return (
     <>
       <div className="accepted-offers">
         <div className="offer-container">
-          {offers.map((offer) => (
+          {offers?.map((offer) => (
             <AcceptedOfferBox key={offer._id} offer={offer} />
           ))}
         </div>

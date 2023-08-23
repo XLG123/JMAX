@@ -15,6 +15,7 @@ const updateProblem = (id, updatedProblem) => ({
   type: UPDATE_PROBLEM,
   id,
   updatedProblem,
+
 });
 const receiveProblem = (problem) => ({
   type: RECEIVE_PROBLEM,
@@ -111,6 +112,7 @@ export const deleteProblem = (id) => async (dispatch, getState) => {
     problemId: id,
   });
 
+
   dispatch(fetchUserProblems(user._id));
 };
 
@@ -120,6 +122,11 @@ export const composeProblem = (data) => async (dispatch) => {
   formData.append("description", description);
   formData.append("category", category);
   formData.append("address", address);
+
+  dispatch(fetchUserProblems(user._id))
+  dispatch(fetchProblems())
+}
+
 
   if (image) formData.append("image", image);
   try {
@@ -167,6 +174,21 @@ export const fetchUpdateProblem =
       formData.append(key, otherUpdatedData[key]);
     });
 
+    const user = getState().session.user;  
+    if (res.ok) {
+      const updatedProblem = await res.json();
+      dispatch(updateProblem(updatedProblem));
+      dispatch(fetchUserProblems(user._id));
+      dispatch(offerActions.fetchUserOffers(user._id));
+      dispatch(fetchUserProblems(user._id));
+    } else {
+      console.error("Request not OK");
+    }
+  } catch (err) {
+    console.error("Error:", err);
+    // Handle error
+  }
+};
     try {
       const res = await jwtFetch(`/api/problems/${problemId}`, {
         method: "PATCH",
@@ -201,17 +223,15 @@ export const problemErrorsReducer = (state = nullErrors, action) => {
   }
 };
 
-const problemsReducer = (
-  state = { all: {}, user: [], new: undefined },
-  action
-) => {
+
+const problemsReducer = (state = { all: {}, user: [], new: {} }, action) => {
   switch (action.type) {
     case RECEIVE_PROBLEMS:
-      return { ...state, all: action.problems, new: undefined };
-    case RECEIVE_PROBLEM:
-      return { ...state, all: action.problem, new: undefined };
+      return { ...state, all: action.problems, new: {} };
+      case RECEIVE_PROBLEM:
+      return { ...state, new: action.problem };
     case RECEIVE_USER_PROBLEMS:
-      return { ...state, userProblems: action.problems, new: undefined };
+      return { ...state, userProblems: action.problems, new: {} };
     case RECEIVE_NEW_PROBLEM:
       return { ...state, new: action.problem };
     case REMOVE_PROBLEM:
@@ -219,9 +239,18 @@ const problemsReducer = (
       delete newState[action.problemId];
       return { ...newState };
     case RECEIVE_USER_LOGOUT:
-      return { ...state, user: [], new: undefined };
-    case UPDATE_PROBLEM:
-      return { ...state, all: action.updatedProblem, new: undefined };
+
+      return { ...state, user: [], new: {} };
+      case UPDATE_PROBLEM:
+        return {
+          ...state,
+          all: {
+            ...state.all,
+            [action.updatedProblem._id]: action.updatedProblem,
+          },
+          new: {},
+        };
+
     default:
       return state;
   }

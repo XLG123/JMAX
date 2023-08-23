@@ -37,6 +37,7 @@ const ProfileBox = ({
   console.log("userId:", userId);
   console.log("CurrentUser._id:", CurrentUser._id);
   const [showRequestForm, setShowRequestForm] = useState(false);
+  const [editStatus,setStatus]=useState(status)
 
   function sendToProf() {
     history.push(`/users/${userId}`);
@@ -55,7 +56,6 @@ const ProfileBox = ({
 
   // Check if the current user is not the problem creator
   const isCurrentUserProblemCreator = userId === CurrentUser._id;
-  console.log("isCurrentUserProblemCreator:", isCurrentUserProblemCreator);
 
   const handleClose = (e) => {
     e.preventDefault();
@@ -77,6 +77,7 @@ const ProfileBox = ({
     e.preventDefault();
 
     const updatedProblem = {
+      status:editStatus,
       category: editCategory,
       address: editZipCode,
       description: editDescription,
@@ -166,13 +167,36 @@ const ProfileBox = ({
               <option value="Driver">Driver</option>
             </select>
 
-            <input
-              type="number"
-              className="signup-input"
-              value={editZipCode}
-              placeholder="1"
-              required
-              onChange={(e) => setEditZipCode(e.target.value)}
+
+            <select id="category" className="select signup-input selecr-font"
+              name="category" value={editStatus}
+              onChange={(e) => setStatus(e.target.value)}>
+                <option value="open">Open</option>
+                <option value="closed">Closed</option>
+            </select>
+
+          <input type="number"
+            className='signup-input'
+            value={editZipCode}
+            placeholder="1"
+            required
+            onChange={(e) => setEditZipCode(e.target.value)}
+          />
+
+          <textarea
+            className='signup-input'
+            value={editDescription}
+            placeholder="Description"
+            required
+            onChange={(e) => setEditDescription(e.target.value)}
+          />
+
+          {/* <label className="img-input"> Add image
+            <input type="file"
+              id="file"
+              className='signup-input'
+              placeholder="Add an image"
+
             />
 
             <textarea
