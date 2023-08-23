@@ -101,7 +101,7 @@ function NavBar() {
   }, [currentUser, dispatch]);
   // [ user,reqOffers]
 
-  const updateFile = e => setImage(e.target.files[0]);
+  const updateFile = (e) => setImage(e.target.files[0]);
 
   const getLinks = () => {
     if (loggedIn) {
@@ -354,9 +354,15 @@ function NavBar() {
   }
 
   const handleSubmit = (e) => {
+    setImage(null);
     e.preventDefault();
     dispatch(
-      problemActions.composeProblem({ category, description, address: zipCode, image })
+      problemActions.composeProblem({
+        category,
+        description,
+        address: zipCode,
+        image,
+      })
     );
     setShowReqForm(false);
   };
