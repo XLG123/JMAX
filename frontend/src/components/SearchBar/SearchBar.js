@@ -83,6 +83,7 @@ const SearchBar = () => {
         });
     }
     setSearchText("");
+    setDropdownItem("");
   };
 
   return (
