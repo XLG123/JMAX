@@ -119,9 +119,7 @@ const ProfileBox = ({
     );
   };
 
-  // useEffect(()=> {
-  //   dispatch(fetchUserProblems(CurrentUser._id));
-  // }, [dispatch])
+
 
   return (
     <>
@@ -143,7 +141,7 @@ const ProfileBox = ({
           </div>
           {/* <div className="pg-offer">
             {!isCurrentUserProblemCreator &&
-              <button className="pg-add-offer-btn" 
+              <button className="pg-add-offer-btn"
               onClick={() => setShow(true)}> Offer Help</button>
             }
           </div> */}
@@ -190,23 +188,6 @@ const ProfileBox = ({
             required
             onChange={(e) => setEditDescription(e.target.value)}
           />
-
-          {/* <label className="img-input"> Add image
-            <input type="file"
-              id="file"
-              className='signup-input'
-              placeholder="Add an image"
-
-            />
-
-            <textarea
-              className="signup-input"
-              value={editDescription}
-              placeholder="Description"
-              required
-              onChange={(e) => setEditDescription(e.target.value)}
-            />
-
             <label className="img-input">
               {" "}
               Add image
@@ -221,6 +202,8 @@ const ProfileBox = ({
             <button className="sign-up-btn ">Edit Request</button>
           </form>
         </Modal>
+
+
       )}
     </>
   );

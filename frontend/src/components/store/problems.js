@@ -123,11 +123,6 @@ export const composeProblem = (data) => async (dispatch) => {
   formData.append("category", category);
   formData.append("address", address);
 
-  dispatch(fetchUserProblems(user._id))
-  dispatch(fetchProblems())
-}
-
-
   if (image) formData.append("image", image);
   try {
     const res = await jwtFetch("/api/problems/create", {
@@ -174,21 +169,6 @@ export const fetchUpdateProblem =
       formData.append(key, otherUpdatedData[key]);
     });
 
-    const user = getState().session.user;  
-    if (res.ok) {
-      const updatedProblem = await res.json();
-      dispatch(updateProblem(updatedProblem));
-      dispatch(fetchUserProblems(user._id));
-      dispatch(offerActions.fetchUserOffers(user._id));
-      dispatch(fetchUserProblems(user._id));
-    } else {
-      console.error("Request not OK");
-    }
-  } catch (err) {
-    console.error("Error:", err);
-    // Handle error
-  }
-};
     try {
       const res = await jwtFetch(`/api/problems/${problemId}`, {
         method: "PATCH",

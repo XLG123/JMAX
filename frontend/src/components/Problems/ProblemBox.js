@@ -8,7 +8,7 @@ import { deleteProblem, fetchUpdateProblem, fetchUserProblems } from '../store/p
 
 
 const ProblemBox = ({
-  problem: { category, author, description, status, _id: id, problemImageUrl },
+  problem: { category, author, description, status, _id: id, problemImageUrl, address },
 }) => {
   const [showRequestForm, setShowRequestForm] = useState(false);
   const CurrentUser = useSelector(state => state.session.user);
@@ -48,7 +48,7 @@ const ProblemBox = ({
     setShowRequestForm(true);
     console.log("editCurrentRequest called", "true:",showRequestForm);
   }
-  
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const updatedProblem = {
@@ -77,7 +77,7 @@ const ProblemBox = ({
         <div className="box">
 
           <h3 onClick={sendToProf} className="user"> {username}</h3>
-{isCurrentUserProblemCreator&& 
+{isCurrentUserProblemCreator&&
    <div className='edit-delete-btn-gp'>
    <div className='pg-edit-btn'
      onClick={editCurrentRequest}>
@@ -89,9 +89,9 @@ const ProblemBox = ({
      Delete
    </div>
  </div>
- 
+
 }
-       
+
           <div className="status"> {editStatus}</div>
           <p className="catgory">{editCategory}</p>
           <p className="des-box">{editDescription}</p>
@@ -173,7 +173,7 @@ const ProblemBox = ({
             onChange={(e) => setEditDescription(e.target.value)}
           />
 
-         
+
           <button type="submit" className="sign-up-btn ">Update</button>
 
         </form>
