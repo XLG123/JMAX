@@ -82,26 +82,27 @@ function SignupForm() {
       setEmailError("Email is required");
       errors = true;
     } else {
-      // let emailRegex = new RegExp(
-      //   `([!#-'*+/-9=?A-Z^-~-]+(.[!#-'*+/-9=?A-Z^-~-]+)*|([]!#-[^-~\\t]|(\\[\\t -~]))+)@([!#-'*+/-9=?A-Z^-~-]+(.[!#-'*+/-9=?A-Z^-~-]+)*|[[\\t -Z^-~]*])`
-      //   );
-      // if (!emailRegex.test(email)) {
-      //   console.log("didn't pass the test");
-      //   setEmailError("Email format is incorrect");
-      // } else {
-      //   console.log("pass??");
-      //   setEmailError(null);
-      // }
-      setEmailError(null);
+      let emailRegex = new RegExp("/^[a-z0-9]+@[a-z]+\.[a-z]{2,3}$/");
+      if (!emailRegex.test(email) && !email.includes(".")) {
+        setEmailError("Email format is incorrect");
+        errors = true;
+      } else {
+        setEmailError(null);
+      }
     }
+
     if (!username) {
       setUsernameError("Username is required");
       errors = true;
     } else {
       setUsernameError(null);
     }
+
     if (!password) {
       setPasswordError("Password is required");
+      errors = true;
+    } else if (password.length < 6) {
+      setPasswordError("Password length must be at least 6 characters long.")
       errors = true;
     } else {
       setPasswordError(null);
@@ -118,17 +119,14 @@ function SignupForm() {
     } else {
       setAgeError(null);
     }
+
     if (password !== password2) {
       setPassword2Error("Passwords do not match");
       errors = true;
     } else {
       setPassword2Error(null);
     }
-    if (!age) {
-      setAgeError("Age must be required");
-      errors = true;
-    } else if (password.length < 8) {
-    }
+
     if (!age) {
       setAgeError("Age must be required");
       errors = true;
@@ -141,6 +139,7 @@ function SignupForm() {
     } else {
       setAgeError(null);
     }
+
     if (address.length !== 5) {
       setZipError("Zip code must be 5 digits");
       errors = true;
