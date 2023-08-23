@@ -3,10 +3,27 @@ import { useHistory } from "react-router-dom";
 import SearchIcon from "@mui/icons-material/Search";
 import "./SearchBar.css";
 import Tooltip from "@mui/material/Tooltip";
+import { useSelector } from "react-redux";
 
 const SearchBar = () => {
   const history = useHistory();
   const [searchText, setSearchText] = useState("");
+  const [dropdownItem, setDropdownItem] = useState("");
+
+  let allDropdownItems = [];
+  allDropdownItems.push("Home Repair");
+  allDropdownItems.push("Delivery");
+  allDropdownItems.push("Driver");
+
+  const allProblems = useSelector((state) => state.problems.all);
+  const allKeys = Object.keys(allProblems);
+  allKeys.forEach((key) => {
+    if (!allDropdownItems.includes(allProblems[key].address)) {
+      allDropdownItems.push(allProblems[key].address);
+    }
+  });
+
+  console.log(allDropdownItems);
 
   const dropdownSearch = (dropdownItem, e) => {
     e.preventDefault();
@@ -48,7 +65,6 @@ const SearchBar = () => {
           secondWord.substring(1).toLowerCase();
       }
     }
-    // console.log(caseInsensitive);
 
     if (caseInsensitive === "Repair Home") {
       caseInsensitive = "Home Repair";
@@ -80,111 +96,31 @@ const SearchBar = () => {
             id="search-bar"
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
+            onInput={(e) => setDropdownItem(e.target.value)}
           />
           <button className="search-bar-btn">
             <SearchIcon className="search-icon" sx={{ fontSize: "1.5vw" }} />
           </button>
         </form>
       </Tooltip>
-      {searchText && (
+      {dropdownItem && (
         <div className="search-dropdown-menu">
           <ul>
-            {isNaN(parseInt(searchText[0])) ? (
-              searchText[0].toLowerCase() === "h" ? (
+            {allDropdownItems
+              .filter((option) =>
+                option.toLowerCase().includes(dropdownItem.toLowerCase())
+              )
+              .map((item, idx) => (
                 <li
                   className="dropdown-item"
-                  onClick={(e) => dropdownSearch("Home Repair", e)}
+                  key={idx}
+                  onClick={(e) => {
+                    dropdownSearch(item, e);
+                  }}
                 >
-                  Home Repair
+                  {item}
                 </li>
-              ) : searchText[0].toLowerCase() === "d" ? (
-                <>
-                  <li
-                    className="dropdown-item"
-                    onClick={(e) => dropdownSearch("Delivery", e)}
-                  >
-                    Delivery
-                  </li>
-                  <li
-                    className="dropdown-item"
-                    onClick={(e) => dropdownSearch("Driver", e)}
-                  >
-                    Driver
-                  </li>
-                </>
-              ) : (
-                <></>
-              )
-            ) : searchText[0] === "1" ? (
-              <>
-                {searchText[1] === "0" ? (
-                  <li
-                    className="dropdown-item"
-                    onClick={(e) => dropdownSearch("10312", e)}
-                  >
-                    10312
-                  </li>
-                ) : (
-                  <></>
-                )}
-                {searchText[1] === "1" ? (
-                  <>
-                    <li
-                      className="dropdown-item"
-                      onClick={(e) => dropdownSearch("11212", e)}
-                    >
-                      11212
-                    </li>
-                    <li
-                      className="dropdown-item"
-                      onClick={(e) => dropdownSearch("11420", e)}
-                    >
-                      11420
-                    </li>
-                    <li
-                      className="dropdown-item"
-                      onClick={(e) => dropdownSearch("11421", e)}
-                    >
-                      11421
-                    </li>
-                  </>
-                ) : (
-                  <></>
-                )}
-                {searchText[1] === "2" ? (
-                  <>
-                    <li
-                      className="dropdown-item"
-                      onClick={(e) => dropdownSearch("12123", e)}
-                    >
-                      12123
-                    </li>
-                    <li
-                      className="dropdown-item"
-                      onClick={(e) => dropdownSearch("12312", e)}
-                    >
-                      12312
-                    </li>
-                    <li
-                      className="dropdown-item"
-                      onClick={(e) => dropdownSearch("12323", e)}
-                    >
-                      12323
-                    </li>
-                    <li
-                      className="dropdown-item"
-                      onClick={(e) => dropdownSearch("12345", e)}
-                    >
-                      12345
-                    </li>
-                  </>
-                ) : (
-                  <></>
-                )}
-              </>
-            ) : (
-              <li className="dropdown-item"></li>
-            )}
+              ))}
           </ul>
         </div>
       )}
