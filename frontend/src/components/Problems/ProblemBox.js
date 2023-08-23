@@ -68,7 +68,7 @@ const ProblemBox = ({
       description: editDescription,
     };
     dispatch(fetchUpdateProblem(id, updatedProblem)).then(() => {
-      debugger;
+      // debugger;
       setShowRequestForm(false);
       console.log("showRequestForm should be false:", "false", showRequestForm);
     });

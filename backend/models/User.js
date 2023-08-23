@@ -27,7 +27,7 @@ const userSchema = new Schema(
     reviewsReceived: [{ type: Schema.Types.ObjectId, ref: "Review" }],
     profileImageUrl: {
       type: String,
-      required: true,
+      required: false,
     },
   },
   {

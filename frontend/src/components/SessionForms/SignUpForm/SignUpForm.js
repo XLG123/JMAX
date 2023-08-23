@@ -14,6 +14,7 @@ function SignupForm() {
   const [address, setAddress] = useState("");
   const [age, setAge] = useState("");
   const history = useHistory();
+  const [image, setImage] = useState(null);
 
   // error handling for signup form
   const [emailError, setEmailError] = useState(false);
@@ -155,6 +156,7 @@ function SignupForm() {
         password,
         age: year,
         address,
+        image,
       };
       dispatch(signup(user)).then(() => {
         history.push("/requests");
@@ -174,6 +176,8 @@ function SignupForm() {
   //   return false
   // }else return true
   // }
+
+  const updateFile = e => setImage(e.target.files[0]);
 
   return (
     <form className="session-form" onSubmit={handleSubmit}>
@@ -255,6 +259,14 @@ function SignupForm() {
             onChange={update("address")}
             placeholder="Zip code"
           />
+          <label>
+            Profile Image
+            <input
+              type="file"
+              accept=".jpg, .jpeg, .png"
+              onChange={updateFile}
+            />
+          </label>
 
           <div className="errors"></div>
 

@@ -169,7 +169,7 @@ const Profile = () => {
           <div className="user-info-display">
             <div className="avatar-container">
               <div className="pg-profile">
-                <Avatar
+                {/* <Avatar
                   sx={{
                     bgcolor: "#77ACA2",
                     width: "7vw",
@@ -181,7 +181,14 @@ const Profile = () => {
                   <h1 className="avatar-letter">
                     {user?.username[0].toUpperCase()}
                   </h1>
-                </Avatar>
+                </Avatar> */}
+                <div style={{ bgcolor: "#77ACA2",
+                    width: "7vw",
+                    height: "7vw",
+                    margin: "15% auto"}}
+                  className="avatar">
+                  <img src={`${user?.profileImageUrl}`} alt="" />
+                </div>
               </div>
             </div>
 
