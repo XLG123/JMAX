@@ -22,7 +22,7 @@ const {
 
 router.get("/", async (req, res) => {
   try {
-    const users = await User.find({}, "username email address age");
+    const users = await User.find({}, "username email address age profileImageUrl");
     const userMap = {};
     users?.forEach((user) => {
       userMap[user._id] = {
@@ -30,6 +30,7 @@ router.get("/", async (req, res) => {
         email: user.email,
         address: user.address,
         age: user.age,
+        profileImageUrl: user.profileImageUrl,
       };
     });
     return res.json(userMap);
