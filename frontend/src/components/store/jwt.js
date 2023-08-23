@@ -1,7 +1,7 @@
 function getCookie(cookieName) {
-  const cookies = document.cookie.split(';');
+  const cookies = document.cookie.split(";");
   for (let cookie of cookies) {
-    const [name, value] = cookie.split('=');
+    const [name, value] = cookie.split("=");
     if (name.trim() === cookieName) return value;
   }
   return null;
@@ -15,15 +15,18 @@ async function jwtFetch(url, options = {}) {
   // Set the "Authorization" header to the value of "jwtToken" in localStorage.
   // Remember to add 'Bearer ' to the front of the token.
   const jwtToken = localStorage.getItem("jwtToken");
-  if (jwtToken) options.headers["Authorization"] = 'Bearer ' + jwtToken;
+  if (jwtToken) options.headers["Authorization"] = "Bearer " + jwtToken;
 
   // If the options.method is not 'GET', then set the "Content-Type" header to
   // "application/json".
   if (options.method.toUpperCase() !== "GET") {
-    options.headers["Content-Type"] =
-      options.headers["Content-Type"] || "application/json";
+    if (
+      !options.headers["Content-Type"] &&
+      !(options.body instanceof FormData)
+    ) {
+      options.headers["Content-Type"] = "application/json";
+    }
     options.headers["CSRF-Token"] = getCookie("CSRF-TOKEN");
-
   }
 
   // Call fetch with the url and the updated options hash.

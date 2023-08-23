@@ -28,6 +28,7 @@ function NavBar() {
   const [description, setDescription] = useState("");
   const [zipCode, setZipCode] = useState("");
   const [showOffers, setShowOffer] = useState(false);
+  const [image, setImage] = useState(null);
   const currentUrl = useLocation().pathname;
   const chatHistory = useSelector((state) =>
     Object.values(state.messages.users)
@@ -96,6 +97,8 @@ function NavBar() {
     }
   }, [currentUser, dispatch]);
   // [ user,reqOffers]
+
+  const updateFile = e => setImage(e.target.files[0]);
 
   const getLinks = () => {
     if (loggedIn) {
@@ -338,7 +341,7 @@ function NavBar() {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(
-      problemActions.composeProblem({ category, description, address: zipCode })
+      problemActions.composeProblem({ category, description, address: zipCode, image })
     );
     setShowReqForm(false);
   };
@@ -417,6 +420,7 @@ function NavBar() {
                 type="file"
                 id="file"
                 // onChange={(e)=> setZipCode(e.target.value)}
+                onChange={updateFile}
                 className="signup-input"
                 placeholder="Add an image"
               />

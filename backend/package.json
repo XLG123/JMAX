@@ -7,7 +7,7 @@
     "dev": "dotenv nodemon ./bin/www --inspect"
   },
   "dependencies": {
-    "aws-sdk": "^2.1431.0",
+    "aws-sdk": "^2.1440.0",
     "bcryptjs": "^2.4.3",
     "cookie-parser": "~1.4.4",
     "cors": "^2.8.5",

@@ -179,6 +179,7 @@
   font-size: 1.6vw;
   margin-top: 0.6vw;
   text-align: center;
+  padding: 1rem;
 }
 
 .pg-right-side-bar {
@@ -246,4 +247,17 @@
 
 .private-chat-room {
   position: absolute;
+}
+
+.imageProblem{
+  width: 70%;
+  max-height: 100%;
+  
+}
+
+.image-problem-div{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
 }
