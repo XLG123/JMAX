@@ -15,16 +15,13 @@ const OfferBox = ({ offer: {description ,price,status ,helper ,_id ,problem} }) 
 const user= useSelector(state=>state.session.user)
   const [show,setShow]=useState(false)
   const history=useHistory()
-  // const [offer,setOffer]=useState("")
   const dispatch=useDispatch()
+
   useEffect(()=>{
     dispatch(sessionActions.fetchAllUsers())
-    // dispatch(problemActions.fetchUserProblems(user._id))
-
-dispatch(offerActions.fetchUserOffers(user._id))
-
-
+    dispatch(offerActions.fetchUserOffers(user._id))
   },[dispatch])
+
   const offerOwner= useSelector(state=> state.session.users)
   function handelSubmit(e){
     e.preventDefault()

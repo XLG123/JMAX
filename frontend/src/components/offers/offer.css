@@ -1,4 +1,6 @@
 .offer-container {
+  /* position: relative; */
+
   /* background-color: aliceblue; */
   /* height: 17rem; */
   /* border-radius: 50%; */
@@ -68,8 +70,7 @@
   margin: 1em;
   font-size: 1.2vw;
   /* text-align: start; */
-  display: flex;
-  justify-content: space-between;
+
   /* background-color: whitesmoke; */
 }
 
@@ -94,4 +95,32 @@
 .padding{
 padding: .3rem;
 cursor: pointer;
+}
+.pinding{
+  background-color:#60968f ;
+  text-align: center;
+  padding: 3rem;
+  position: relative;
+  border-radius: 1rem;
+}
+
+.problem-image{
+  width: 70%;
+}
+.user-review{
+  display: block;
+  color: #1c2d39;
+  width: 100%;
+  text-align: start;
+}
+.space-review{
+  display: flex;
+  justify-content: space-between;
+  /* background-color: #031926; */
+}
+.edit-delete-btn-gp{
+  /* background-color: #031926; */
+  width: 30%;
+  margin-left: -6rem;
+
 }

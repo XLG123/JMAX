@@ -70,6 +70,18 @@ export const fetchOffers = () => async dispatch => {
       }
     }
   };
+  export const fetchPendingOffers = (userId) => async dispatch => {
+    try {
+      const res = await jwtFetch(`/api/users/${userId}/offers/pending`);
+      const offers = await res.json();
+      dispatch(receiveOffers(offers));
+    } catch (err) {
+      const resBody = await err.json();
+      if (resBody.statusCode === 400) {
+        dispatch(receiveErrors(resBody.errors));
+      }
+    }
+  };
   
 
   export const fetchUserOffers = id => async dispatch => {
@@ -115,6 +127,8 @@ export const fetchOffers = () => async dispatch => {
       if (res.ok) {
         dispatch(deleteOffer(offerId));
         dispatch(fetchUserOffers(user._id))
+        dispatch(fetchPendingOffers(user._id))
+
       } 
     } catch (err) {
       // Handle error
@@ -133,6 +147,7 @@ export const fetchOffers = () => async dispatch => {
         const updatedOffer = await res.json();
         dispatch(updateOffer(offerId, updatedOffer));
         dispatch(fetchUserOffers(user._id))
+        dispatch(fetchPendingOffers(user._id))
 
       } 
     } catch (err) {

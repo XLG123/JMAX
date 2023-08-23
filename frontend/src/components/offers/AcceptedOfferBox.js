@@ -12,6 +12,8 @@ import { useHistory } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { faMoneyCheck } from '@fortawesome/free-solid-svg-icons';
+
 import "./offer.css"
 import { NavLink } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
@@ -97,7 +99,9 @@ setReviewId(review._id)
 setReviewDes(review.description)
 setShowEditReview(true)
 }
-
+function handelUser(id){
+  history.push(`/users/${id}`)
+}
 const reqForOffer=useSelector(state=> state.problems.new)
 if (!offerOwner)return null
 // const helperOrReqOwner=(user._id===helper ||user===reqForOffer.author)
@@ -111,21 +115,25 @@ if(reqForOffer===undefined)return null
       <h3 onClick={redirectToHelper} className="user bigger">{offerOwner[helper]?.username}</h3>
 
       <p className="green">status : {status}</p>
-      <div onClick={handelshowReq} className="req">request</div>
+      <div  className="req">request: <FontAwesomeIcon icon={faMoneyCheck} onClick={handelshowReq} /></div>
       <p className="des-box">Price : {price}</p>
       <p className="des-box">offer : {description}</p>
     {/* </div> */}
-<button className="sign-up-btn pad center " type="submit">Add Review</button>
+<button className="sign-up-btn pad center " type="submit">Add Comment</button>
 
 </form>
 {reviews.map(ele=>(
 ele.offerId === _id &&
- <div className="review"> {ele.description}
+ <div className="review"> <p onClick={()=>handelUser(ele.reviewer._id)} className="user-review">{ele.reviewer.username}:</p>
+ <div className="space-review">
+   {ele.description}
+   </div> 
  {ele.reviewer._id==user._id &&
-  <div className="edit-delete">
+  <div className="edit-delete" >
   <FontAwesomeIcon icon={faEdit} className="padding" onClick={(e)=>handelShowEdit(e,ele)} /> 
    <FontAwesomeIcon icon={faTrashAlt} className="padding" onClick={(e)=>handelDelete(e,ele._id)} />
   </div>
+
 }
 
   </div>
@@ -152,7 +160,7 @@ ele.offerId === _id &&
               required
             />
          {/* {helperOrReqOwner&& */}
-          <button className="sign-up-btn" type="submit">Add Review</button>
+          <button className="sign-up-btn" type="submit">Save</button>
          {/* }     */}
    
           </form>
@@ -162,6 +170,7 @@ ele.offerId === _id &&
           <div>
           <div className="des-box"> {reqForOffer?.description}</div> 
           <div className="des-box">   {reqForOffer?.category}</div>
+          <img src={reqForOffer?.problemImageUrl}/>
           <div className="des-box">  <NavLink to={`/users/${reqForOffer?.author?._id}`} style={{color:"#031926"}}>{reqForOffer?.author?.username}</NavLink> </div>
           </div>
     </Modal>}
