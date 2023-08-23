@@ -1,38 +1,41 @@
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import * as sessionActions from "../store/session"
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import * as sessionActions from "../store/session";
 // import { fetchUserProblems, clearProblemErrors } from '../../store/problems';
 // import ProblemBox from '../Problems/ProblemBox';
 import "./Profile.css";
-import ProfileBox from './ProfileBox';
-import { clearProblemErrors, fetchProblems, fetchUserProblems } from '../store/problems';
-import { useParams } from 'react-router-dom';
-import CommentIcon from '@mui/icons-material/Comment';
-import { useHistory } from 'react-router-dom';
-import Avatar from '@mui/material/Avatar';
+import ProfileBox from "./ProfileBox";
+import {
+  clearProblemErrors,
+  fetchProblems,
+  fetchUserProblems,
+} from "../store/problems";
+import { useParams } from "react-router-dom";
+import CommentIcon from "@mui/icons-material/Comment";
+import { useHistory } from "react-router-dom";
+import Avatar from "@mui/material/Avatar";
 // All classnames are declared with the prefix pg which stands for profile page, instead of pp.
 
 const Profile = () => {
-  const history=useHistory()
+  const history = useHistory();
   const userId = useParams().userId;
   const dispatch = useDispatch();
-   let users = useSelector(state => state.session.users);
+  let users = useSelector((state) => state.session.users);
 
-  if (!users){
-    users={}
+  if (!users) {
+    users = {};
   }
 
-  const user = users[userId]
+  const user = users[userId];
 
-  const currentUser = useSelector(state => state.session.user);
-  const allProblems = useSelector(state => Object.values(state.problems.all));
+  const currentUser = useSelector((state) => state.session.user);
+  const allProblems = useSelector((state) => Object.values(state.problems.all));
   console.log(allProblems);
-  const userProblemIds = 
-    useSelector(state => state.problems.userProblems)
+  const userProblemIds = useSelector((state) => state.problems.userProblems);
   // console.log(userProblemIds);
 
   useEffect(() => {
-    dispatch(sessionActions.fetchAllUsers())
+    dispatch(sessionActions.fetchAllUsers());
     dispatch(fetchProblems());
     dispatch(fetchUserProblems(userId));
     return () => dispatch(clearProblemErrors());
@@ -42,59 +45,61 @@ const Profile = () => {
     return [];
   }
 
-  if (!users) return null
+  if (!users) return null;
 
   const allRequestsOffers = (e) => {
     e.preventDefault();
-  }
+  };
 
   const allRequests = (e) => {
     e.preventDefault();
-  }
+  };
 
   const showOpenRequests = (e) => {
     e.preventDefault();
-  }
+  };
 
   const showResolvedRequests = (e) => {
     e.preventDefault();
-  }
+  };
 
   const allOffers = (e) => {
     e.preventDefault();
-  }
+  };
 
   const showAcceptedOffers = (e) => {
     // e.preventDefault();
+
     history.push(`/offers/${userId}`)
   }
 
+
   const showPendingOffers = (e) => {
     e.preventDefault();
-  }
+  };
   // debugger
   // if (allProblems.length === 0)return null
 
   const noRequestsMsg = () => {
-    return (<div className='no-requests-container'>
-      <h1 className='no-requests-msg' style={{color: 'green'}}>
-        No requests yet.
-      </h1>
-    </div>)
-  }
+    return (
+      <div className="no-requests-container">
+        <h1 className="no-requests-msg" style={{ color: "green" }}>
+          No requests yet.
+        </h1>
+      </div>
+    );
+  };
 
-  function handelText(){
-    history.push(`/chat/private/${currentUser._id}/${userId}`) 
+  function handelText() {
+    history.push(`/chat/private/${currentUser._id}/${userId}`);
   }
 
   return (
     <>
-    {/* pg stands for profile page */}
-      <div className='pg-container'>
-
-        <div className='pg-left-side-bar'>
-          <div className='pg-filter-gp'>
-
+      {/* pg stands for profile page */}
+      <div className="pg-container">
+        <div className="pg-left-side-bar">
+          <div className="pg-filter-gp">
             {/* By default, the users will see the all requests they made */}
             {/* <div className='pg-filter-btn' 
               onClick={(e) => {allRequestsOffers(e)}}>
@@ -120,15 +125,22 @@ const Profile = () => {
 
             </div> */}
 
-            <div className='pg-helper-btn-gp'>
+            <div className="pg-helper-btn-gp">
+              <div
+                className="helper-btn"
+                onClick={(e) => {
+                  allOffers(e);
+                }}
+              >
+                Offers
+              </div>
 
-              <div className="helper-btn"
-                onClick={(e) => {allOffers(e)}}>Offers</div>
+              <div className="linebreak"></div>
 
-              <div className='linebreak'></div>
-
-              <div className='helper-accepted-filter-btn'
-                onClick={showAcceptedOffers}>
+              <div
+                className="helper-accepted-filter-btn"
+                onClick={showAcceptedOffers}
+              >
                 Accepted
               </div>
 
@@ -136,66 +148,75 @@ const Profile = () => {
                 onClick={(e) => {showPendingOffers(e)}}>
                 Pending
               </div> */}
-
             </div>
           </div>
         </div>
 
         <div className="pg-middle-section">
-          {userProblemIds.length === 0 ? <div className='no-request-container'>
-            No requests
-          </div> : <></>}
+          {userProblemIds.length === 0 ? (
+            <div className="no-request-container">No requests</div>
+          ) : (
+            <></>
+          )}
           {allProblems
             .filter((problem) => userProblemIds.includes(problem._id))
-            .map((problem)=> (<ProfileBox key={problem._id} 
-              problem={problem}/>))}
+            .map((problem) => (
+              <ProfileBox key={problem._id} problem={problem} />
+            ))}
         </div>
 
         <div className="pg-right-side-bar">
-          <div className='user-info-display'>
-            <div className='avatar-container'>
-              <div className='pg-profile'>
-                <Avatar sx={{
-                  bgcolor: '#77ACA2',
-                  width: "7vw", height: '7vw', margin: '15% auto'
-                }}
-                  className='avatar'>
-                  <h1 className='avatar-letter'>{user?.username[0]}</h1>
+          <div className="user-info-display">
+            <div className="avatar-container">
+              <div className="pg-profile">
+                <Avatar
+                  sx={{
+                    bgcolor: "#77ACA2",
+                    width: "7vw",
+                    height: "7vw",
+                    margin: "15% auto",
+                  }}
+                  className="avatar"
+                >
+                  <h1 className="avatar-letter">
+                    {user?.username[0].toUpperCase()}
+                  </h1>
                 </Avatar>
               </div>
             </div>
 
-            <div className='general-info user-info'>
+            <div className="general-info user-info">
               <div className="pg-user-info-label">
                 <span>Username: </span>
-                </div> {user?.username}
+              </div>{" "}
+              {user?.username}
             </div>
 
-            <div className='general-info user-info'>
+            <div className="general-info user-info">
               <div className="pg-user-info-label">
                 <span>Email: &nbsp;&nbsp;</span> {user?.email}
               </div>
             </div>
 
-            <div className='general-info user-addr'>
+            <div className="general-info user-addr">
               <div className="pg-user-info-label">
                 <span>ZipCode: &nbsp;&nbsp;</span> {user?.address}
               </div>
             </div>
 
-            <div className='general-info user-age'>
-              <div className="pg-user-age">
-                Age: &nbsp;&nbsp;{user?.age}
-              </div>
+            <div className="general-info user-age">
+              <div className="pg-user-age">Age: &nbsp;&nbsp;{user?.age}</div>
             </div>
-            <CommentIcon sx={{fontSize: "5rem", marginLeft: "4.5rem", 
-            width: "30%"}} onClick={handelText} className='private-chat-room'/>
+            <CommentIcon
+              sx={{ fontSize: "5rem", marginLeft: "4.5rem", width: "30%" }}
+              onClick={handelText}
+              className="private-chat-room"
+            />
           </div>
         </div>
-
       </div>
     </>
   );
-}
+};
 
-export default Profile; 
+export default Profile;

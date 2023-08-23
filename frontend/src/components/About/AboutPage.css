@@ -2,41 +2,6 @@
   position: relative;
 }
 
-.splash-container {
-  position: absolute;
-  top: 45vh;
-  left: 50%;
-}
-
-.image-container {
-  width: 25vw;
-  height: 25vw;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  animation: fadeInOut 5s;
-  animation-fill-mode: forwards;
-}
-
-@keyframes fadeInOut {
-  0% {
-    opacity: 0;
-  }
-
-  50% {
-    opacity: 1;
-  }
-
-  100% {
-    opacity: 0;
-    display: none;
-  }
-}
-
-.splash-logo {
-  width: inherit;
-}
-
 .app-description-container {
   font-size: 1.8vw;
   width: 80vw;
@@ -55,17 +20,15 @@
 }
 
 .team-members-info {
-  position: absolute;
-  visibility: hidden;
-  top: 24vw;
-  left: 5%;
+  margin-top: 4vw;
+  width: inherit;
 }
 
 .app-description,
-.team-members-info {
-  animation: fadeIn ease 5s;
+.team-members-info,
+.source-code-btn {
+  animation: fadeIn ease 2s;
   animation-iteration-count: 1;
-  animation-delay: 5s;
   animation-fill-mode: forwards;
 }
 
@@ -84,7 +47,7 @@
   display: grid;
   width: inherit;
   grid-template-columns: auto auto auto auto;
-  column-gap: 29%;
+  column-gap: 12%;
   letter-spacing: 0.1em;
 }
 
@@ -94,12 +57,16 @@
 }
 
 .member-pos {
+  font-size: 1.4vw;
   text-align: center;
+  margin-top: 0.5vw;
+  margin-bottom: 1.5vw;
 }
 
 .member-avatar {
   cursor: pointer;
   box-sizing: border-box;
+  
 }
 
 .member-avatar:hover {
@@ -121,8 +88,8 @@
   font-size: 1vw;
   border-radius: 5px;
   border: 1px solid #9DBEBB;
-  transition: color 1s;
-  transition: background-color 1s;
+  transition: color 0.5s;
+  transition: background-color 0.5s;
 }
 
 .source-code-btn:hover {
@@ -130,14 +97,30 @@
   color: #031926;
 }
 
-@media screen and (width <= 1440px) {
+@media screen and (width > 1440px) {
   .source-code-btn {
-    bottom: -50vw;
+    bottom: -47vw;
   }
 }
 
-@media screen and (width > 1440px) {
+@media screen and (width <= 1440px) {
   .source-code-btn {
-    bottom: -46vw;
+    bottom: -49vw;
   }
+}
+
+.online-presence-links {
+  text-align: center;
+  margin-top: 1vw;
+}
+
+.online-presence-links a {
+  text-decoration: none;
+  color: #F4E9CD;
+  display: inline-block;
+  width: 3vw;
+}
+
+.online-presence-links a:hover {
+  color:#9DBEBB;
 }

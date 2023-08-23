@@ -108,6 +108,8 @@ body {
   color: #F4E9CD;
   background-color: #031926;
   font-family: 'Rakkas', cursive;
+  word-spacing: 0.35em;
+  letter-spacing: 0.05em;
 }
 
 ol,

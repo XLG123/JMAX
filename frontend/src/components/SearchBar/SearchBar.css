@@ -2,91 +2,121 @@
   position: absolute;
   top: 2vw;
   left: 35%;
+  width: 33vw;
+}
+
+.search-bar-form {
+  width: inherit;
+  display: grid;
+  grid-template-columns: 88% 12%;
+  height: 2.1vw;
 }
 
 #search-bar {
-  height: 2.1vw;
-  width: 30vw;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
-}
-
-#search-bar {
   padding-left: 10px;
   font-size: 1.3vw;
+  border: none;
   background-color: rgba(255, 255, 255, 0.9);
+}
+
+#search-bar:focus {
+  box-shadow: 0px 0px 10px #fff;
 }
 
 #search-bar::placeholder {
   padding: 0px 5px;
   font-size: 1.1vw;
-  color: #7b7b7b;
-}
-
-#search-bar:focus {
-  box-shadow: 0px 0px 3px 1px #fff;
-  outline: none;
-}
-
-#search-bar:focus + .search-bar-btn {
-  box-shadow: 0px 0px 3px 1px #fff;
+  color: #909090;
 }
 
 .search-bar-btn {
-  position: absolute;
-  top: 0.1vw;
-  font-size: 2vw;
   width: 2.2vw;
-  height: 2.2vw;
+  height: inherit;
   text-align: center;
   display: flex;
   justify-content: center;
   align-items: center;
-  border-top: 1px solid gray;
-  border-right: 1px solid gray;
-  border-bottom: 1px solid gray;
+  border: none;
+  background-color: #9DBEBB;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
-  display: inline-block;
   cursor: pointer;
 }
 
 .search-icon {
-  width: 2vw;
+  color: #031926;
   top: 50%;
   left: 50%;
 }
 
-@media screen and (width > 1440px) {
+.search-dropdown-menu {
+  position: absolute;
+  width: 29vw;
+  height: fit-content;
+  background-color: #9DBEBB;
+  border: 1px solid #F4E9CD;
+  z-index: 10;
+  color: #031926;
+}
+
+.dropdown-item {
+  font-size: 1.3vw;
+  padding: 5px;
+  cursor: pointer;
+  border-bottom: 1px dotted #031926;
+}
+
+.dropdown-item:last-child {
+  border-bottom: none;
+}
+
+.dropdown-item:hover {
+  background-color: #468189;
+}
+
+@media screen and (width >= 1440px) {
   .search-bar-container {
-    top: 2vw;
+    top: 2.2vw;
   }
 }
 
 @media screen and (width < 1440px) {
   .search-bar-container {
-    top: 1.85vw;
+    top: 2.35vw;
   }
 }
 
 @media screen and (width < 1200px) {
   .search-bar-container {
-    top: 1.7vw;
+    top: 2.4vw;
   }
 }
 
 @media screen and (width < 800px) {
   .search-bar-container {
-    top: 1vw;
+    top: 2.4vw;
   }
 }
 
 @media screen and (width < 600px) {
   .search-bar-container {
-    top: -0.8vw;
+    top: 2.5vw;
   }
 }
 
 .search-result {
   margin-top: 7vw;
+}
+
+.not-found-msg {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 1.3vw;
+  text-align: center;
+}
+
+.zipcode-search, .category-search {
+  color:rgb(255, 255, 255);
+  font-weight: bold;
 }
