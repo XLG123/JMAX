@@ -1,6 +1,8 @@
 .container{
     /* background-color: blue; */
     margin-top: 5rem;
+    margin-bottom: 5rem;
+
 }
 .problems-container{
     margin-top: 2rem;
@@ -9,6 +11,7 @@
 /* background-color: antiquewhite; */
 }
 .box{
+    position: relative;
     width: 50%;
     background: linear-gradient(to bottom, #9dbebb 0%, #468189 50%, #9dbebb 100%);
     /* box-shadow: 2px 2px 2px 2px #F3E9CD(0, 0, 0, 0.2);  */

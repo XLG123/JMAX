@@ -1,33 +1,42 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { NavLink, useHistory, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { logout, login } from "../store/session";
-import Modal from "../context/model.js"
+import { logout, login, getCurrentUser } from "../store/session";
+import Modal from "../context/model.js";
 import webAppLogo from "../../assets/images/webAppLogo.jpg";
-import * as problemActions from "../store/problems"
+import * as problemActions from "../store/problems";
 import SearchBar from "../SearchBar/SearchBar";
-import IconButton from '@mui/material/IconButton';
-import LogoutIcon from '@mui/icons-material/Logout';
-import SmsIcon from '@mui/icons-material/Sms';
-import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
+import IconButton from "@mui/material/IconButton";
+import LogoutIcon from "@mui/icons-material/Logout";
+import SmsIcon from "@mui/icons-material/Sms";
+import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
+import LoginIcon from "@mui/icons-material/Login";
 import "./NavBar.css";
-import OfferModal from "../offerModal/index"
+import OfferModal from "../offerModal/index";
 import Offers from "../offers/offers";
-import * as offersActions from "../store/offers"
-import Tooltip from '@mui/material/Tooltip';
+import * as offersActions from "../store/offers";
+import Tooltip from "@mui/material/Tooltip";
+import { fetchAssociatedIds } from "../store/messages";
 
 function NavBar() {
   const loggedIn = useSelector((state) => !!state.session.user);
-  const user = useSelector((state) => state.session.user);
-  const [notify, setNotify] = useState("")
+  const currentUser = useSelector((state) => state.session.user);
+  const [notify, setNotify] = useState("");
   const dispatch = useDispatch();
   const history = useHistory();
-  const [showReq, setShowReqForm] = useState(false)
+  const [showReq, setShowReqForm] = useState(false);
   const [category, setCategory] = useState("Home Repair");
-  const [description, setDescription] = useState('');
-  const [zipCode, setZipCode] = useState('')
-  const [showOffers, setShowOffer] = useState(false)
+  const [description, setDescription] = useState("");
+  const [zipCode, setZipCode] = useState("");
+  const [showOffers, setShowOffer] = useState(false);
+  const [image, setImage] = useState(null);
   const currentUrl = useLocation().pathname;
+  const chatHistory = useSelector((state) =>
+    Object.values(state.messages.users)
+  );
+  const [showChat, setShowChat] = useState(false);
+  const ref = useRef();
+  // console.log(chatHistory);
 
   const logoutUser = (e) => {
     e.preventDefault();
@@ -51,39 +60,63 @@ function NavBar() {
   const goToAbout = () => {
     history.push("/about");
   };
-  const reqOffers=useSelector(state=>state.offers.user)
+  const reqOffers = useSelector((state) => state.offers.user);
 
-  const goToPublicChat = () => {
-    history.push("/chat");
-  }
- 
-  
-useEffect(() => {
-  if (loggedIn) {
-    dispatch(problemActions.fetchUserProblemsOpen(user._id))
+  // const goToPublicChat = () => {
+  //   // history.push("/chat");
+  // };
 
-    dispatch(offersActions.fetchUserOffers(user._id)).then(() => {
-      if (Object.keys(reqOffers).length === 0) {
-        setNotify(false);
-      } else {
-        setNotify(true);
+  const showPrivateChat = () => {
+    setShowChat(!showChat);
+  };
+
+  useEffect(() => {
+    const closeChatHistory = (e) => {
+      if (showChat && ref.current && !ref.current.contains(e.target)) {
+        setShowChat(false);
       }
-    });
-  }
-}, [ user,dispatch]);
-// [ user,reqOffers]
+    };
 
+    document.addEventListener("click", closeChatHistory);
+
+    return () => {
+      document.removeEventListener("click", closeChatHistory);
+    };
+  }, [showChat]);
+
+  useEffect(() => {
+    if (loggedIn) {
+      dispatch(problemActions.fetchUserProblemsOpen(currentUser._id));
+
+      dispatch(offersActions.fetchUserOffers(currentUser._id)).then(() => {
+        if (Object.keys(reqOffers).length === 0) {
+          setNotify(false);
+        } else {
+          setNotify(true);
+        }
+      });
+
+      dispatch(fetchAssociatedIds(currentUser._id));
+    }
+  }, [currentUser, dispatch]);
+  // [ user,reqOffers]
+
+  const updateFile = e => setImage(e.target.files[0]);
 
   const getLinks = () => {
     if (loggedIn) {
       return (
         <>
-
           <div className="links-nav">
             <Tooltip title="All Requests">
-              <NavLink to="/requests" className={currentUrl === "/requests" ?
-                "nav-btn-gp2 all-requests-btn selected-nav-btn" :
-                "nav-btn-gp2 all-requests-btn"}>
+              <NavLink
+                to="/requests"
+                className={
+                  currentUrl === "/requests"
+                    ? "nav-btn-gp2 all-requests-btn selected-nav-btn"
+                    : "nav-btn-gp2 all-requests-btn"
+                }
+              >
                 All Requests
                 <span></span>
                 <span></span>
@@ -93,41 +126,98 @@ useEffect(() => {
               </NavLink>
             </Tooltip>
 
-            <Tooltip title="Public Chat Room">
-              <IconButton className="public-chat-btn" onClick={goToPublicChat}>
-                <SmsIcon sx={{ color: "#F4E9CD", fontSize: "2.5vw", 
-                  position: "absolute", bottom: "0.2vw"}} 
-                  className="public-chat-icon"/>
+            <Tooltip title="Chat History">
+              <IconButton
+                className="nav-chat-btn"
+                onClick={showPrivateChat}
+                ref={ref}
+              >
+                <SmsIcon
+                  sx={{
+                    color: "#F4E9CD",
+                    fontSize: "2.5vw",
+                    position: "absolute",
+                    bottom: "0.2vw",
+                  }}
+                  className="nav-chat-icon"
+                />
               </IconButton>
             </Tooltip>
 
-            <Tooltip title="Notification">
-              {notify === false &&
+            {showChat && (
+              <div className="private-chat-history">
+                <ul>
+                  {chatHistory.length === 0 ? (
+                    <div>No Chat History Yet</div>
+                  ) : (
+                    <div className="private-chat-title">
+                      Click to enter chat
+                    </div>
+                  )}
+                  {chatHistory.map((user) => (
+                    <li key={user._id}>
+                      <NavLink
+                        to={`/chat/private/${currentUser._id}/${user._id}`}
+                        className="private-chat-link"
+                        onClick={showPrivateChat}
+                      >
+                        <span className="private-chat-other-username">
+                          {user.username}
+                        </span>
+                        <span className="enter-private-chat">
+                          <LoginIcon className="enter-chat-icon" />
+                        </span>
+                      </NavLink>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {notify === false && (
+              <Tooltip title="Notification">
                 <IconButton className="notify-btn" onClick={handleShowOffer}>
                   <NotificationsActiveIcon
                     className="notify-icon"
-                    sx={{ color: "#F4E9CD", fontSize: "2.5vw", position: "absolute", bottom: "0.2vw" }}
+                    sx={{
+                      color: "#F4E9CD",
+                      fontSize: "2.5vw",
+                      position: "absolute",
+                      bottom: "0.2vw",
+                    }}
                   />
                 </IconButton>
-              }
-            </Tooltip>
+              </Tooltip>
+            )}
 
-            <Tooltip title="Notification">
-              {notify === true &&
-                <IconButton className={`notify-btn ${notify ? "shaking2" : ""}`} onClick={handleShowOffer}>
+            {notify === true && (
+              <Tooltip title="Notification">
+                <IconButton
+                  className={`notify-btn ${notify ? "shaking2" : ""}`}
+                  onClick={handleShowOffer}
+                >
                   <NotificationsActiveIcon
                     className="notify-icon"
-                    sx={{ color: "red", fontSize: "2.5vw", position: "absolute", bottom: "0.2vw" }}
+                    sx={{
+                      color: "red",
+                      fontSize: "2.5vw",
+                      position: "absolute",
+                      bottom: "0.2vw",
+                    }}
                   />
                 </IconButton>
-              }
-            </Tooltip>
+              </Tooltip>
+            )}
 
             <Tooltip title="Profile Page">
-              <NavLink to={`/users/${user?._id}`} className={currentUrl ===
-                `/users/${user?._id}` ?
-                "nav-btn-gp2 user-profile-btn selected-nav-btn" :
-                "nav-btn-gp2 user-profile-btn"}>
+              <NavLink
+                to={`/users/${currentUser?._id}`}
+                className={
+                  currentUrl === `/users/${currentUser?._id}`
+                    ? "nav-btn-gp2 user-profile-btn selected-nav-btn"
+                    : "nav-btn-gp2 user-profile-btn"
+                }
+              >
                 Profile
                 <span></span>
                 <span></span>
@@ -138,8 +228,10 @@ useEffect(() => {
             </Tooltip>
 
             <Tooltip title="Create a new request">
-              <div onClick={handleShowForm}
-                className="nav-btn-gp2 new-request-btn">
+              <div
+                onClick={handleShowForm}
+                className="nav-btn-gp2 new-request-btn"
+              >
                 Write a Request
                 <span></span>
                 <span></span>
@@ -149,19 +241,20 @@ useEffect(() => {
               </div>
             </Tooltip>
 
-            {/* TODO: CATEGORY FILTER */}
-
             <Tooltip title="Log Out">
-              <IconButton onClick={logoutUser} className="logout-btn" >
-                <LogoutIcon className="logout-icon"
+              <IconButton onClick={logoutUser} className="logout-btn">
+                <LogoutIcon
+                  className="logout-icon"
                   sx={{
-                    color: '#F4E9CD', fontSize: "2.5vw",
-                    position: "absolute", bottom: "0.2vw", borderRadius: '5px'
+                    color: "#F4E9CD",
+                    fontSize: "2.5vw",
+                    position: "absolute",
+                    bottom: "0.2vw",
+                    borderRadius: "5px",
                   }}
                 />
               </IconButton>
             </Tooltip>
-
           </div>
           <SearchBar />
         </>
@@ -169,56 +262,80 @@ useEffect(() => {
     } else {
       return (
         <>
-
           <div className="links-auth">
             <Tooltip title="Demo User Login">
-              <div className="nav-btn" id="demo-login" onClick={demoLogin}>
-                Demo
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                {/* the empty spans are for css styling effects */}
-              </div>
+              <>
+                <div className="nav-btn" id="demo-login" onClick={demoLogin}>
+                  Demo
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  {/* the empty spans are for css styling effects */}
+                </div>
+              </>
             </Tooltip>
 
             <Tooltip title="Sign Up">
-              <NavLink to="/signup" className={currentUrl === "/signup" ?
-                "nav-btn selected-nav-btn" : "nav-btn"}>
-                Sign Up
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                {/* the empty spans are for css styling effects */}
-              </NavLink>
+              <>
+                <NavLink
+                  to="/signup"
+                  className={
+                    currentUrl === "/signup"
+                      ? "nav-btn selected-nav-btn"
+                      : "nav-btn"
+                  }
+                >
+                  Sign Up
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  {/* the empty spans are for css styling effects */}
+                </NavLink>
+              </>
             </Tooltip>
 
             <Tooltip title="Login">
-              <NavLink to="/login" className={currentUrl === "/login" ?
-                "nav-btn selected-nav-btn" : "nav-btn"}>
-                Log In
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                {/* the empty spans are for css styling effects */}
-              </NavLink>
+              <>
+                <NavLink
+                  to="/login"
+                  className={
+                    currentUrl === "/login"
+                      ? "nav-btn selected-nav-btn"
+                      : "nav-btn"
+                  }
+                >
+                  Log In
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  {/* the empty spans are for css styling effects */}
+                </NavLink>
+              </>
             </Tooltip>
 
             <Tooltip title="about page">
-              <div className={currentUrl === "/about" ?
-                "nav-btn selected-nav-btn" : "nav-btn"} id="about-btn"
-                onClick={goToAbout}>
-                About
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                {/* the empty spans are for css styling effects */}
-              </div>
+              <>
+                <div
+                  className={
+                    currentUrl === "/about"
+                      ? "nav-btn selected-nav-btn"
+                      : "nav-btn"
+                  }
+                  id="about-btn"
+                  onClick={goToAbout}
+                >
+                  About
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  {/* the empty spans are for css styling effects */}
+                </div>
+              </>
             </Tooltip>
-
           </div>
         </>
       );
@@ -226,34 +343,42 @@ useEffect(() => {
   };
 
   function handleShowForm(e) {
-    e.preventDefault()
-    setShowReqForm(true)
+    e.preventDefault();
+    setShowReqForm(true);
   }
 
   function handleClose(e) {
     e.preventDefault();
-    setShowReqForm(false)
-    setShowOffer(false)
+    setShowReqForm(false);
+    setShowOffer(false);
   }
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(problemActions.composeProblem({ category, description, address: zipCode }));
-    setShowReqForm(false)
-  }
+    dispatch(
+      problemActions.composeProblem({ category, description, address: zipCode, image })
+    );
+    setShowReqForm(false);
+  };
   function handleShowOffer(e) {
-    e.preventDefault()
+    e.preventDefault();
     // debugger
-    setShowOffer(true)
+    setShowOffer(true);
   }
 
   return (
     <>
       <div className="nav-bar-container">
-
-        <NavLink to={currentUrl === "/" || currentUrl === "/about"
-          || currentUrl === "/login" || currentUrl === "/signup" ? "/" :
-          "/requests"}>
+        <NavLink
+          to={
+            currentUrl === "/" ||
+            currentUrl === "/about" ||
+            currentUrl === "/login" ||
+            currentUrl === "/signup"
+              ? "/"
+              : "/requests"
+          }
+        >
           <div className="logo-container">
             <img src={webAppLogo} alt="app-logo" className="main-pg-logo2" />
           </div>
@@ -261,68 +386,77 @@ useEffect(() => {
 
         {getLinks()}
       </div>
-      {showReq && <Modal onClose={handleClose}>
+      {showReq && (
+        <Modal onClose={handleClose}>
+          <form onSubmit={handleSubmit}>
+            <label htmlFor="category" className="title space">
+              Select a Category:
+            </label>
 
-        <form onSubmit={handleSubmit}>
+            <br />
 
-          <label htmlFor="category" className="title space" >Select a Category:</label>
+            <select
+              id="category"
+              className="select signup-input selecr-font"
+              name="category"
+              onChange={(e) => setCategory(e.target.value)}
+            >
+              <option value="Home Repair">Home Repair</option>
+              <option value="Delivery">Delivery</option>
+              <option value="Driver">Driver</option>
+            </select>
 
-          <br />
-
-          <select id="category" className="select signup-input selecr-font" name="category" onChange={(e) => setCategory(e.target.value)}>
-            <option value="Home Repair">Home Repair</option>
-            <option value="Delivery">Delivery</option>
-            <option value="Driver">Driver</option>
-          </select>
-
-          <input type="number"
-            onChange={(e) => setZipCode(e.target.value)}
-            className='signup-input'
-            placeholder="Zip Code"
-            required
-          />
-
-          {/* <br></br>
-<br></br>  */}
-          <br />
-          <div className="errors"></div>
-
-          <textarea
-            className='signup-input'
-            placeholder="Description"
-            onChange={(e) => setDescription(e.target.value)}
-            required
-          />
-          <br></br>
-          <br></br>
-
-          <label className="img-input"> Add image
-            <input type="file"
-              id="file"
-              // onChange={(e)=> setZipCode(e.target.value)}
-              className='signup-input'
-              placeholder="Add an image"
+            <input
+              type="number"
+              onChange={(e) => setZipCode(e.target.value)}
+              className="signup-input"
+              placeholder="Zip Code"
+              required
             />
-          </label>
-          <br></br>
-          <br></br>
-          <br></br>
 
-          <button className="sign-up-btn ">Add Request</button>
-        </form>
-      </Modal>}
+            {/* <br></br>
+<br></br>  */}
+            <br />
+            <div className="errors"></div>
 
-      {showOffers && <Modal onClose={handleClose}>
+            <textarea
+              className="signup-input"
+              placeholder="Description"
+              onChange={(e) => setDescription(e.target.value)}
+              required
+            />
+            <br></br>
+            <br></br>
 
-        <div className="offerbox">
-          <Offers />
+            <label className="img-input">
+              {" "}
+              Add image
+              <input
+                type="file"
+                id="file"
+                // onChange={(e)=> setZipCode(e.target.value)}
+                onChange={updateFile}
+                className="signup-input"
+                placeholder="Add an image"
+              />
+            </label>
+            <br></br>
+            <br></br>
+            <br></br>
 
-        </div>
+            <button className="sign-up-btn ">Add Request</button>
+          </form>
+        </Modal>
+      )}
 
-      </Modal>}
+      {showOffers && (
+        <Modal onClose={handleClose}>
+          <div className="offerbox">
+            <Offers />
+          </div>
+        </Modal>
+      )}
     </>
-
-
   );
 }
 

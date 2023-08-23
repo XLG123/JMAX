@@ -32,7 +32,8 @@
 
 .chat-user {
   margin-bottom: 1em;
-  margin-left: 88%;
+  margin-left: 90%;
+  font-size: 1.2vw;
 }
 
 .scrollable-chat {
@@ -64,6 +65,8 @@
   word-wrap: break-word;
   border: 2px solid #031926;
   padding: 0.2em 1em;
+  word-spacing: 0.05em;
+  letter-spacing: 0.01em;
 }
 
 .sent {
@@ -118,7 +121,7 @@
 
 .sticky-input form button {
   font-size: inherit;
-  background-color: rgba(192, 192, 192, 0.8);
+  background-color: #9DBEBB;
   outline: none;
   border: none;
   border-top-right-radius: 5px;
@@ -149,11 +152,11 @@
 }
 
 /* Public chat styling */
-.public-chat-msg {
+/* .public-chat-msg {
   font-size: 1.3vw;
   background-color:rgba(192, 192, 192, 0.8);
   margin-bottom: 0.5em;
   border-radius: 5px;
   padding: 0.3em 0.6em;
   width: fit-content;
-}
+} */

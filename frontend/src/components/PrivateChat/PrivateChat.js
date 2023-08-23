@@ -3,7 +3,7 @@ import io from "socket.io-client";
 import "../LiveChat/LiveChat.css";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchMessages } from "../store/messages";
+import { fetchAssociatedIds, fetchMessages } from "../store/messages";
 import { useRef } from "react";
 
 let socket;
@@ -12,7 +12,7 @@ const PrivateChat = () => {
   const { userId, otherUserId } = useParams();
   const [inputMessage, setInputMessage] = useState("");
   const dispatch = useDispatch();
-  const messagesFromStore = useSelector((state) => state.messages);
+  const messagesFromStore = useSelector((state) => state.messages.messages);
   const currentUser = useSelector((state) => state.session.user);
   const [isTyping, setIsTyping] = useState(false);
   const [typingUsername, setTypingUsername] = useState("");
@@ -104,6 +104,7 @@ const PrivateChat = () => {
     socket.emit("private message", message);
     setMessages((prevMessages) => [...prevMessages, message]);
     setInputMessage("");
+    dispatch(fetchAssociatedIds(userId));
   };
 
   return (
@@ -113,7 +114,7 @@ const PrivateChat = () => {
 
       <div className="scrollable-chat" ref={scrollableChatRef}>
         <div className="chat">
-          {messages.map((msg, idx) => (
+          {Object.values(messages).map((msg, idx) => (
             <div key={idx}
               className={
                 msg.sender === userId ? "sent" : "received"} >

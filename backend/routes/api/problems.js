@@ -3,10 +3,15 @@ const router = express.Router();
 const mongoose = require("mongoose");
 const Problem = mongoose.model("Problem");
 const { requireUser } = require("../../config/passport");
-// const {
-//   multipleFilesUpload,
-//   multipleMulterUpload,
-// } = require("../../../backend/awsS3");
+// const { DEFAULT_PROBLEM_IMAGE_URL } = require("../../seeders/images");
+const DEFAULT_PROBLEM_IMAGE_URL =
+  "https://my-jmax.s3.us-east-2.amazonaws.com/public/tools.svg";
+const {
+  multipleFilesUpload,
+  multipleMulterUpload,
+  singleFileUpload,
+  singleMulterUpload,
+} = require("../../../backend/awsS3");
 
 router.get("/", async (req, res) => {
   try {
@@ -108,22 +113,23 @@ router.get("/closed", async (req, res) => {
 
 router.post(
   "/create",
-  // multipleMulterUpload("images"),
+  singleMulterUpload("image"),
   requireUser,
   async (req, res) => {
-    // console.log(req.files);
-    // const imageUrls = await multipleFilesUpload({
-    //   files: req.files,
-    //   public: true,
-    // });
+    let imageUrls;
+
+    const problemImageUrl = req.file
+      ? await singleFileUpload({ file: req.file, public: true })
+      : DEFAULT_PROBLEM_IMAGE_URL;
     const newProblem = new Problem({
       category: req.body.category,
       description: req.body.description,
       address: req.body.address,
-      // problemImageUrl: imageUrls,
+      problemImageUrl,
       status: req.body.status,
       author: req.user._id,
     });
+
     try {
       let savedProblem = await newProblem.save();
       savedProblem = await savedProblem.populate(
@@ -155,25 +161,75 @@ router.get("/:id", requireUser, async (req, res, next) => {
   }
 });
 
-router.patch("/:id", requireUser, async (req, res) => {
-  try {
-    const problem = await Problem.findById(req.params.id);
-    if (!problem) {
-      throw new Error("Problem not found");
-    }
+// router.patch("/:id", requireUser, async (req, res) => {
+//   try {
+//     const problem = await Problem.findById(req.params.id);
+//     if (!problem) {
+//       throw new Error("Problem not found");
+//     }
 
-    if (!problem.author.equals(req.user._id)) {
-      throw new Error("You are not authorized to edit this problem");
-    }
-    await Problem.updateOne({ _id: req.params.id }, { $set: req.body });
+//     if (!problem.author.equals(req.user._id)) {
+//       throw new Error("You are not authorized to edit this problem");
+//     }
+//     await Problem.updateOne({ _id: req.params.id }, { $set: req.body });
 
-    // return res.json({ message: "Problem updated successfully" });
-  } catch (error) {
-    return res.status(500).json({
-      error: error.message,
-    });
+//     return res.json({ message: "Problem updated successfully" });
+//   } catch (error) {
+//     return res.status(500).json({
+//       error: error.message,
+//     });
+//   }
+// });
+
+router.patch(
+  "/:id",
+  singleMulterUpload("image"), // If you want to update the image as well
+  requireUser,
+  async (req, res) => {
+    const { id } = req.params;
+
+    try {
+      // Find the problem by ID
+      let problemToUpdate = await Problem.findById(id);
+
+      if (!problemToUpdate) {
+        return res.status(404).json({ error: "Problem not found" });
+      }
+
+      // Check if the user is the author of the problem
+      if (problemToUpdate.author.toString() !== req.user._id.toString()) {
+        return res
+          .status(403)
+          .json({ error: "You don't have permission to update this problem" });
+      }
+
+      // Update the problem fields
+      if (req.body.category) problemToUpdate.category = req.body.category;
+      if (req.body.description)
+        problemToUpdate.description = req.body.description;
+      if (req.body.address) problemToUpdate.address = req.body.address;
+      if (req.body.status) problemToUpdate.status = req.body.status;
+
+      // Handle image update
+      if (req.file) {
+        const problemImageUrl = await singleFileUpload({
+          file: req.file,
+          public: true,
+        });
+        problemToUpdate.problemImageUrl = problemImageUrl;
+      }
+
+      // Save the updated problem
+      const updatedProblem = await problemToUpdate.save();
+
+      return res.json(updatedProblem);
+    } catch (error) {
+      return res.status(500).json({
+        error: error.message,
+      });
+    }
   }
-});
+);
 
 router.get("/:userId", async (req, res) => {
   try {
