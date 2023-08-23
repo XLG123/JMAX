@@ -4,15 +4,13 @@ import * as problemActions from "../store/problems"
 import ProblemBox from './ProblemBox';
 import * as sessionActions from "../store/session"
 const Problems = () => {
-  // debugger
   const dispatch = useDispatch();
   const problems = useSelector(state => Object.values(state.problems.all));
 
   useEffect(() => {
-    // dispatch(sessionActions.fetchAllUsers())
     dispatch(problemActions.fetchProblems());
     return () => dispatch(problemActions.clearProblemErrors());
-  }, [dispatch])
+  }, [dispatch,problems.length])
 
   if (problems.length === 0) return <div className='noproblem'>There are no Problems</div>;
 
