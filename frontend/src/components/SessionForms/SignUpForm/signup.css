@@ -47,7 +47,7 @@
     color:black;
     font-weight: bold;
     font-family: 'Times New Roman', Times, serif;
-   
+    
 }
 
 input::placeholder {
@@ -62,7 +62,8 @@ input[type='password'] {
 }
 
 input[type='text']:focus,
-input[type='password']:focus {
+input[type='password']:focus,
+#zipcode-input:focus {
     box-shadow: 0px 0px 10px 5px rgba(255, 255, 255, 1);
 }
 
@@ -71,12 +72,13 @@ input[type='password']:focus {
     width: 35%;
     border-radius: 5px;
     color: #031926;
-    font-size: 2.2vw;
+    font-size: 1.6em;
     font-family: 'Rakkas', cursive;
     border: none;
     cursor: pointer;
     background-color: rgba(255, 255, 255, 0.75);
     transition: background-color 0.5s ease-in 100ms;
+    word-spacing: 0.3em;
 }
 
 .sign-up-btn:hover {

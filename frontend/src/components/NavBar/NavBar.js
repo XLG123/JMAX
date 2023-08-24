@@ -30,6 +30,7 @@ function NavBar() {
   const [zipCode, setZipCode] = useState("");
   const [showOffers, setShowOffer] = useState(false);
   const [image, setImage] = useState(null);
+  const [imageSrc, setImageSrc] = useState(null);
   const currentUrl = useLocation().pathname;
   const chatHistory = useSelector((state) =>
     Object.values(state.messages.users)
@@ -101,7 +102,10 @@ function NavBar() {
   }, [currentUser, dispatch]);
   // [ user,reqOffers]
 
-  const updateFile = (e) => setImage(e.target.files[0]);
+  const updateFile = (e) => {
+    setImage(e.target.files[0]);
+    setImageSrc(URL.createObjectURL(e.target.files[0]));
+  };
 
   const getLinks = () => {
     if (loggedIn) {
@@ -351,6 +355,7 @@ function NavBar() {
     e.preventDefault();
     setShowReqForm(false);
     setShowOffer(false);
+    setImageSrc(null);
   }
 
   const handleSubmit = (e) => {
@@ -365,7 +370,9 @@ function NavBar() {
       })
     );
     setShowReqForm(false);
+    setImageSrc(null);
   };
+
   function handleShowOffer(e) {
     e.preventDefault();
     // debugger
@@ -416,6 +423,7 @@ function NavBar() {
               type="number"
               onChange={(e) => setZipCode(e.target.value)}
               className="signup-input"
+              id="zipcode-input"
               placeholder="Zip Code"
               required
             />
@@ -440,15 +448,19 @@ function NavBar() {
               <input
                 type="file"
                 id="file"
-                // onChange={(e)=> setZipCode(e.target.value)}
                 onChange={updateFile}
                 className="signup-input"
-                placeholder="Add an image"
               />
             </label>
             <br></br>
             <br></br>
             <br></br>
+
+            {imageSrc && (
+              <div className="request-preview-img-container">
+                <img src={imageSrc} className="request-preview-image" />
+              </div>
+            )}
 
             <button className="sign-up-btn ">Add Request</button>
           </form>

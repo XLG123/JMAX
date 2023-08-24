@@ -463,6 +463,7 @@ textarea {
 
 .img-input {
   padding: 1rem;
+  color: #666;
   background-color: #9DBEBB;
   width: 15rem;
   border-radius: 5px;
@@ -518,4 +519,24 @@ input[type="file"] {
   to {
     color: #F4E9CD; /* Change it to the original color or any other color */
   }
+}
+
+#zipcode-input {
+  outline: none;
+}
+
+#zipcode-input::placeholder {
+  font-size: large;
+}
+
+.request-preview-img-container {
+  width: 80%;
+  height: 20%;
+  margin: 0 auto;
+}
+
+.request-preview-image {
+  width: inherit;
+  height: inherit;
+  object-fit: contain;
 }
