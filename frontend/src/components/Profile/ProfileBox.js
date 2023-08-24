@@ -62,6 +62,9 @@ const ProfileBox = ({
   const handleClose = (e) => {
     e.preventDefault();
     setShowRequestForm(false);
+    if (!problemImageUrl) {
+      setImageSrc("");
+    }
   };
 
   const limitZipCodeMaxLength = (e) => {
@@ -72,7 +75,9 @@ const ProfileBox = ({
   };
 
   const updateImagePreview = (e) => {
-    setImageSrc(URL.createObjectURL(e.target.files[0]));
+    if (e.target.files.length !== 0) {
+      setImageSrc(URL.createObjectURL(e.target.files[0]));
+    }
   }
 
   const handleSubmit = async (e) => {
@@ -158,7 +163,7 @@ const ProfileBox = ({
               Select a Category:
             </label>
 
-            <div>
+            <div className="edit-request-form-container">
               <select
                 id="category"
                 className="select signup-input selecr-font"
@@ -206,12 +211,11 @@ const ProfileBox = ({
 
               <div className="edit-request-img-input-container">
                 <label className="img-input">
-                  {imageSrc ? "Update Image" : "Add Image"}
+                  {problemImageUrl ? "Update Image" : "Add Image"}
                   <input
                     type="file"
                     id="file"
                     className="signup-input"
-                    placeholder="Add an image"
                     onChange={(e)=> updateImagePreview(e)}
                   />
                 </label>

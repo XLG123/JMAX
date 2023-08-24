@@ -288,11 +288,11 @@
 }
 
 .update-image-preview {
-  width: 50%;
+  width: 60%;
   height: 20vh;
   margin-top: 2vh;
 }
 
-.edit-request-btn {
-
+.edit-request-form-container:not(:has(.update-image-preview)) .edit-request-btn {
+  margin-top: 4vh;
 }
