@@ -15,7 +15,7 @@ const {
 
 router.get("/", async (req, res) => {
   try {
-    const problems = await Problem.find().populate(
+    const problems = await Problem.find().sort('-createdAt').populate(
       "author",
       "_id username email"
     );
@@ -36,7 +36,7 @@ router.get("/", async (req, res) => {
 
 router.get("/open", async (req, res) => {
   try {
-    const problems = await Problem.find().populate(
+    const problems = await Problem.find().sort('-createdAt').populate(
       "author",
       "_id username email"
     );
