@@ -130,9 +130,12 @@ const ProfileBox = ({
           <div className="pg-status"> {status}</div>
           <p className="pg-catgory">{category}</p>
           <p className="pg-des-box">{description}</p>
-          <div className="image-problem-div">
-            <img className="imageProblem" src={`${problemImageUrl}`} alt="" />
-          </div>
+          {problemImageUrl && (
+            <div className="image-problem-div">
+              <img className="image-problem" src={`${problemImageUrl}`} alt="" 
+              />
+            </div>
+          )}
           {/* <div className="pg-offer">
             {!isCurrentUserProblemCreator &&
               <button className="pg-add-offer-btn"
