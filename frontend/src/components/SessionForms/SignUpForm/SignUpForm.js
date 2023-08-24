@@ -262,6 +262,7 @@ function SignupForm() {
             // value={password2}
             onChange={update("address")}
             placeholder="Zip code"
+            min="0"
           />
 
           <div>
