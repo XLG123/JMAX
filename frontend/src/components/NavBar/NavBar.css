@@ -230,6 +230,7 @@
 @media screen and (width <= 1050px) {
   .nav-chat-btn {
     top: 2vw;
+    right: -74vw;
   }
 }
 
@@ -241,7 +242,8 @@
 
 @media screen and (width < 600px) {
   .nav-chat-btn {
-    top: 0.75vw;
+    top: 0.65vw;
+    right: -72vw;
   }
 }
 
@@ -364,6 +366,14 @@
     left: 91vw;
   }
 
+  .user-profile-btn {
+    right: 8vw;
+  }
+
+  .notify-btn {
+    right: -77vw;
+  }
+
 }
 
 @media screen and (width < 600px) {
@@ -372,15 +382,15 @@
   }
 
   .logout-btn {
-    left: 89vw;
+    left: 87vw;
   }
 
   .user-profile-btn {
-    right: 4.5vw;
+    right: 7vw;
   }
   
   .notify-btn {
-    right: -79vw;
+    right: -75vw;
   }
 }
 

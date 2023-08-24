@@ -70,9 +70,8 @@ const Profile = () => {
   const showAcceptedOffers = (e) => {
     // e.preventDefault();
 
-    history.push(`/offers/${userId}`)
-  }
-
+    history.push(`/offers/${userId}`);
+  };
 
   const showPendingOffers = (e) => {
     e.preventDefault();
@@ -169,50 +168,35 @@ const Profile = () => {
           <div className="user-info-display">
             <div className="avatar-container">
               <div className="pg-profile">
-                {/* <Avatar
-                  sx={{
-                    bgcolor: "#77ACA2",
-                    width: "7vw",
-                    height: "7vw",
-                    margin: "15% auto",
-                  }}
-                  className="avatar"
-                >
-                  <h1 className="avatar-letter">
-                    {user?.username[0].toUpperCase()}
-                  </h1>
-                </Avatar> */}
-                <div style={{ bgcolor: "#77ACA2",
-                    width: "7vw",
-                    height: "7vw",
-                    margin: "15% auto"}}
-                  className="avatar">
-                  <img src={`${user?.profileImageUrl}`} alt="" />
-                </div>
+                <img
+                  src={`${user?.profileImageUrl}`}
+                  alt=""
+                  className="user-profile"
+                />
               </div>
             </div>
 
             <div className="general-info user-info">
               <div className="pg-user-info-label">
                 <span>Username: </span>
-              </div>{" "}
-              {user?.username}
+                <span>{user?.username}</span>
+              </div>
             </div>
 
             <div className="general-info user-info">
               <div className="pg-user-info-label">
-                <span>Email: &nbsp;&nbsp;</span> {user?.email}
+                <span>Email: &nbsp;</span> {user?.email}
               </div>
             </div>
 
             <div className="general-info user-addr">
               <div className="pg-user-info-label">
-                <span>ZipCode: &nbsp;&nbsp;</span> {user?.address}
+                <span>ZipCode: </span> {user?.address}
               </div>
             </div>
 
             <div className="general-info user-age">
-              <div className="pg-user-age">Age: &nbsp;&nbsp;{user?.age}</div>
+              <div className="pg-user-age">Age: {user?.age}</div>
             </div>
             <CommentIcon
               sx={{ fontSize: "5rem", marginLeft: "4.5rem", width: "30%" }}
