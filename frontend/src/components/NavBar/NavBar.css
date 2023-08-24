@@ -146,7 +146,7 @@
 
 .notify-btn {
   position: relative;
-  left: 81vw;
+  right: -81vw;
   top: 2.5vw;
 }
 
@@ -174,7 +174,7 @@
 
 @media screen and (width < 800px) {
   .user-profile-btn {
-    right: 3.5vw;
+    right: 4vw;
   }
 }
 
@@ -186,7 +186,7 @@
 
 .logout-btn {
   position: relative;
-  left: 94.5vw;
+  left: 94vw;
   top: 2.45vw;
 }
 
@@ -202,7 +202,7 @@
 
 .nav-chat-btn {
   position: relative;
-  left: 76vw;
+  right: -76vw;
 }
 
 .nav-chat-icon {
@@ -349,17 +349,38 @@
   .logout-btn, .notify-btn {
     top: 1.9vw;
   }
+
+  .logout-btn {
+    left: 93vw;
+  }
 }
 
 @media screen and (width < 800px) {
   .logout-btn, .notify-btn {
     top: 1.5vw;
   }
+
+  .logout-btn {
+    left: 91vw;
+  }
+
 }
 
 @media screen and (width < 600px) {
   .logout-btn, .notify-btn {
     top: 0.5vw;
+  }
+
+  .logout-btn {
+    left: 89vw;
+  }
+
+  .user-profile-btn {
+    right: 4.5vw;
+  }
+  
+  .notify-btn {
+    right: -79vw;
   }
 }
 
