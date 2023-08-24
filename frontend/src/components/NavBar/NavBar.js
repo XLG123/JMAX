@@ -447,6 +447,7 @@ function NavBar() {
               Add image
               <input
                 type="file"
+                accept=".jpeg, .jpg, .png"
                 id="file"
                 onChange={updateFile}
                 className="signup-input"
@@ -458,7 +459,7 @@ function NavBar() {
 
             {imageSrc && (
               <div className="request-preview-img-container">
-                <img src={imageSrc} className="request-preview-image" />
+                <img src={imageSrc} className="request-preview-image" alt=""/>
               </div>
             )}
 

@@ -56,13 +56,16 @@ input::placeholder {
 }
 
 input[type='text'], 
-input[type='password'] {
+input[type='password'],
+#signup-zipcode,
+#zipcode-input {
     outline: none;
     transition: box-shadow 0.5s;
 }
 
 input[type='text']:focus,
 input[type='password']:focus,
+#signup-zipcode:focus,
 #zipcode-input:focus {
     box-shadow: 0px 0px 10px 5px rgba(255, 255, 255, 1);
 }
@@ -72,7 +75,7 @@ input[type='password']:focus,
     width: 35%;
     border-radius: 5px;
     color: #031926;
-    font-size: 1.6em;
+    font-size: 1.8vw;
     font-family: 'Rakkas', cursive;
     border: none;
     cursor: pointer;
@@ -84,6 +87,31 @@ input[type='password']:focus,
 .sign-up-btn:hover {
     background-color: white;
     box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.9);
+}
+
+#register-btn {
+    margin-top: 1.5vh;
+}
+
+#profile-img-btn {
+    font-size: 1.3vw;
+    cursor: pointer;
+}
+
+.user-profile-preview-container {
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 3vh;
+}
+
+.user-profile-preview {
+    width: inherit;
+    object-fit: contain;
+}
+
+.sign-up-form-container:has(.user-profile-preview-container) {
+    top: 2.5vw;
 }
 
 .sign-in-form-container {
@@ -125,6 +153,7 @@ input[type='password']:focus,
     position: absolute;
     /* margin-bottom: -1rem; */
 }
+
 .btn{
     font-size: x-large;
 }

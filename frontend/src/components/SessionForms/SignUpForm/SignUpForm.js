@@ -2,10 +2,9 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "./signup.css";
 import { signup, clearSessionErrors } from "../../store/session";
-// import logo from "./logo.jpg"
 import { receiveErrors } from "../../store/session";
-import logo from "./Vector.png";
 import { useHistory } from "react-router-dom";
+
 function SignupForm() {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
@@ -15,6 +14,7 @@ function SignupForm() {
   const [age, setAge] = useState("");
   const history = useHistory();
   const [image, setImage] = useState(null);
+  const [imageSrc, setImageSrc] = useState(null);
 
   // error handling for signup form
   const [emailError, setEmailError] = useState(false);
@@ -83,7 +83,7 @@ function SignupForm() {
       setEmailError("Email is required");
       errors = true;
     } else {
-      let emailRegex = new RegExp("/^[a-z0-9]+@[a-z]+\.[a-z]{2,3}$/");
+      let emailRegex = new RegExp("/^[a-z0-9]+@[a-z]+.[a-z]{2,3}$/");
       if (!emailRegex.test(email) && !email.includes(".")) {
         setEmailError("Email format is incorrect");
         errors = true;
@@ -103,7 +103,7 @@ function SignupForm() {
       setPasswordError("Password is required");
       errors = true;
     } else if (password.length < 6) {
-      setPasswordError("Password length must be at least 6 characters long.")
+      setPasswordError("Password length must be at least 6 characters long.");
       errors = true;
     } else {
       setPasswordError(null);
@@ -176,13 +176,15 @@ function SignupForm() {
   // }else return true
   // }
 
-  const updateFile = e => setImage(e.target.files[0]);
+  const updateFile = (e) => {
+    setImage(e.target.files[0]);
+    setImageSrc(URL.createObjectURL(e.target.files[0]));
+  };
 
   return (
     <form className="session-form" onSubmit={handleSubmit}>
       <div className="sign-up-form-container">
         <h1 className="sign-up-title">
-          {/* <img src={logo} alt="session-form-logo" className="logo"/>  */}
           Register for a new account on Problem Solver
         </h1>
 
@@ -254,23 +256,40 @@ function SignupForm() {
           <input
             type="number"
             className="signup-input"
+            id="signup-zipcode"
             // value={password2}
             onChange={update("address")}
             placeholder="Zip code"
           />
-          <label>
-            Profile Image
-            <input
-              type="file"
-              accept=".jpg, .jpeg, .png"
-              onChange={updateFile}
-            />
-          </label>
+
+          <div>
+            <br />
+            <label className="img-input" id="profile-img-btn">
+              Profile Image
+              <input
+                type="file"
+                accept=".jpg, .jpeg, .png"
+                onChange={updateFile}
+              />
+            </label>
+            <br />
+          </div>
+
+          {imageSrc && (
+            <div className="user-profile-preview-container">
+              <img
+                src={imageSrc}
+                className="user-profile-preview"
+                alt="user profile preview"
+              />
+            </div>
+          )}
 
           <div className="errors"></div>
 
           <input
             className="sign-up-btn"
+            id="register-btn"
             type="submit"
             value="Register"
             // disabled={!email || !username || !password || password !== password2}
