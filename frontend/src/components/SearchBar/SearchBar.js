@@ -62,12 +62,18 @@ const SearchBar = () => {
         const words = searchText.split(" ");
         const firstWord = words[0];
         const secondWord = words[1];
-        caseInsensitive =
-          firstWord[0].toUpperCase() +
-          firstWord.substring(1).toLowerCase() +
-          " " +
-          secondWord[0].toUpperCase() +
-          secondWord.substring(1).toLowerCase();
+        if (secondWord !== "") {
+          caseInsensitive =
+            firstWord[0].toUpperCase() +
+            firstWord.substring(1).toLowerCase() +
+            " " +
+            secondWord[0].toUpperCase() +
+            secondWord.substring(1).toLowerCase();
+        } else {
+          caseInsensitive = "placeholder";
+        }
+      } else if (wordCount > 2) {
+        caseInsensitive = "placeholder";
       }
     }
 
