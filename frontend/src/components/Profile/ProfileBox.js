@@ -107,25 +107,21 @@ const ProfileBox = ({
     dispatch(deleteProblem(id));
   };
 
-  const editAndDeleteButtonGroup = () => {
-    return (
-      <div className="edit-delete-btn-gp">
-        <div className="pg-edit-btn" onClick={editCurrentRequest}>
-          Edit
-        </div>
-
-        <div className="pg-delete-btn" onClick={() => deleteCurrentRequest(id)}>
-          Delete
-        </div>
-      </div>
-    );
-  };
-
   return (
     <>
       <div className="pg-problems-container">
         <div className="pg-box">
-          {isCurrentUserProblemCreator ? editAndDeleteButtonGroup() : <></>}
+          
+          <div className="edit-delete-btn-gp">
+            <div className="pg-edit-btn" onClick={editCurrentRequest}>
+              Edit
+            </div>
+
+            <div className="pg-delete-btn" onClick={() => deleteCurrentRequest(id)}>
+              Delete
+            </div>
+          </div>
+
           <h3 onClick={sendToProf} className="pg-user">
             {username}
           </h3>
