@@ -104,7 +104,9 @@ function NavBar() {
 
   const updateFile = (e) => {
     setImage(e.target.files[0]);
-    setImageSrc(URL.createObjectURL(e.target.files[0]));
+    if (e.target.files.length !== 0) {
+      setImageSrc(URL.createObjectURL(e.target.files[0]));
+    }
   };
 
   const getLinks = () => {
