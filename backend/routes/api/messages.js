@@ -73,27 +73,39 @@ router.get("/:userId", async (req, res) => {
     const userId = req.params.userId;
 
     const messages = await Message.find({
-      $or: [
-        { sender: userId },
-        { receiver: userId },
-      ],
+      $or: [{ sender: userId }, { receiver: userId }],
     }).sort("-createdAt");
 
     const userMessages = {};
     messages.forEach((message) => {
-      const associatedId = message.sender.toString() === userId ? message.receiver.toString() : message.sender.toString();
-      if (!userMessages[associatedId] || new Date(userMessages[associatedId].createdAt) < new Date(message.createdAt)) {
+      const associatedId =
+        message.sender.toString() === userId
+          ? message.receiver.toString()
+          : message.sender.toString();
+      if (
+        !userMessages[associatedId] ||
+        new Date(userMessages[associatedId].createdAt) <
+          new Date(message.createdAt)
+      ) {
         userMessages[associatedId] = message;
       }
     });
 
-    const allAssociatedIds = Object.values(userMessages).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).map(message => message.sender.toString() === userId ? message.receiver.toString() : message.sender.toString());
+    const allAssociatedIds = Object.values(userMessages)
+      .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+      .map((message) =>
+        message.sender.toString() === userId
+          ? message.receiver.toString()
+          : message.sender.toString()
+      );
 
     const users = await User.find({
       _id: { $in: allAssociatedIds },
     });
 
-    const sortedUsers = allAssociatedIds.map(id => users.find(user => user._id.toString() === id).toObject());
+    const sortedUsers = allAssociatedIds.map((id) =>
+      users.find((user) => user._id.toString() === id).toObject()
+    );
 
     res.json(sortedUsers);
   } catch (error) {
