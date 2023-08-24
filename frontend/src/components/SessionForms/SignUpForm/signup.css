@@ -90,7 +90,7 @@ input[type='password']:focus,
 }
 
 #register-btn {
-    margin-top: 1.5vh;
+    margin-top: 4vh;
 }
 
 #profile-img-btn {
@@ -112,6 +112,10 @@ input[type='password']:focus,
 
 .sign-up-form-container:has(.user-profile-preview-container) {
     top: 2.5vw;
+}
+
+.sign-up-form-container:has(.user-profile-preview-container) #register-btn {
+    margin-top: 1vh;
 }
 
 .sign-in-form-container {
