@@ -29,15 +29,15 @@ const ProfileBox = ({
   const [editDescription, setEditDescription] = useState(description);
   const [editZipCode, setEditZipCode] = useState(address);
   const [zipCodeError, setZipCodeError] = useState("");
-  const [imageSrc, setImageSrc] = useState(null);
+  const [imageSrc, setImageSrc] = useState(problemImageUrl);
   // const [show, setShow] = useState(false);
   // const [price, setPrice] = useState();
   // const [offer, setOffer] = useState("");
   const dispatch = useDispatch();
   const history = useHistory();
   const { username, _id: userId } = author;
-  console.log("userId:", userId);
-  console.log("CurrentUser._id:", CurrentUser._id);
+  // console.log("userId:", userId);
+  // console.log("CurrentUser._id:", CurrentUser._id);
   const [showRequestForm, setShowRequestForm] = useState(false);
   const [editStatus, setStatus] = useState(status);
 
@@ -70,6 +70,10 @@ const ProfileBox = ({
       setZipCodeError("");
     }
   };
+
+  const updateImagePreview = (e) => {
+    setImageSrc(URL.createObjectURL(e.target.files[0]));
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -111,13 +115,15 @@ const ProfileBox = ({
     <>
       <div className="pg-problems-container">
         <div className="pg-box">
-          
           <div className="edit-delete-btn-gp">
             <div className="pg-edit-btn" onClick={editCurrentRequest}>
               Edit
             </div>
 
-            <div className="pg-delete-btn" onClick={() => deleteCurrentRequest(id)}>
+            <div
+              className="pg-delete-btn"
+              onClick={() => deleteCurrentRequest(id)}
+            >
               Delete
             </div>
           </div>
@@ -151,62 +157,83 @@ const ProfileBox = ({
             <label htmlFor="category" className="title space">
               Select a Category:
             </label>
-            <select
-              id="category"
-              className="select signup-input selecr-font"
-              name="category"
-              value={editCategory}
-              onChange={(e) => setEditCategory(e.target.value)}
-            >
-              <option value="Home Repair">Home Repair</option>
-              <option value="Delivery">Delivery</option>
-              <option value="Driver">Driver</option>
-            </select>
 
-            <select
-              id="category"
-              className="select signup-input selecr-font"
-              name="category"
-              value={editStatus}
-              onChange={(e) => setStatus(e.target.value)}
-            >
-              <option value="open">Open</option>
-              <option value="closed">Closed</option>
-            </select>
+            <div>
+              <select
+                id="category"
+                className="select signup-input selecr-font"
+                name="category"
+                value={editCategory}
+                onChange={(e) => setEditCategory(e.target.value)}
+              >
+                <option value="Home Repair">Home Repair</option>
+                <option value="Delivery">Delivery</option>
+                <option value="Driver">Driver</option>
+              </select>
 
-            {zipCodeError && <div>{zipCodeError}</div>}
+              <select
+                id="category"
+                className="select signup-input selecr-font"
+                name="category"
+                value={editStatus}
+                onChange={(e) => setStatus(e.target.value)}
+              >
+                <option value="open">Open</option>
+                <option value="closed">Closed</option>
+              </select>
 
-            <input
-              type="number"
-              className="signup-input"
-              id="edit-zipcode-input"
-              value={editZipCode}
-              min="0"
-              placeholder="1"
-              required
-              onChange={(e) => setEditZipCode(e.target.value)}
-              onInput={(e) => limitZipCodeMaxLength(e)}
-            />
+              {zipCodeError && <div>{zipCodeError}</div>}
 
-            <textarea
-              className="signup-input"
-              value={editDescription}
-              placeholder="Description"
-              required
-              onChange={(e) => setEditDescription(e.target.value)}
-            />
-            <label className="img-input">
-              {" "}
-              Add image
               <input
-                type="file"
-                id="file"
+                type="number"
                 className="signup-input"
-                placeholder="Add an image"
+                id="edit-zipcode-input"
+                value={editZipCode}
+                min="0"
+                placeholder="1"
+                required
+                onChange={(e) => setEditZipCode(e.target.value)}
+                onInput={(e) => limitZipCodeMaxLength(e)}
               />
-            </label>
 
-            <button className="sign-up-btn ">Edit Request</button>
+              <textarea
+                className="signup-input"
+                value={editDescription}
+                placeholder="Description"
+                required
+                onChange={(e) => setEditDescription(e.target.value)}
+              />
+
+              <div className="edit-request-img-input-container">
+                <label className="img-input">
+                  {imageSrc ? "Update Image" : "Add Image"}
+                  <input
+                    type="file"
+                    id="file"
+                    className="signup-input"
+                    placeholder="Add an image"
+                    onChange={(e)=> updateImagePreview(e)}
+                  />
+                </label>
+              </div>
+
+              {imageSrc && (
+                <div
+                  className="request-preview-img-container 
+                  update-image-preview"
+                >
+                  <img
+                    src={imageSrc}
+                    className="request-preview-image"
+                    alt=""
+                  />
+                </div>
+              )}
+
+              <button className="sign-up-btn edit-request-btn">
+                Edit Request
+              </button>
+            </div>
           </form>
         </Modal>
       )}

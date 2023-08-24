@@ -282,3 +282,17 @@
   height: inherit;
   object-fit: contain;
 }
+
+.edit-request-img-input-container {
+  margin-top: 1.7vh;
+}
+
+.update-image-preview {
+  width: 50%;
+  height: 20vh;
+  margin-top: 2vh;
+}
+
+.edit-request-btn {
+
+}
