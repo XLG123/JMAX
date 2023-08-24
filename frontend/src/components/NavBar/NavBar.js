@@ -28,6 +28,7 @@ function NavBar() {
   const [category, setCategory] = useState("Home Repair");
   const [description, setDescription] = useState("");
   const [zipCode, setZipCode] = useState("");
+  const [zipCodeError, setZipCodeError] = useState("");
   const [showOffers, setShowOffer] = useState(false);
   const [image, setImage] = useState(null);
   const [imageSrc, setImageSrc] = useState(null);
@@ -358,21 +359,34 @@ function NavBar() {
     setShowReqForm(false);
     setShowOffer(false);
     setImageSrc(null);
+    setZipCodeError("");
+  }
+
+  const limitZipCodeMaxLength = (e) => {
+    e.target.value = e.target.value.slice(0, 5);
+    if (e.target.value.length === 5) {
+      setZipCodeError("");
+    }
   }
 
   const handleSubmit = (e) => {
     setImage(null);
     e.preventDefault();
-    dispatch(
-      problemActions.composeProblem({
-        category,
-        description,
-        address: zipCode,
-        image,
-      })
-    );
-    setShowReqForm(false);
-    setImageSrc(null);
+    if (zipCode.length < 5) {
+      setZipCodeError("Zip Code length must be 5 digits")
+    } else {
+      dispatch(
+        problemActions.composeProblem({
+          category,
+          description,
+          address: zipCode,
+          image,
+        })
+      );
+      setShowReqForm(false);
+      setImageSrc(null);
+      setZipCodeError("");
+    }
   };
 
   function handleShowOffer(e) {
@@ -421,17 +435,18 @@ function NavBar() {
               <option value="Driver">Driver</option>
             </select>
 
+            {zipCodeError && <div>{zipCodeError}</div>}
             <input
               type="number"
               onChange={(e) => setZipCode(e.target.value)}
+              onInput={(e) => limitZipCodeMaxLength(e)}
+              min="0"
               className="signup-input"
               id="zipcode-input"
               placeholder="Zip Code"
               required
             />
 
-            {/* <br></br>
-<br></br>  */}
             <br />
             <div className="errors"></div>
 
@@ -461,7 +476,7 @@ function NavBar() {
 
             {imageSrc && (
               <div className="request-preview-img-container">
-                <img src={imageSrc} className="request-preview-image" alt=""/>
+                <img src={imageSrc} className="request-preview-image" alt="" />
               </div>
             )}
 

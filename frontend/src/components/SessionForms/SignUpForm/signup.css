@@ -32,10 +32,6 @@
     word-spacing: 1vw;
 }
 
-.errors{
-    /* background-color: #F4E9CD; */
-}
-
 .signup-input{
     padding: 0.8rem;
     background-color: #9DBEBB;
@@ -47,7 +43,6 @@
     color:black;
     font-weight: bold;
     font-family: 'Times New Roman', Times, serif;
-    
 }
 
 input::placeholder {

@@ -96,7 +96,7 @@ const AboutPage = () => {
                 <span id="change-J">J</span>ordy
               </div>
               <div className="member-pos">Backend Lead</div>
-              <a href={portfolioLinks[0]}>
+              <a href={portfolioLinks[0]} target="_blank">
                 <Avatar
                   alt="jor-profile"
                   src={avatar1}
@@ -122,7 +122,7 @@ const AboutPage = () => {
                 <span id="change-M">M</span>anel
               </div>
               <div className="member-pos">Flex Lead</div>
-              <a href={portfolioLinks[1]}>
+              <a href={portfolioLinks[1]} target="_blank">
                 <Avatar
                   alt="mal-profile"
                   src={avatar2}
@@ -148,7 +148,7 @@ const AboutPage = () => {
                 <span id="change-A">A</span>smaa
               </div>
               <div className="member-pos">Frontend Lead</div>
-              <a href={portfolioLinks[2]}>
+              <a href={portfolioLinks[2]} target="_blank">
                 <Avatar
                   alt="asm-profile"
                   src={avatar3}
@@ -174,7 +174,7 @@ const AboutPage = () => {
                 <span id="change-X">X</span>iao Lin
               </div>
               <div className="member-pos">Team Lead</div>
-              <a href={portfolioLinks[3]}>
+              <a href={portfolioLinks[3]} target="_blank">
                 <Avatar
                   alt="xlg-profile"
                   src={avatar4}
