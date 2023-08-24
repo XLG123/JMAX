@@ -107,9 +107,15 @@ const ProblemBox = ({
           <div className="status"> {editStatus}</div>
           <p className="catgory">{editCategory}</p>
           <p className="des-box">{editDescription}</p>
-          <div className="image-problem-div">
-            <img className="imageProblem" src={`${problemImageUrl}`} alt="" />
-          </div>
+          {problemImageUrl && <div className="image-problem-div">
+            <img
+              className="image-problem"
+              src={`${problemImageUrl}`}
+              alt=""
+            />
+          </div>}
+
+          <br />
 
           <div className="offer">
             {!isCurrentUserProblemCreator && (
