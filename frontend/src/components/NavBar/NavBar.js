@@ -373,7 +373,7 @@ function NavBar() {
     setImage(null);
     e.preventDefault();
     if (zipCode.length < 5) {
-      setZipCodeError("Zip Code length must be 5 digits")
+      setZipCodeError("Zip Code length must be 5 digits");
     } else {
       dispatch(
         problemActions.composeProblem({

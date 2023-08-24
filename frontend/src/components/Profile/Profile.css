@@ -271,6 +271,7 @@
 
 .image-problem-div{
   width: 60%;
+  height: 28vh;
   margin: 0 auto;
   display: flex;
   justify-content: center;

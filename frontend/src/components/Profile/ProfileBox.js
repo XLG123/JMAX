@@ -28,6 +28,8 @@ const ProfileBox = ({
   const [editCategory, setEditCategory] = useState(category);
   const [editDescription, setEditDescription] = useState(description);
   const [editZipCode, setEditZipCode] = useState(address);
+  const [zipCodeError, setZipCodeError] = useState("");
+  const [imageSrc, setImageSrc] = useState(null);
   // const [show, setShow] = useState(false);
   // const [price, setPrice] = useState();
   // const [offer, setOffer] = useState("");
@@ -62,16 +64,12 @@ const ProfileBox = ({
     setShowRequestForm(false);
   };
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   const updatedProblem = {
-  //     category: editCategory,
-  //     address: editZipCode,
-  //     description: editDescription
-  //   }
-  //   dispatch(fetchUpdateProblem(id, updatedProblem));
-  //   setShowRequestForm(false);
-  // }
+  const limitZipCodeMaxLength = (e) => {
+    e.target.value = e.target.value.slice(0, 5);
+    if (e.target.value.length === 5) {
+      setZipCodeError("");
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -88,11 +86,15 @@ const ProfileBox = ({
       updatedProblem.image = image;
     }
 
-    try {
-      await dispatch(fetchUpdateProblem(id, updatedProblem));
-      setShowRequestForm(false);
-    } catch (error) {
-      // Handle error
+    if (editZipCode.length < 5) {
+      setZipCodeError("Zip Code length must be 5 digits");
+    } else {
+      try {
+        await dispatch(fetchUpdateProblem(id, updatedProblem));
+        setShowRequestForm(false);
+      } catch (error) {
+        // Handle error
+      }
     }
   };
 
@@ -132,7 +134,10 @@ const ProfileBox = ({
           <p className="pg-des-box">{description}</p>
           {problemImageUrl && (
             <div className="image-problem-div">
-              <img className="image-problem" src={`${problemImageUrl}`} alt="" 
+              <img
+                className="image-problem"
+                src={`${problemImageUrl}`}
+                alt=""
               />
             </div>
           )}
@@ -173,13 +178,18 @@ const ProfileBox = ({
               <option value="closed">Closed</option>
             </select>
 
+            {zipCodeError && <div>{zipCodeError}</div>}
+
             <input
               type="number"
               className="signup-input"
+              id="edit-zipcode-input"
               value={editZipCode}
+              min="0"
               placeholder="1"
               required
               onChange={(e) => setEditZipCode(e.target.value)}
+              onInput={(e) => limitZipCodeMaxLength(e)}
             />
 
             <textarea

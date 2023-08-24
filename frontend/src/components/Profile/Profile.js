@@ -79,16 +79,6 @@ const Profile = () => {
   // debugger
   // if (allProblems.length === 0)return null
 
-  const noRequestsMsg = () => {
-    return (
-      <div className="no-requests-container">
-        <h1 className="no-requests-msg" style={{ color: "green" }}>
-          No requests yet.
-        </h1>
-      </div>
-    );
-  };
-
   function handelText() {
     history.push(`/chat/private/${currentUser._id}/${userId}`);
   }
