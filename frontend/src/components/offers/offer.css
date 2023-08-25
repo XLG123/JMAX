@@ -124,3 +124,9 @@ cursor: pointer;
   margin-left: -6rem;
 
 }
+
+@media screen and (width > 1440px) {
+  .pending-offer-edit-delete {
+    margin-left: -7rem;
+  }
+}
