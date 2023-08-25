@@ -268,8 +268,8 @@ const ProblemBox = ({
                 </div>
               )}
 
-              <button type="submit" className="sign-up-btn ">
-                Update
+              <button type="submit" className="sign-up-btn edit-request-btn">
+                Update Request
               </button>
             </div>
           </form>

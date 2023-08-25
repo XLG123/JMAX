@@ -473,6 +473,7 @@ textarea {
   font-weight: bold;
   font-family: 'Times New Roman', Times, serif;
   margin-bottom: 3rem;
+  cursor: pointer;
 }
 
 /* Specific rule for input[type="file"] */
