@@ -367,7 +367,7 @@ function NavBar() {
     if (e.target.value.length === 5) {
       setZipCodeError("");
     }
-  }
+  };
 
   const handleSubmit = (e) => {
     setImage(null);
@@ -441,7 +441,7 @@ function NavBar() {
               onChange={(e) => setZipCode(e.target.value)}
               onInput={(e) => limitZipCodeMaxLength(e)}
               min="0"
-              className="signup-input"
+              className="signup-input zipcode-input"
               placeholder="Zip Code"
               required
             />
@@ -450,7 +450,7 @@ function NavBar() {
             <div className="errors"></div>
 
             <textarea
-              className="signup-input"
+              className="signup-input add-request-description-box"
               placeholder="Description"
               onChange={(e) => setDescription(e.target.value)}
               required
@@ -479,7 +479,8 @@ function NavBar() {
               </div>
             )}
 
-            <button className="sign-up-btn ">Add Request</button>
+            <button className="sign-up-btn add-request-btn">
+              Add Request</button>
           </form>
         </Modal>
       )}

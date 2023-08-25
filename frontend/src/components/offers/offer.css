@@ -9,6 +9,13 @@
   /* margin-bottom: 2rem; */
   /* margin-right: -3rem; */
   letter-spacing: 0.05em;
+  border: 1px solid green;
+}
+
+.all-offers-scrollable-container {
+  width: 100%;
+  height: 50%;
+  overflow-y: auto;
 }
 
 .offer-box {
@@ -23,8 +30,11 @@
   /* margin-top: 3rem; */
   padding-top: 3rem;
   /* color:#031926; */
+  overflow-x: hidden;
+}
 
-  overflow: auto;
+.req-offer-container .notify-modal-problems .box{
+  width: 80%;
 }
 
 .bigger {
@@ -96,8 +106,9 @@
 padding: .3rem;
 cursor: pointer;
 }
-.pinding{
-  background-color:#60968f ;
+.pending{
+  background-color:#1c2d39 ;
+  border: 2px solid #acbbb9;
   text-align: center;
   padding: 3rem;
   position: relative;
@@ -118,9 +129,15 @@ cursor: pointer;
   justify-content: space-between;
   /* background-color: #031926; */
 }
-.edit-delete-btn-gp{
+.pending-offer-edit-delete{
   /* background-color: #031926; */
   width: 30%;
   margin-left: -6rem;
 
+}
+
+@media screen and (width > 1440px) {
+  .pending-offer-edit-delete {
+    margin-left: -7rem;
+  }
 }

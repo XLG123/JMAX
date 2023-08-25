@@ -120,7 +120,7 @@ const ProblemBox = ({
 
   return (
     <>
-      <div className="problems-container">
+      <div className="problems-container notify-modal-problems">
         <div className="box">
           <h3 onClick={sendToProf} className="user">
             {" "}
@@ -128,7 +128,7 @@ const ProblemBox = ({
           </h3>
           {/* {console.log(author)} */}
           {isCurrentUserProblemCreator && (
-            <div className="edit-delete-btn-gp">
+            <div className="edit-delete-btn-gp problem-edit-delete">
               <div className="pg-edit-btn" onClick={editCurrentRequest}>
                 Edit
               </div>
@@ -225,7 +225,7 @@ const ProblemBox = ({
 
               <input
                 type="number"
-                className="signup-input"
+                className="signup-input edit-zipcode-input"
                 value={editZipCode}
                 min="0"
                 placeholder="1"
@@ -235,7 +235,7 @@ const ProblemBox = ({
               />
 
               <textarea
-                className="signup-input"
+                className="signup-input edit-description-input"
                 value={editDescription}
                 placeholder="Description"
                 required
