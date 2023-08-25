@@ -168,7 +168,7 @@ export const fetchUpdateProblem =
     Object.keys(otherUpdatedData).forEach((key) => {
       formData.append(key, otherUpdatedData[key]);
     });
-
+debugger
     try {
       const res = await jwtFetch(`/api/problems/${problemId}`, {
         method: "PATCH",

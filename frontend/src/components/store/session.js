@@ -6,6 +6,11 @@ const CLEAR_SESSION_ERRORS = "session/CLEAR_SESSION_ERRORS";
 export const RECEIVE_USER_LOGOUT = "session/RECEIVE_USER_LOGOUT";
 export const RECEIVE_USERS = "session/RECEIVE_USERS";
 const RECEIVE_USER = "session/RECEIVE_USER";
+const Update_USER ="session/Update_USER"
+const updateUser=(user)=>({
+  type: Update_USER,
+  user,
+})
 const receiveUsers = (users) => ({
   type: RECEIVE_USERS,
   users,
@@ -84,6 +89,8 @@ const sessionReducer = (state = initialState, action) => {
       return { ...state, users: action.users };
     case RECEIVE_USER:
       return { ...state, users: action.user };
+      case Update_USER:
+        return {...state,users:action.user}
     default:
       return state;
   }
@@ -123,3 +130,28 @@ export const fetchUser = (userId) => async (dispatch) => {
   const user = await res.json();
   return dispatch(receiveUser(user));
 };
+
+export const fetchUpdareUser=(user) => async (dispatch, getState) => {
+    const { image, ...otherUpdatedData } = user;
+    const formData = new FormData();
+    formData.append("image", image);
+    Object.keys(otherUpdatedData).forEach((key) => {
+      formData.append(key, otherUpdatedData[key]);
+    });
+    try {
+      const res = await jwtFetch(`/api/users/${user._id}/profile-image`, {
+        method: "PATCH",
+        body: formData,
+      });
+
+      if (res.ok) {
+        
+        const updatedUser = await res.json();
+        dispatch(updateUser(updatedUser));
+        dispatch(getCurrentUser())
+        // dispatch(receiveCurrentUser(updatedUser))
+      }
+    } catch (err) {
+      // Handle error
+    }
+  };
