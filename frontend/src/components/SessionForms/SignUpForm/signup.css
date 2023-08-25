@@ -51,10 +51,6 @@ input::placeholder {
     font-size: 1.3vw;
 }
 
-.zipcode-input::placeholder {
-    color: green !important;
-}
-
 input[type='text'], 
 input[type='password'],
 .signup-zipcode,

@@ -489,6 +489,17 @@ input[type="file"] {
 
 }
 
+.zipcode-input::placeholder {
+  font-size: large;
+}
+
+.add-request-btn {
+  width: fit-content !important;
+}
+
+.add-request-description-box {
+  resize: horizontal;
+}
 
 /* #selected-requests-btn,
 #selected-profile-btn,

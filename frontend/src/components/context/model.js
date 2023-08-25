@@ -23,7 +23,7 @@ export default function Modal({ onClose, children }) {
   const modalNode = useContext(ModalContext);
   if (!modalNode) return null;
   return ReactDOM.createPortal(
-    <div id="modal">
+    <div id="modal" style={{zIndex: "1000"}}>
       <div id="modal-background" onClick={onClose} />
       {/* <div className='nice'> */}
       <div id="modal-content" className='sign'>
