@@ -235,7 +235,7 @@ const ProblemBox = ({
               />
 
               <textarea
-                className="signup-input"
+                className="signup-input edit-description-input"
                 value={editDescription}
                 placeholder="Description"
                 required

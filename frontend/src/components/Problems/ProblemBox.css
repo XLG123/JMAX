@@ -84,3 +84,15 @@
 .problem-edit-delete {
     left: 41.5vw !important;
 }
+
+.edit-zipcode-input::placeholder {
+    font-size: large;
+}
+
+.edit-request-btn {
+    width: fit-content !important;
+}
+
+.edit-description-input {
+    resize: horizontal;
+}
