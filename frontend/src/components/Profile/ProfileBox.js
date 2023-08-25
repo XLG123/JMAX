@@ -66,7 +66,8 @@ const ProfileBox = ({
       setImageSrc("");
     }
 
-    // When the form is closed before submit, the original content will remain instead of the edited one.
+    // When the form is closed before submit,
+    // the original content will remain instead of the edited one.
     setEditCategory(category);
     setStatus(status);
     setEditZipCode(address);
@@ -84,7 +85,7 @@ const ProfileBox = ({
     if (e.target.files.length !== 0) {
       setImageSrc(URL.createObjectURL(e.target.files[0]));
     }
-  }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -126,18 +127,20 @@ const ProfileBox = ({
     <>
       <div className="pg-problems-container">
         <div className="pg-box">
-          <div className="edit-delete-btn-gp">
-            <div className="pg-edit-btn" onClick={editCurrentRequest}>
-              Edit
-            </div>
+          {isCurrentUserProblemCreator && (
+            <div className="edit-delete-btn-gp">
+              <div className="pg-edit-btn" onClick={editCurrentRequest}>
+                Edit
+              </div>
 
-            <div
-              className="pg-delete-btn"
-              onClick={() => deleteCurrentRequest(id)}
-            >
-              Delete
+              <div
+                className="pg-delete-btn"
+                onClick={() => deleteCurrentRequest(id)}
+              >
+                Delete
+              </div>
             </div>
-          </div>
+          )}
 
           <h3 onClick={sendToProf} className="pg-user">
             {username}
@@ -219,9 +222,10 @@ const ProfileBox = ({
                   {problemImageUrl ? "Update Image" : "Add Image"}
                   <input
                     type="file"
+                    accept=".jpeg, .jpg, .png"
                     id="file"
                     className="signup-input"
-                    onChange={(e)=> updateImagePreview(e)}
+                    onChange={(e) => updateImagePreview(e)}
                   />
                 </label>
               </div>
@@ -240,7 +244,7 @@ const ProfileBox = ({
               )}
 
               <button className="sign-up-btn edit-request-btn">
-                Edit Request
+                Update Request
               </button>
             </div>
           </form>

@@ -31,12 +31,13 @@ const ProblemBox = ({
   const history = useHistory();
   const { username, _id: userId } = author;
   const [editCategory, setEditCategory] = useState(category);
-  const [editDescription, setEditDescription] = useState(description);
-  const [editZipCode, setEditZipCode] = useState(address);
   const [editStatus, setStatus] = useState(status);
+  const [editZipCode, setEditZipCode] = useState(address);
+  const [editDescription, setEditDescription] = useState(description);
+  const [zipCodeError, setZipCodeError] = useState("");
+  const [imageSrc, setImageSrc] = useState(problemImageUrl);
   // console.log("userId:", userId);
   // console.log("CurrentUser._id:", CurrentUser._id);
-
   const isCurrentUserProblemCreator = userId === CurrentUser._id;
 
   function sendToProf() {
@@ -53,10 +54,24 @@ const ProblemBox = ({
     dispatch(offerActions.composeOffer(offerData));
     history.push(`users/${userId}`);
   }
+
+  const updateImagePreview = (e) => {
+    if (e.target.files.length !== 0) {
+      setImageSrc(URL.createObjectURL(e.target.files[0]));
+    }
+  }
+
+  const limitZipCodeMaxLength = (e) => {
+    e.target.value = e.target.value.slice(0, 5);
+    if (e.target.value.length === 5) {
+      setZipCodeError("");
+    }
+  }
+
   const editCurrentRequest = (e) => {
     e.preventDefault();
     setShowRequestForm(true);
-    console.log("editCurrentRequest called", "true:", showRequestForm);
+    // console.log("editCurrentRequest called", "true:", showRequestForm);
   };
 
   const handleSubmit = (e) => {
@@ -67,18 +82,40 @@ const ProblemBox = ({
       address: editZipCode,
       description: editDescription,
     };
-    dispatch(fetchUpdateProblem(id, updatedProblem)).then(() => {
-      // debugger;
-      setShowRequestForm(false);
-      console.log("showRequestForm should be false:", "false", showRequestForm);
-    });
+
+    if (e.target.file.files[0]) {
+      const image = e.target.file.files[0];
+      updatedProblem.image = image;
+    }
+
+    if (editZipCode.length < 5) {
+      setZipCodeError("Zip Code length must be 5 digits");
+    } else {
+      dispatch(fetchUpdateProblem(id, updatedProblem)).then(() => {
+        // debugger;
+        setShowRequestForm(false);
+        // console.log("showRequestForm should be false:", "false", showRequestForm);
+      });
+    }
   };
+
   const deleteCurrentRequest = (id) => {
     dispatch(deleteProblem(id));
   };
+
   function handelClose(e) {
     e.preventDefault();
     setShowRequestForm(false);
+    if (!problemImageUrl) {
+      setImageSrc("");
+    }
+
+    // When the form is closed before submit, 
+    // the original content will remain instead of the edited one.
+    setEditCategory(category);
+    setStatus(status);
+    setEditZipCode(address);
+    setEditDescription(description);  
   }
 
   return (
@@ -87,8 +124,9 @@ const ProblemBox = ({
         <div className="box">
           <h3 onClick={sendToProf} className="user">
             {" "}
-            {username}
+            {username ? username : CurrentUser.username}
           </h3>
+          {/* {console.log(author)} */}
           {isCurrentUserProblemCreator && (
             <div className="edit-delete-btn-gp">
               <div className="pg-edit-btn" onClick={editCurrentRequest}>
@@ -158,49 +196,82 @@ const ProblemBox = ({
             <label htmlFor="category" className="title space">
               Select a Category:
             </label>
-            <select
-              id="category"
-              className="select signup-input selecr-font"
-              name="category"
-              value={editCategory}
-              onChange={(e) => setEditCategory(e.target.value)}
-            >
-              <option value="Home Repair">Home Repair</option>
-              <option value="Delivery">Delivery</option>
-              <option value="Driver">Driver</option>
-            </select>
 
-            <select
-              id="category"
-              className="select signup-input selecr-font"
-              name="category"
-              value={editStatus}
-              onChange={(e) => setStatus(e.target.value)}
-            >
-              <option value="open">Open</option>
-              <option value="closed">Closed</option>
-            </select>
+            <div className="edit-request-form-container">
+              <select
+                id="category"
+                className="select signup-input selecr-font"
+                name="category"
+                value={editCategory}
+                onChange={(e) => setEditCategory(e.target.value)}
+              >
+                <option value="Home Repair">Home Repair</option>
+                <option value="Delivery">Delivery</option>
+                <option value="Driver">Driver</option>
+              </select>
 
-            <input
-              type="number"
-              className="signup-input"
-              value={editZipCode}
-              placeholder="1"
-              required
-              onChange={(e) => setEditZipCode(e.target.value)}
-            />
+              <select
+                id="category"
+                className="select signup-input selecr-font"
+                name="category"
+                value={editStatus}
+                onChange={(e) => setStatus(e.target.value)}
+              >
+                <option value="open">Open</option>
+                <option value="closed">Closed</option>
+              </select>
 
-            <textarea
-              className="signup-input"
-              value={editDescription}
-              placeholder="Description"
-              required
-              onChange={(e) => setEditDescription(e.target.value)}
-            />
+              {zipCodeError && <div>{zipCodeError}</div>}
 
-            <button type="submit" className="sign-up-btn ">
-              Update
-            </button>
+              <input
+                type="number"
+                className="signup-input"
+                value={editZipCode}
+                min="0"
+                placeholder="1"
+                required
+                onChange={(e) => setEditZipCode(e.target.value)}
+                onInput={(e) => limitZipCodeMaxLength(e)}
+              />
+
+              <textarea
+                className="signup-input"
+                value={editDescription}
+                placeholder="Description"
+                required
+                onChange={(e) => setEditDescription(e.target.value)}
+              />
+
+              <div className="edit-request-img-input-container">
+                <label className="img-input">
+                  {problemImageUrl ? "Update Image" : "Add Image"}
+                  <input
+                    type="file"
+                    id="file"
+                    className="signup-input"
+                    accept=".jpeg, .jpg, .png"
+                    onChange={(e) => updateImagePreview(e)}
+                  />
+                </label>
+              </div>
+
+              {imageSrc && (
+                <div
+                  className="request-preview-img-container 
+                  update-image-preview"
+                >
+                  <img
+                    src={imageSrc}
+                    className="request-preview-image"
+                    alt=""
+                  />
+                </div>
+              )}
+
+              <button type="submit" className="sign-up-btn ">
+                Update
+              </button>
+            </div>
           </form>
         </Modal>
       )}
