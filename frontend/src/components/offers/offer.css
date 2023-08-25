@@ -96,8 +96,9 @@
 padding: .3rem;
 cursor: pointer;
 }
-.pinding{
-  background-color:#60968f ;
+.pending{
+  background-color:#1c2d39 ;
+  border: 2px solid #acbbb9;
   text-align: center;
   padding: 3rem;
   position: relative;
