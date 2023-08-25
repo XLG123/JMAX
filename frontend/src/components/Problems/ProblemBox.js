@@ -225,7 +225,7 @@ const ProblemBox = ({
 
               <input
                 type="number"
-                className="signup-input"
+                className="signup-input edit-zipcode-input"
                 value={editZipCode}
                 min="0"
                 placeholder="1"
