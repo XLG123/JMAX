@@ -7,7 +7,7 @@ const RECEIVE_USER_OFFERSS = "offers/RECEIVE_USER_OFFERSS";
 const RECEIVE_NEW_OFFER = "offers/RECEIVE_NEW_OFFER";
 const RECEIVE_OFFER_ERRORS = "offers/RECEIVE_OFFER_ERRORS";
 const CLEAR_OFFER_ERRORS = "offers/CLEAR_OFFER_ERRORS";
-const DELETE_P_OFFER="offers/DELETE_P_OFFER";
+
 const updateOffer = (offerId, updatedOffer) => ({
   type: UPDATE_OFFER,
   offerId,
@@ -16,10 +16,6 @@ const updateOffer = (offerId, updatedOffer) => ({
 
 const deleteOffer = (offerId) => ({
   type: DELETE_OFFER,
-  offerId
-});
-const deletePOffer = (offerId) => ({
-  type: DELETE_P_OFFER,
   offerId
 });
 
@@ -130,7 +126,6 @@ export const fetchOffers = () => async dispatch => {
       const user=getState().session.user
       if (res.ok) {
         dispatch(deleteOffer(offerId));
-        dispatch(deletePOffer(offerId));
         dispatch(fetchUserOffers(user._id))
         dispatch(fetchPendingOffers(user._id))
 
@@ -176,10 +171,6 @@ export const fetchOffers = () => async dispatch => {
           const updatedUserOffers = { ...state.user };
           delete updatedUserOffers[action.offerId];
           return { ...state, user: updatedUserOffers };
-          case DELETE_P_OFFER:
-            const pOffers = { ...state.offers };
-            delete pOffers[action.offerId];
-            return { ...state, all: pOffers };
           case UPDATE_OFFER:
       return { ...state};
       default:

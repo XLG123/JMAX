@@ -14,13 +14,9 @@ import { useParams } from "react-router-dom";
 import CommentIcon from "@mui/icons-material/Comment";
 import { useHistory } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
-import Modal from "../context/model";
 // All classnames are declared with the prefix pg which stands for profile page, instead of pp.
+
 const Profile = () => {
-  const currentUser = useSelector((state) => state.session.user);
-
-const [image,setImage]=useState(currentUser.profileImageUrl)
-
   const history = useHistory();
   const userId = useParams().userId;
   const dispatch = useDispatch();
@@ -31,7 +27,8 @@ const [image,setImage]=useState(currentUser.profileImageUrl)
   }
 
   const user = users[userId];
-const [showEditProfile,setShowEditProfile]=useState()
+
+  const currentUser = useSelector((state) => state.session.user);
   const allProblems = useSelector((state) => Object.values(state.problems.all));
   // console.log(allProblems);
   const userProblemIds = useSelector((state) => state.problems.userProblems);
@@ -87,17 +84,6 @@ const [showEditProfile,setShowEditProfile]=useState()
     history.push(`/chat/private/${currentUser._id}/${userId}`);
   }
 
-function handelEditImage(e){
-
-  e.preventDefault();
-  if (e.target.file.files[0]) {
-    const image = e.target.file.files[0];
-    currentUser.image = image;
-  }
-// debugger
-  dispatch(sessionActions.fetchUpdareUser(currentUser))
-  setShowEditProfile(false)
-}
   return (
     <>
       {/* pg stands for profile page */}
@@ -174,32 +160,12 @@ function handelEditImage(e){
             <div className="avatar-container">
               <div className="pg-profile">
                 <img
-                  src={`${image}`}
+                  src={`${user?.profileImageUrl}`}
                   alt=""
                   className="user-profile"
-                  onClick={()=>setShowEditProfile(true)}
                 />
               </div>
             </div>
-            {showEditProfile&& <Modal>
-              <form onSubmit={handelEditImage}>
-             
-                <div className="edit-request-img-input-container">
-                <label className="img-input">
-                  <input
-                    type="file"
-                    id="file"
-                    className="signup-input"
-                    accept=".jpeg, .jpg, .png"
-                    onChange={(e) => setImage(e.target.value)}
-                  />
-                </label>
-              </div>
-             <button className="sign-up-btn" type="submit">
-              Save
-            </button>
-             </form>
-              </Modal>}
 
             <div className="general-info user-info">
               <div className="pg-user-info-label">
