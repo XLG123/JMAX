@@ -33,9 +33,11 @@ if (Object.keys(requests).length === 0) {
           {requests[reqId].status === "open" && (
             <>
               <ProblemBox problem={requests[reqId]} />
-              {Object.values(reqOffers[reqId])?.map(offer => (
-                <OfferBox key={offer._id} offer={offer} />
-              ))}
+              <div className='all-offers-scrollable-container'>
+                {Object.values(reqOffers[reqId])?.map(offer => (
+                  <OfferBox key={offer._id} offer={offer} />
+                ))}
+              </div>
             </>
           )}
         </div>

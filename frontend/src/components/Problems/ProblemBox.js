@@ -120,7 +120,7 @@ const ProblemBox = ({
 
   return (
     <>
-      <div className="problems-container">
+      <div className="problems-container notify-modal-problems">
         <div className="box">
           <h3 onClick={sendToProf} className="user">
             {" "}

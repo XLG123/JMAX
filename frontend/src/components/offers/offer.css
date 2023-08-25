@@ -9,6 +9,13 @@
   /* margin-bottom: 2rem; */
   /* margin-right: -3rem; */
   letter-spacing: 0.05em;
+  border: 1px solid green;
+}
+
+.all-offers-scrollable-container {
+  width: 100%;
+  height: 50%;
+  overflow-y: auto;
 }
 
 .offer-box {
@@ -23,8 +30,11 @@
   /* margin-top: 3rem; */
   padding-top: 3rem;
   /* color:#031926; */
+  overflow-x: hidden;
+}
 
-  overflow: auto;
+.req-offer-container .notify-modal-problems .box{
+  width: 80%;
 }
 
 .bigger {
