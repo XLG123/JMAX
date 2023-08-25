@@ -22,7 +22,7 @@ const ProblemBox = ({
   },
 }) => {
   const [showRequestForm, setShowRequestForm] = useState(false);
-  const CurrentUser = useSelector((state) => state.session.user);
+  const currentUser = useSelector((state) => state.session.user);
 
   const [show, setShow] = useState(false);
   const [price, setPrice] = useState();
@@ -37,9 +37,9 @@ const ProblemBox = ({
   const [zipCodeError, setZipCodeError] = useState("");
   const [imageSrc, setImageSrc] = useState(problemImageUrl);
   // console.log("userId:", userId);
-  // console.log("CurrentUser._id:", CurrentUser._id);
-  const isCurrentUserProblemCreator = userId === CurrentUser._id;
-
+  // console.log("CurrentUser._id:", currentUser._id);
+  const isCurrentUserProblemCreator = currentUser._id===author|| currentUser._id===userId
+// debugger
   function sendToProf() {
     history.push(`/users/${userId}`);
   }
@@ -93,6 +93,7 @@ const ProblemBox = ({
     } else {
       dispatch(fetchUpdateProblem(id, updatedProblem)).then(() => {
         // debugger;
+        console.log(isCurrentUserProblemCreator)
         setShowRequestForm(false);
         // console.log("showRequestForm should be false:", "false", showRequestForm);
       });
@@ -123,8 +124,8 @@ const ProblemBox = ({
       <div className="problems-container">
         <div className="box">
           <h3 onClick={sendToProf} className="user">
-            {" "}
-            {username ? username : CurrentUser.username}
+           
+           {username ? username : currentUser.username}
           </h3>
           {/* {console.log(author)} */}
           {isCurrentUserProblemCreator && (
@@ -158,7 +159,7 @@ const ProblemBox = ({
           <div className="offer">
             {!isCurrentUserProblemCreator && (
               <button className="add-offer-btn" onClick={() => setShow(true)}>
-                {" "}
+              
                 Offer Help
               </button>
             )}
