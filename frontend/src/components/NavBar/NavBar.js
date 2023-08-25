@@ -441,7 +441,7 @@ function NavBar() {
               onChange={(e) => setZipCode(e.target.value)}
               onInput={(e) => limitZipCodeMaxLength(e)}
               min="0"
-              className="signup-input"
+              className="signup-input signup-zipcode"
               placeholder="Zip Code"
               required
             />
@@ -479,7 +479,7 @@ function NavBar() {
               </div>
             )}
 
-            <button className="sign-up-btn ">Add Request</button>
+            <button className="sign-up-btn">Add Request</button>
           </form>
         </Modal>
       )}

@@ -523,10 +523,6 @@ input[type="file"] {
   }
 }
 
-.zipcode-input::placeholder {
-  font-size: large;
-}
-
 .request-preview-img-container {
   max-width: 80%;
   width: 70%;

@@ -44,7 +44,7 @@ function PendingOfferBox({ offer: {description ,price,status ,helper ,_id ,probl
  <>
     <div className="offer-container pinding">
     {isCurrentUserOfferCreator&&
-   <div className='edit-delete-btn-gp'>
+   <div className='edit-delete-btn-gp pending-offer-edit-delete'>
    <div className='pg-edit-btn'
    onClick={()=>setShowEditOffer(true)}
      >

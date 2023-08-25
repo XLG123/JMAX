@@ -80,3 +80,7 @@
 .user{
     cursor: pointer;
 }
+
+.problem-edit-delete {
+    left: 41.5vw !important;
+}

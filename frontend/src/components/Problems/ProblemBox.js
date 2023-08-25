@@ -128,7 +128,7 @@ const ProblemBox = ({
           </h3>
           {/* {console.log(author)} */}
           {isCurrentUserProblemCreator && (
-            <div className="edit-delete-btn-gp">
+            <div className="edit-delete-btn-gp problem-edit-delete">
               <div className="pg-edit-btn" onClick={editCurrentRequest}>
                 Edit
               </div>
