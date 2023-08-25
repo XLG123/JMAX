@@ -7,7 +7,6 @@ import "./SearchBar.css";
 const SearchResults = () => {
   const location = useLocation();
   const searchResults = location.state.searchResults;
-
   return (
     <div className="search-result">
       {Object.keys(searchResults).length === 0 ? (
@@ -17,8 +16,8 @@ const SearchResults = () => {
           <span className="category-search">category name</span>.
         </div>
       ) : (
-        Object.values(searchResults).map((result, idx) => (
-          <ProblemBox key={idx} problem={result} />
+        Object.values(searchResults).map((result) => (
+          <ProblemBox key={result._id} problem={result} />
         ))
       )}
     </div>

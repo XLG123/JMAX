@@ -28,8 +28,10 @@ function NavBar() {
   const [category, setCategory] = useState("Home Repair");
   const [description, setDescription] = useState("");
   const [zipCode, setZipCode] = useState("");
+  const [zipCodeError, setZipCodeError] = useState("");
   const [showOffers, setShowOffer] = useState(false);
   const [image, setImage] = useState(null);
+  const [imageSrc, setImageSrc] = useState(null);
   const currentUrl = useLocation().pathname;
   const chatHistory = useSelector((state) =>
     Object.values(state.messages.users)
@@ -101,7 +103,12 @@ function NavBar() {
   }, [currentUser, dispatch]);
   // [ user,reqOffers]
 
-  const updateFile = (e) => setImage(e.target.files[0]);
+  const updateFile = (e) => {
+    setImage(e.target.files[0]);
+    if (e.target.files.length !== 0) {
+      setImageSrc(URL.createObjectURL(e.target.files[0]));
+    }
+  };
 
   const getLinks = () => {
     if (loggedIn) {
@@ -351,21 +358,37 @@ function NavBar() {
     e.preventDefault();
     setShowReqForm(false);
     setShowOffer(false);
+    setImageSrc(null);
+    setZipCodeError("");
+  }
+
+  const limitZipCodeMaxLength = (e) => {
+    e.target.value = e.target.value.slice(0, 5);
+    if (e.target.value.length === 5) {
+      setZipCodeError("");
+    }
   }
 
   const handleSubmit = (e) => {
     setImage(null);
     e.preventDefault();
-    dispatch(
-      problemActions.composeProblem({
-        category,
-        description,
-        address: zipCode,
-        image,
-      })
-    );
-    setShowReqForm(false);
+    if (zipCode.length < 5) {
+      setZipCodeError("Zip Code length must be 5 digits");
+    } else {
+      dispatch(
+        problemActions.composeProblem({
+          category,
+          description,
+          address: zipCode,
+          image,
+        })
+      );
+      setShowReqForm(false);
+      setImageSrc(null);
+      setZipCodeError("");
+    }
   };
+
   function handleShowOffer(e) {
     e.preventDefault();
     // debugger
@@ -412,16 +435,17 @@ function NavBar() {
               <option value="Driver">Driver</option>
             </select>
 
+            {zipCodeError && <div>{zipCodeError}</div>}
             <input
               type="number"
               onChange={(e) => setZipCode(e.target.value)}
+              onInput={(e) => limitZipCodeMaxLength(e)}
+              min="0"
               className="signup-input"
               placeholder="Zip Code"
               required
             />
 
-            {/* <br></br>
-<br></br>  */}
             <br />
             <div className="errors"></div>
 
@@ -439,16 +463,21 @@ function NavBar() {
               Add image
               <input
                 type="file"
+                accept=".jpeg, .jpg, .png"
                 id="file"
-                // onChange={(e)=> setZipCode(e.target.value)}
                 onChange={updateFile}
                 className="signup-input"
-                placeholder="Add an image"
               />
             </label>
             <br></br>
             <br></br>
             <br></br>
+
+            {imageSrc && (
+              <div className="request-preview-img-container">
+                <img src={imageSrc} className="request-preview-image" alt="" />
+              </div>
+            )}
 
             <button className="sign-up-btn ">Add Request</button>
           </form>

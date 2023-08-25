@@ -5,6 +5,7 @@
   margin-left: 1vw;
   position: relative;
   color: inherit;
+  z-index: 10;
 }
 
 .logo-container {
@@ -146,7 +147,7 @@
 
 .notify-btn {
   position: relative;
-  left: 81vw;
+  right: -81vw;
   top: 2.5vw;
 }
 
@@ -174,7 +175,7 @@
 
 @media screen and (width < 800px) {
   .user-profile-btn {
-    right: 3.5vw;
+    right: 4vw;
   }
 }
 
@@ -186,7 +187,7 @@
 
 .logout-btn {
   position: relative;
-  left: 94.5vw;
+  left: 94vw;
   top: 2.45vw;
 }
 
@@ -202,7 +203,7 @@
 
 .nav-chat-btn {
   position: relative;
-  left: 76vw;
+  right: -76vw;
 }
 
 .nav-chat-icon {
@@ -230,6 +231,7 @@
 @media screen and (width <= 1050px) {
   .nav-chat-btn {
     top: 2vw;
+    right: -74vw;
   }
 }
 
@@ -241,7 +243,8 @@
 
 @media screen and (width < 600px) {
   .nav-chat-btn {
-    top: 0.75vw;
+    top: 0.65vw;
+    right: -72vw;
   }
 }
 
@@ -349,17 +352,46 @@
   .logout-btn, .notify-btn {
     top: 1.9vw;
   }
+
+  .logout-btn {
+    left: 93vw;
+  }
 }
 
 @media screen and (width < 800px) {
   .logout-btn, .notify-btn {
     top: 1.5vw;
   }
+
+  .logout-btn {
+    left: 91vw;
+  }
+
+  .user-profile-btn {
+    right: 8vw;
+  }
+
+  .notify-btn {
+    right: -77vw;
+  }
+
 }
 
 @media screen and (width < 600px) {
   .logout-btn, .notify-btn {
     top: 0.5vw;
+  }
+
+  .logout-btn {
+    left: 87vw;
+  }
+
+  .user-profile-btn {
+    right: 7vw;
+  }
+  
+  .notify-btn {
+    right: -75vw;
   }
 }
 
@@ -432,6 +464,7 @@ textarea {
 
 .img-input {
   padding: 1rem;
+  color: #666;
   background-color: #9DBEBB;
   width: 15rem;
   border-radius: 5px;
@@ -440,6 +473,7 @@ textarea {
   font-weight: bold;
   font-family: 'Times New Roman', Times, serif;
   margin-bottom: 3rem;
+  cursor: pointer;
 }
 
 /* Specific rule for input[type="file"] */
@@ -487,4 +521,21 @@ input[type="file"] {
   to {
     color: #F4E9CD; /* Change it to the original color or any other color */
   }
+}
+
+.zipcode-input::placeholder {
+  font-size: large;
+}
+
+.request-preview-img-container {
+  max-width: 80%;
+  width: 70%;
+  height: 20%;
+  margin: 0 auto;
+}
+
+.request-preview-image {
+  width: inherit;
+  height: inherit;
+  object-fit: contain;
 }
