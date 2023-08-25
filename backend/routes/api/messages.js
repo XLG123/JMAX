@@ -72,30 +72,42 @@ router.get("/:userId", async (req, res) => {
   try {
     const userId = req.params.userId;
 
-    const senderIds = await Message.distinct("sender", {
-      receiver: userId,
-    });
-
-    const receiverIds = await Message.distinct("receiver", {
+    const messages = await Message.find({
       $or: [{ sender: userId }, { receiver: userId }],
+    }).sort("-createdAt");
+
+    const userMessages = {};
+    messages.forEach((message) => {
+      const associatedId =
+        message.sender.toString() === userId
+          ? message.receiver.toString()
+          : message.sender.toString();
+      if (
+        !userMessages[associatedId] ||
+        new Date(userMessages[associatedId].createdAt) <
+          new Date(message.createdAt)
+      ) {
+        userMessages[associatedId] = message;
+      }
     });
 
-    const allAssociatedIds = [...senderIds, ...receiverIds];
-
-    // Remove duplicates by converting the array to a Set and back to an array
-    const uniqueAssociatedIds = [...new Set(allAssociatedIds)];
+    const allAssociatedIds = Object.values(userMessages)
+      .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+      .map((message) =>
+        message.sender.toString() === userId
+          ? message.receiver.toString()
+          : message.sender.toString()
+      );
 
     const users = await User.find({
-      _id: { $in: uniqueAssociatedIds },
+      _id: { $in: allAssociatedIds },
     });
 
-    // Create a user object with user IDs as keys
-    const usersById = users.reduce((acc, user) => {
-      acc[user._id.toString()] = user.toObject();
-      return acc;
-    }, {});
+    const sortedUsers = allAssociatedIds.map((id) =>
+      users.find((user) => user._id.toString() === id).toObject()
+    );
 
-    res.json(usersById);
+    res.json(sortedUsers);
   } catch (error) {
     console.error("Error fetching associated users:", error);
     res.status(500).json({ error: "Internal server error" });
