@@ -65,6 +65,7 @@ const Profile = () => {
 
   const allOffers = (e) => {
     e.preventDefault();
+    history.push(`/pending/offers/${userId}`)
   };
 
   const showAcceptedOffers = (e) => {
@@ -132,7 +133,7 @@ const Profile = () => {
                   allOffers(e);
                 }}
               >
-                Offers
+                Pending Offers
               </div>
 
               <div className="linebreak"></div>
