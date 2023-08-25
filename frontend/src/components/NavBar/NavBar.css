@@ -522,7 +522,7 @@ input[type="file"] {
   }
 }
 
-#zipcode-input::placeholder {
+.zipcode-input::placeholder {
   font-size: large;
 }
 

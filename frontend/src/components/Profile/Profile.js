@@ -30,7 +30,7 @@ const Profile = () => {
 
   const currentUser = useSelector((state) => state.session.user);
   const allProblems = useSelector((state) => Object.values(state.problems.all));
-  console.log(allProblems);
+  // console.log(allProblems);
   const userProblemIds = useSelector((state) => state.problems.userProblems);
   // console.log(userProblemIds);
 

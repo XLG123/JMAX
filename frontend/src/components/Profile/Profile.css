@@ -15,7 +15,7 @@
 @media screen and (width > 1440px) {
   .pg-container {
     top: 6vw;
-    height: 80vh
+    height: 80vh;
   }
 }
 
@@ -107,8 +107,7 @@
 .pg-requester-open-status-btn:hover,
 .pg-requester-resolved-status-btn:hover,
 .helper-accepted-filter-btn:hover,
-.helper-pending-filter-btn:hover
-{
+.helper-pending-filter-btn:hover {
   background-color: #468189;
 }
 
@@ -134,8 +133,7 @@
 
 .pg-box {
   width: 95%;
-  background: 
-    linear-gradient(to bottom, #9dbebb 0%, #468189 50%, #9dbebb 100%);
+  background: linear-gradient(to bottom, #9dbebb 0%, #468189 50%, #9dbebb 100%);
   border-radius: 1rem;
   padding: 1rem;
   margin: 0px auto;
@@ -254,7 +252,7 @@
   }
 }
 
-.text-me{
+.text-me {
   font-size: 7rem;
 }
 
@@ -269,7 +267,11 @@
   }
 }
 
-.image-problem-div{
+.edit-textarea-input {
+  resize: horizontal;
+}
+
+.image-problem-div {
   width: 60%;
   height: 28vh;
   margin: 0 auto;
@@ -289,10 +291,11 @@
 
 .update-image-preview {
   width: 60%;
-  height: 20vh;
+  height: 21vh;
   margin-top: 2vh;
 }
 
-.edit-request-form-container:not(:has(.update-image-preview)) .edit-request-btn {
+.edit-request-form-container:not(:has(.update-image-preview))
+  .edit-request-btn {
   margin-top: 4vh;
 }

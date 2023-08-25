@@ -11,7 +11,7 @@ import {
   fetchUserProblems,
 } from "../store/problems";
 
-// All classnames are declared with the prefix pg which stands for profile page, instead of pp.
+// All class names are declared with the prefix pg which stands for profile group, instead of pp(profile page).
 
 const ProfileBox = ({
   problem: {
@@ -65,6 +65,12 @@ const ProfileBox = ({
     if (!problemImageUrl) {
       setImageSrc("");
     }
+
+    // When the form is closed before submit, the original content will remain instead of the edited one.
+    setEditCategory(category);
+    setStatus(status);
+    setEditZipCode(address);
+    setEditDescription(description);
   };
 
   const limitZipCodeMaxLength = (e) => {
@@ -191,8 +197,7 @@ const ProfileBox = ({
 
               <input
                 type="number"
-                className="signup-input"
-                id="edit-zipcode-input"
+                className="signup-input edit-zipcode-input"
                 value={editZipCode}
                 min="0"
                 placeholder="1"
@@ -202,7 +207,7 @@ const ProfileBox = ({
               />
 
               <textarea
-                className="signup-input"
+                className="signup-input edit-textarea-input"
                 value={editDescription}
                 placeholder="Description"
                 required

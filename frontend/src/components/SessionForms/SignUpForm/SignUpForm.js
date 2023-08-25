@@ -257,8 +257,7 @@ function SignupForm() {
 
           <input
             type="number"
-            className="signup-input"
-            id="signup-zipcode"
+            className="signup-input signup-zipcode"
             // value={password2}
             onChange={update("address")}
             placeholder="Zip code"

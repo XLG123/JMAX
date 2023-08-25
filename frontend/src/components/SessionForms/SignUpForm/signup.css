@@ -36,6 +36,7 @@
     padding: 0.8rem;
     background-color: #9DBEBB;
     margin-bottom: 1rem;
+    min-width: 70%;
     width: 70%;
     border-radius: 5px;
     border: none;
@@ -52,18 +53,18 @@ input::placeholder {
 
 input[type='text'], 
 input[type='password'],
-#signup-zipcode,
-#zipcode-input,
-#edit-zipcode-input {
+.signup-zipcode,
+.zipcode-input,
+.edit-zipcode-input {
     outline: none;
     transition: box-shadow 0.5s;
 }
 
 input[type='text']:focus,
 input[type='password']:focus,
-#signup-zipcode:focus,
-#zipcode-input:focus,
-#edit-zipcode-input:focus {
+.signup-zipcode:focus,
+.zipcode-input:focus,
+.edit-zipcode-input:focus {
     box-shadow: 0px 0px 10px 5px rgba(255, 255, 255, 1);
 }
 

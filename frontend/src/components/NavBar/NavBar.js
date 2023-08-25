@@ -442,7 +442,6 @@ function NavBar() {
               onInput={(e) => limitZipCodeMaxLength(e)}
               min="0"
               className="signup-input"
-              id="zipcode-input"
               placeholder="Zip Code"
               required
             />
