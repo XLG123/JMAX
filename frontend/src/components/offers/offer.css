@@ -11,6 +11,17 @@
   letter-spacing: 0.05em;
 }
 
+.one-req-offers-container {
+  background-color: #9dbebb;
+  padding-top: 0.1em;
+  padding-bottom: 0.1em;
+  margin-bottom: 2em;
+}
+
+.one-req-offers-container:first-child {
+  border-top: none;
+}
+
 .offer-container-on-notify:last-child {
   margin-bottom: 2em;
 }
@@ -33,6 +44,7 @@
 
 .on-notify-offer-status {
   color: rgb(68, 206, 4);
+  /* font */
 }
 
 .delete-offer-trash-can-btn {
@@ -63,7 +75,6 @@
 .all-offers-scrollable-container {
   width: 100%;
   height: 50%;
-  overflow-y: auto;
 }
 
 .offer-box {
@@ -74,7 +85,7 @@
 }
 
 .req-offer-container {
-  background-color: #9dbebb;
+  /* background-color: #9dbebb; */
   /* margin-top: 3rem; */
   padding-top: 3rem;
   /* color:#031926; */
