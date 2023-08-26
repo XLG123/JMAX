@@ -84,9 +84,13 @@ input[type='password']:focus,
     word-spacing: 0.3em;
 }
 
-.sign-up-btn:hover {
+.sign-up-btn:hover, .sign-up-btn:focus-visible {
     background-color: white;
     box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.9);
+}
+
+.sign-up-btn:focus-visible {
+    outline: none;
 }
 
 #register-btn {
