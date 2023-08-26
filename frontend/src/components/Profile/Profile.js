@@ -19,7 +19,6 @@ import Modal from "../context/model";
 const Profile = () => {
   const currentUser = useSelector((state) => state.session.user);
 
-const [image,setImage]=useState(currentUser.profileImageUrl)
 
   const history = useHistory();
   const userId = useParams().userId;
@@ -31,18 +30,25 @@ const [image,setImage]=useState(currentUser.profileImageUrl)
   }
 
   const user = users[userId];
+  debugger
+  const [image, setImage] = useState(user?.profileImageUrl || 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png');
+ 
 const [showEditProfile,setShowEditProfile]=useState()
   const allProblems = useSelector((state) => Object.values(state.problems.all));
   // console.log(allProblems);
   const userProblemIds = useSelector((state) => state.problems.userProblems);
   // console.log(userProblemIds);
-
+  const updateImage = (newImageUrl) => {
+    setImage(newImageUrl);
+  };
   useEffect(() => {
     dispatch(sessionActions.fetchAllUsers());
     dispatch(fetchProblems());
     dispatch(fetchUserProblems(userId));
+    updateImage(user?.profileImageUrl);
+
     return () => dispatch(clearProblemErrors());
-  }, [userId, dispatch, allProblems.length]);
+  }, [userId, dispatch, allProblems.length,user?.profileImageUrl]);
 
   if (!userProblemIds) {
     return [];
@@ -87,17 +93,21 @@ const [showEditProfile,setShowEditProfile]=useState()
     history.push(`/chat/private/${currentUser._id}/${userId}`);
   }
 
-function handelEditImage(e){
-
-  e.preventDefault();
-  if (e.target.file.files[0]) {
-    const image = e.target.file.files[0];
-    currentUser.image = image;
+  function handelEditImage(e) {
+    e.preventDefault();
+    if (e.target.file.files[0]) {
+      const image = e.target.file.files[0];
+      // Create a new object with the updated image URL
+      const updatedUser = { ...currentUser, image: image };
+      // Dispatch the action with the updated user object
+      dispatch(sessionActions.fetchUpdareUser(updatedUser));
+      setShowEditProfile(false);
+    }
   }
-// debugger
-  dispatch(sessionActions.fetchUpdareUser(currentUser))
-  setShowEditProfile(false)
-}
+  // useEffect(() => {
+  //   // This line should be placed inside the useEffect
+  //   updateImage(user?.profileImageUrl);
+  // }, [user?.profileImageUrl]);
   return (
     <>
       {/* pg stands for profile page */}
