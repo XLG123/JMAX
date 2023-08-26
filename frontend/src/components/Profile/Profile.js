@@ -14,9 +14,12 @@ import { useParams } from "react-router-dom";
 import CommentIcon from "@mui/icons-material/Comment";
 import { useHistory } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
+import Modal from "../context/model";
 // All classnames are declared with the prefix pg which stands for profile page, instead of pp.
-
 const Profile = () => {
+  const currentUser = useSelector((state) => state.session.user);
+
+
   const history = useHistory();
   const userId = useParams().userId;
   const dispatch = useDispatch();
@@ -27,19 +30,25 @@ const Profile = () => {
   }
 
   const user = users[userId];
-
-  const currentUser = useSelector((state) => state.session.user);
+  debugger
+  const [image, setImage] = useState(user?.profileImageUrl || 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png');
+ 
+const [showEditProfile,setShowEditProfile]=useState()
   const allProblems = useSelector((state) => Object.values(state.problems.all));
   // console.log(allProblems);
   const userProblemIds = useSelector((state) => state.problems.userProblems);
   // console.log(userProblemIds);
-
+  const updateImage = (newImageUrl) => {
+    setImage(newImageUrl);
+  };
   useEffect(() => {
     dispatch(sessionActions.fetchAllUsers());
     dispatch(fetchProblems());
     dispatch(fetchUserProblems(userId));
+    updateImage(user?.profileImageUrl);
+
     return () => dispatch(clearProblemErrors());
-  }, [userId, dispatch, allProblems.length]);
+  }, [userId, dispatch, allProblems.length,user?.profileImageUrl]);
 
   if (!userProblemIds) {
     return [];
@@ -84,6 +93,21 @@ const Profile = () => {
     history.push(`/chat/private/${currentUser._id}/${userId}`);
   }
 
+  function handelEditImage(e) {
+    e.preventDefault();
+    if (e.target.file.files[0]) {
+      const image = e.target.file.files[0];
+      // Create a new object with the updated image URL
+      const updatedUser = { ...currentUser, image: image };
+      // Dispatch the action with the updated user object
+      dispatch(sessionActions.fetchUpdareUser(updatedUser));
+      setShowEditProfile(false);
+    }
+  }
+  // useEffect(() => {
+  //   // This line should be placed inside the useEffect
+  //   updateImage(user?.profileImageUrl);
+  // }, [user?.profileImageUrl]);
   return (
     <>
       {/* pg stands for profile page */}
@@ -160,12 +184,32 @@ const Profile = () => {
             <div className="avatar-container">
               <div className="pg-profile">
                 <img
-                  src={`${user?.profileImageUrl}`}
+                  src={`${image}`}
                   alt=""
                   className="user-profile"
+                  onClick={()=>setShowEditProfile(true)}
                 />
               </div>
             </div>
+            {showEditProfile&& <Modal>
+              <form onSubmit={handelEditImage}>
+             
+                <div className="edit-request-img-input-container">
+                <label className="img-input">
+                  <input
+                    type="file"
+                    id="file"
+                    className="signup-input"
+                    accept=".jpeg, .jpg, .png"
+                    onChange={(e) => setImage(e.target.value)}
+                  />
+                </label>
+              </div>
+             <button className="sign-up-btn" type="submit">
+              Save
+            </button>
+             </form>
+              </Modal>}
 
             <div className="general-info user-info">
               <div className="pg-user-info-label">
