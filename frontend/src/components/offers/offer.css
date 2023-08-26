@@ -164,6 +164,15 @@ cursor: pointer;
   border-radius: 1rem;
 }
 
+.pending-offer-status-container {
+  font-size: 1.6vw;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+.pending-offer-status {
+  font-weight: bold;
+}
+
 .problem-image{
   width: 70%;
 }

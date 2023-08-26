@@ -70,8 +70,8 @@ function PendingOfferBox({
           <span className="des-box-dim">Offer:</span>
           <span className="des-box-lightweight"> {pOffer}</span>
         </p>
-        <p className="green">
-          <span className="des-box-dim">Offer Status:</span>
+        <p className="green pending-offer-status-container">
+          <span className="des-box-dim pending-offer-status">Offer Status:</span>
           <span className="des-box-lightweight"> {status}</span>
         </p>
       </div>
