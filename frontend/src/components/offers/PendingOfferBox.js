@@ -42,9 +42,9 @@ function PendingOfferBox({ offer: {description ,price,status ,helper ,_id ,probl
 
     return (
  <>
-    <div className="offer-container pinding">
+    <div className="offer-container pending">
     {isCurrentUserOfferCreator&&
-   <div className='edit-delete-btn-gp'>
+   <div className='edit-delete-btn-gp pending-offer-edit-delete'>
    <div className='pg-edit-btn'
    onClick={()=>setShowEditOffer(true)}
      >
@@ -59,7 +59,7 @@ function PendingOfferBox({ offer: {description ,price,status ,helper ,_id ,probl
  </div>
 
     }
-            <p className="des-box">Request : <FontAwesomeIcon icon={faMoneyCheck} style={{color:'#1D3150'}} onClick={()=>setShowReq(true)}/></p>
+            <p className="des-box">Request : <FontAwesomeIcon icon={faMoneyCheck} style={{color:'#9dbebb'}} onClick={()=>setShowReq(true)}/></p>
             <p className="green">status : {status}</p>
             <p className="des-box">Price : {pPrice}</p>
             <p className="des-box">offer : {pOffer}</p>

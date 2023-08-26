@@ -489,6 +489,17 @@ input[type="file"] {
 
 }
 
+.zipcode-input::placeholder {
+  font-size: large;
+}
+
+.add-request-btn {
+  width: fit-content !important;
+}
+
+.add-request-description-box {
+  resize: horizontal;
+}
 
 /* #selected-requests-btn,
 #selected-profile-btn,
@@ -521,10 +532,6 @@ input[type="file"] {
   to {
     color: #F4E9CD; /* Change it to the original color or any other color */
   }
-}
-
-.zipcode-input::placeholder {
-  font-size: large;
 }
 
 .request-preview-img-container {
