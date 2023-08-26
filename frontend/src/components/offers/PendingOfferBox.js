@@ -19,25 +19,49 @@ function PendingOfferBox({
   const currentUser = useSelector((state) => state.session.user);
   const [pOffer, setOffer] = useState(description);
   const [pPrice, setPrice] = useState(price);
+  const [priceError, setPriceError] = useState("");
   const [showReq, setShowReq] = useState(false);
+
   function handelDeleteOffer(e) {
     e.preventDefault();
     dispatch(offerActions.fetchDeleteOffer(_id));
   }
+
   useEffect(() => {
     dispatch(problemActions.fetchProblems());
   }, [dispatch, userId]);
+
   const problems = useSelector((state) => state.problems.all);
+
   const offerProblem = problems[problem];
+
   const isCurrentUserOfferCreator = currentUser._id === userId;
+
+  const eliminateNegativePrice = (e) => {
+    if (e.target?.value < 0) {
+      setPriceError("No negative price value.");
+    } else {
+      setPriceError("");
+    }
+  }
+
+  const handleClose = () => {
+    setShowEditOffer(false);
+    setOffer(description);
+    setPrice(price);
+    setPriceError("");
+  }
+
   function handleEditOffer(e) {
     e.preventDefault();
     const updateOffer = {
       description: pOffer,
       price: pPrice,
     };
-    dispatch(offerActions.fetchUpdateOffer(_id, updateOffer));
-    setShowEditOffer(false);
+    if (priceError === "") {
+      dispatch(offerActions.fetchUpdateOffer(_id, updateOffer));
+      setShowEditOffer(false);
+    }
   }
 
   return (
@@ -54,6 +78,7 @@ function PendingOfferBox({
             </div>
           </div>
         )}
+
         <p className="des-box">
           <span className="des-box-dim">Request:</span>{" "}
           <FontAwesomeIcon
@@ -62,21 +87,25 @@ function PendingOfferBox({
             onClick={() => setShowReq(true)}
           />
         </p>
+
         <p className="des-box">
           <span className="des-box-dim">Price:</span>
           <span className="des-box-lightweight"> ${pPrice}</span>
         </p>
+
         <p className="des-box pending-offer-content">
           <span className="des-box-dim">Offer:</span>
           <span className="des-box-lightweight"> {pOffer}</span>
         </p>
+
         <p className="green pending-offer-status-container">
           <span className="des-box-dim pending-offer-status">Offer Status:</span>
           <span className="des-box-lightweight"> {status}</span>
         </p>
+
       </div>
       {showEditOffer && (
-        <Modal onClose={() => setShowEditOffer(false)}>
+        <Modal onClose={() => handleClose()}>
           <h1 className="title">Edit this Offer</h1>
           <form onSubmit={handleEditOffer}>
             <input
@@ -86,10 +115,14 @@ function PendingOfferBox({
               placeholder={pOffer}
               required
             />
+
+            {priceError && <div style={{marginBottom: "0.3em"}}>{priceError}</div>}
+
             <input
               type="number"
               onChange={(e) => setPrice(e.target.value)}
-              className="signup-input"
+              onInput={(e) => eliminateNegativePrice(e)}
+              className="signup-input price-input"
               placeholder={pPrice}
               required
             />
@@ -106,10 +139,12 @@ function PendingOfferBox({
             <span className="open-req-dim">Requester: </span>
             {offerProblem?.author.username}
           </p>
+
           <p className="open-req-modal-content">
             <span className="open-req-dim">Category: </span>
             {offerProblem?.category}{" "}
           </p>
+
           <p className="open-req-modal-content status">
             <span className="open-req-dim">Status:</span>{" "}
             <span className="open-req-modal-status">{offerProblem?.status}{" "}</span>
@@ -119,6 +154,7 @@ function PendingOfferBox({
             <span className="open-req-dim">Description</span> :{" "}
             {offerProblem?.description}
           </p>
+
           <img className="problem-image" src={offerProblem?.problemImageUrl} />
         </Modal>
       )}

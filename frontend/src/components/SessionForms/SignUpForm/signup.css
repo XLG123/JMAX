@@ -55,7 +55,8 @@ input[type='text'],
 input[type='password'],
 .signup-zipcode,
 .zipcode-input,
-.edit-zipcode-input {
+.edit-zipcode-input,
+.price-input {
     outline: none;
     transition: box-shadow 0.5s;
 }
@@ -64,7 +65,8 @@ input[type='text']:focus,
 input[type='password']:focus,
 .signup-zipcode:focus,
 .zipcode-input:focus,
-.edit-zipcode-input:focus {
+.edit-zipcode-input:focus,
+.price-input:focus {
     box-shadow: 0px 0px 10px 5px rgba(255, 255, 255, 1);
 }
 
