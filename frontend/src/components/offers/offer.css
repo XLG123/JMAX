@@ -66,6 +66,10 @@
   font-weight: 100 !important;
 }
 
+.pending-offer-content {
+  padding-top: 0;
+}
+
 .open-req-dim {
   color: rgb(212, 195, 150);
 }

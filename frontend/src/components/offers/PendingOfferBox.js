@@ -62,17 +62,17 @@ function PendingOfferBox({
             onClick={() => setShowReq(true)}
           />
         </p>
-        <p className="green">
-          <span className="des-box-dim">Status:</span>
-          <span className="des-box-lightweight"> {status}</span>
-        </p>
         <p className="des-box">
           <span className="des-box-dim">Price:</span>
           <span className="des-box-lightweight"> ${pPrice}</span>
         </p>
-        <p className="des-box">
+        <p className="des-box pending-offer-content">
           <span className="des-box-dim">Offer:</span>
           <span className="des-box-lightweight"> {pOffer}</span>
+        </p>
+        <p className="green">
+          <span className="des-box-dim">Offer Status:</span>
+          <span className="des-box-lightweight"> {status}</span>
         </p>
       </div>
       {showEditOffer && (
