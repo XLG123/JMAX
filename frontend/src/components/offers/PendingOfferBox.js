@@ -43,14 +43,14 @@ function PendingOfferBox({
     } else {
       setPriceError("");
     }
-  }
+  };
 
   const handleClose = () => {
     setShowEditOffer(false);
     setOffer(description);
     setPrice(price);
     setPriceError("");
-  }
+  };
 
   function handleEditOffer(e) {
     e.preventDefault();
@@ -99,10 +99,11 @@ function PendingOfferBox({
         </p>
 
         <p className="green pending-offer-status-container">
-          <span className="des-box-dim pending-offer-status">Offer Status:</span>
+          <span className="des-box-dim pending-offer-status">
+            Offer Status:
+          </span>
           <span className="des-box-lightweight"> {status}</span>
         </p>
-
       </div>
       {showEditOffer && (
         <Modal onClose={() => handleClose()}>
@@ -116,7 +117,9 @@ function PendingOfferBox({
               required
             />
 
-            {priceError && <div style={{marginBottom: "0.3em"}}>{priceError}</div>}
+            {priceError && (
+              <div style={{ marginBottom: "0.3em" }}>{priceError}</div>
+            )}
 
             <input
               type="number"
@@ -147,7 +150,9 @@ function PendingOfferBox({
 
           <p className="open-req-modal-content status">
             <span className="open-req-dim">Status:</span>{" "}
-            <span className="open-req-modal-status">{offerProblem?.status}{" "}</span>
+            <span className="open-req-modal-status">
+              {offerProblem?.status}{" "}
+            </span>
           </p>
 
           <p className="title">
