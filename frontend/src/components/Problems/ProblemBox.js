@@ -122,8 +122,8 @@ const ProblemBox = ({
     <>
       <div className="problems-container notify-modal-problems">
         <div className="box">
-          <h3 onClick={sendToProf} className="user">
-            {" "}
+          <h3 onClick={sendToProf} className="all-req-content user">
+            <span className="all-req-lighter-text">Requester: </span>
             {username ? username : CurrentUser.username}
           </h3>
           {/* {console.log(author)} */}
@@ -142,9 +142,14 @@ const ProblemBox = ({
             </div>
           )}
 
-          <div className="status"> {editStatus}</div>
-          <p className="catgory">{editCategory}</p>
-          <p className="des-box">{editDescription}</p>
+          <p className="all-req-content catgory">
+            <span className="all-req-lighter-text">Category: </span> {editCategory}
+          </p>
+          <div className="all-req-content status">
+            <span className="all-req-lighter-text">Status: </span> 
+            {editStatus[0].toUpperCase() + editStatus.substring(1)}
+          </div>
+          <p className="all-req-content des-box">{editDescription}</p>
           {problemImageUrl && <div className="image-problem-div">
             <img
               className="image-problem"

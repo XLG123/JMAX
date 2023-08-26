@@ -45,6 +45,7 @@
 
 .green {
   color: green;
+  font-size: x-large;
 }
 
 .pad {
@@ -57,11 +58,52 @@
   font-size: x-large;
 }
 
+.des-box-dim {
+  color: rgb(194, 182, 151);
+}
+
+.des-box-lightweight {
+  font-weight: 100 !important;
+}
+
+.open-req-dim {
+  color: rgb(212, 195, 150);
+}
+
+.open-req-modal-status {
+  color: rgb(65, 200, 2);
+}
+
+.open-req-modal-content {
+  font-size: 1.2vw;
+  line-height: 1.3em;
+}
+
 .accepted-offers {
   margin: auto;
   margin-top: 5rem;
 
   width: 50%;
+}
+
+.accepted-offer-dim {
+  color: rgb(212, 195, 150);
+}
+
+.accepted-offer-content {
+  font-size: 1.3vw !important;
+}
+
+.accepted-offer-content:nth-child(4) {
+  padding-top: 0;
+}
+
+.req-modal-requester-link {
+  color: #F4E9CD !important;
+}
+
+.req-modal-dim {
+  color: rgb(212, 195, 150);
 }
 
 .center {
@@ -96,16 +138,19 @@
   left: 67vw;
   bottom: 10vw;
 }
+
 .edit-delete{
   text-align: end;
   /* background-color: aliceblue; */
   display: inline-block;
   /* margin-left: 18rem; */
 }
+
 .padding{
 padding: .3rem;
 cursor: pointer;
 }
+
 .pending{
   background-color:#1c2d39 ;
   border: 2px solid #acbbb9;
@@ -118,17 +163,20 @@ cursor: pointer;
 .problem-image{
   width: 70%;
 }
+
 .user-review{
   display: block;
   color: #1c2d39;
   width: 100%;
   text-align: start;
 }
+
 .space-review{
   display: flex;
   justify-content: space-between;
   /* background-color: #031926; */
 }
+
 .pending-offer-edit-delete{
   /* background-color: #031926; */
   width: 30%;

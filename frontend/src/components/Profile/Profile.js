@@ -155,7 +155,7 @@ const [showEditProfile,setShowEditProfile]=useState()
                 className="helper-accepted-filter-btn"
                 onClick={showAcceptedOffers}
               >
-                Accepted
+                Accepted Offers
               </div>
 
               {/* <div className='helper-pending-filter-btn'

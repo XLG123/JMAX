@@ -142,12 +142,21 @@ const ProfileBox = ({
             </div>
           )}
 
-          <h3 onClick={sendToProf} className="pg-user">
-            {username}
+          <h3 onClick={sendToProf} className="pg-content pg-user">
+            <span className="pg-light">Requester:</span> {username}
           </h3>
-          <div className="pg-status"> {status}</div>
-          <p className="pg-catgory">{category}</p>
-          <p className="pg-des-box">{description}</p>
+          <p className="pg-content pg-catgory">
+            <span className="pg-light">Category:</span> {category}
+          </p>
+          <div className="pg-content pg-status">
+            <span className="pg-light">Status:</span>{" "}
+            <span
+              className={status === "open" ? "open-status" : "closed-status"}
+            >
+              {status[0].toUpperCase() + status.substring(1)}
+            </span>
+          </div>
+          <p className="pg-content pg-des-box">{description}</p>
           {problemImageUrl && (
             <div className="image-problem-div">
               <img

@@ -44,7 +44,7 @@ export const composeReview = data => async dispatch => {
 
 
 export const fetchUpdateReview = (reviewId, updatedData) => async (dispatch,getState) => {
-  debugger
+  // debugger
   try {
     const res = await jwtFetch(`/api/reviews/${reviewId}`, {
       method: 'PATCH',
@@ -52,7 +52,7 @@ export const fetchUpdateReview = (reviewId, updatedData) => async (dispatch,getS
     });
     const user = getState().session.user;  
     if (res.ok) {
-      debugger
+      // debugger
       const updatedReview = await res.json();
       dispatch(updateReview(updatedReview));
     } else {
