@@ -257,13 +257,43 @@ cursor: pointer;
 .pending-offer-edit-delete{
   /* background-color: #031926; */
   width: 30%;
-  margin-left: -6rem;
+  margin-left: -6.5em;
 
 }
 
-@media screen and (width > 1440px) {
+@media screen and (width >= 1440px) {
   .pending-offer-edit-delete {
-    margin-left: -7rem;
+    margin-left: -7em;
+  }
+}
+
+@media screen and (width < 1440px) {
+  .pending-offer-edit-delete {
+    margin-left: -8em;
+  }
+}
+
+@media screen and (width < 1300px) {
+  .pending-offer-edit-delete {
+    margin-left: -9em;
+  }
+}
+
+@media screen and (width < 1100px) {
+  .pending-offer-edit-delete {
+    margin-left: -11em;
+  }
+}
+
+@media screen and (width < 800px) {
+  .pending-offer-edit-delete {
+    margin-left: -13em;
+  }
+}
+
+@media screen and (width < 600px) {
+  .pending-offer-edit-delete {
+    margin-left: -16em;
   }
 }
 
