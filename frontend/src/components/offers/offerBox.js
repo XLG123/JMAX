@@ -11,6 +11,7 @@ import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import "./offer.css";
+import { Tooltip } from "@mui/material";
 const OfferBox = ({
   offer: { description, price, status, helper, _id, problem },
 }) => {
@@ -56,24 +57,43 @@ const OfferBox = ({
       <div className="offer-container offer-container-on-notify">
         <form onSubmit={handelTakingOffer}>
           {/* <div className=""> */}
-          <h3 onClick={redirectToHelper} className="user bigger">
-            {offerOwner[helper].username}
-          </h3>
           <div className="close">
             {" "}
-            <FontAwesomeIcon
-              icon={faTrashAlt}
-              style={{ color: "#FF5733" }}
-              onClick={handelDeleteOffer}
-            />
+            <Tooltip title="Delete Offer">
+              <FontAwesomeIcon
+                icon={faTrashAlt}
+                style={{ color: "#FF5733" }}
+                onClick={handelDeleteOffer}
+                className="delete-offer-trash-can-btn"
+              />
+            </Tooltip>
           </div>
 
-          <p className="green">status : {status}</p>
+          <h3
+            onClick={redirectToHelper}
+            className="user bigger on-notify-helper"
+          >
+            <span className="on-notify-dim">Helper:</span>{" "}
+            {offerOwner[helper].username}
+          </h3>
 
-          <p className="des-box">Price : {price}</p>
-          <p className="des-box">offer : {description}</p>
+          <p className="des-box on-notify-offer-text">
+            <span className="on-notify-dim">Price:</span> ${price}
+          </p>
+
+          <p className="des-box on-notify-offer-text 
+            on-notify-offer">
+            <span className="on-notify-dim">Offer:</span> {description}
+          </p>
+
+          <p className="green on-notify-offer-text 
+            on-notify-offer-status-container">
+            <span className="on-notify-dim">Offer Status:</span>
+            <span className="on-notify-offer-status"> {status}</span>
+          </p>
+
           {/* </div> */}
-          <button className="sign-up-btn pad " type="submit">
+          <button className="sign-up-btn pad" type="submit">
             Accept Offer
           </button>
         </form>

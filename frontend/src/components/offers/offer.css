@@ -11,6 +11,45 @@
   letter-spacing: 0.05em;
 }
 
+.offer-container-on-notify:last-child {
+  margin-bottom: 2em;
+}
+
+.offer-container-on-notify .pad {
+  font-size: 1.2vw;
+}
+
+.on-notify-dim {
+  color: rgb(212, 195, 150);
+}
+
+.on-notify-offer {
+  padding-top: 0;
+}
+
+.on-notify-offer-status-container {
+  font-size: 1.45vw !important;
+}
+
+.on-notify-offer-status {
+  color: rgb(68, 206, 4);
+}
+
+.delete-offer-trash-can-btn {
+  color: rgb(193, 190, 190) !important;
+  margin-bottom: 0.2em;
+  cursor: pointer;
+}
+
+.on-notify-helper {
+  padding-bottom: 0.5em;
+  border-bottom: 2px solid #9dbebb;
+}
+
+.on-notify-offer-text {
+  font-size: 1.45vw;
+}
+
 .offer-container-on-notify {
   /* border: 1px solid #031926; */
   background-color: #4E868D;
@@ -19,10 +58,6 @@
   width: 80%;
   margin-left: auto;
   margin-right: auto;
-}
-
-.offer-container-on-notify:last-child {
-  margin-bottom: 2em;
 }
 
 .all-offers-scrollable-container {
@@ -57,7 +92,7 @@
 
 .bigger {
   /* padding: .5rem; */
-  font-size: xx-large;
+  font-size: 1.2vw;
   /* box-shadow: 0px 0px 50px #F4E9CD; */
 }
 
@@ -74,6 +109,7 @@
 .close {
   /* color:red; */
   font-size: x-large;
+  text-align: right;
 }
 
 .des-box-dim {
@@ -104,7 +140,6 @@
 .accepted-offers {
   margin: auto;
   margin-top: 5rem;
-
   width: 50%;
 }
 
