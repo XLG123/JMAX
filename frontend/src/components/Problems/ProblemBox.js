@@ -35,6 +35,7 @@ const ProblemBox = ({
   const [editZipCode, setEditZipCode] = useState(address);
   const [editDescription, setEditDescription] = useState(description);
   const [zipCodeError, setZipCodeError] = useState("");
+  const [priceError, setPriceError] = useState("");
   const [imageSrc, setImageSrc] = useState(problemImageUrl);
   // console.log("userId:", userId);
   // console.log("CurrentUser._id:", CurrentUser._id);
@@ -51,28 +52,38 @@ const ProblemBox = ({
       description: offer,
       problem: id,
     };
-    dispatch(offerActions.composeOffer(offerData));
-    history.push(`users/${userId}`);
+    if (priceError === "") {
+      dispatch(offerActions.composeOffer(offerData));
+      history.push(`users/${userId}`);
+    }
   }
 
   const updateImagePreview = (e) => {
     if (e.target.files.length !== 0) {
       setImageSrc(URL.createObjectURL(e.target.files[0]));
     }
-  }
+  };
 
   const limitZipCodeMaxLength = (e) => {
     e.target.value = e.target.value.slice(0, 5);
     if (e.target.value.length === 5) {
       setZipCodeError("");
     }
-  }
+  };
 
   const editCurrentRequest = (e) => {
     e.preventDefault();
     setShowRequestForm(true);
     // console.log("editCurrentRequest called", "true:", showRequestForm);
   };
+
+  const eliminateNegativePrice = (e) => {
+    if (e.target?.value < 0) {
+      setPriceError("No negative price value.");
+    } else {
+      setPriceError("");
+    }
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -110,20 +121,20 @@ const ProblemBox = ({
       setImageSrc("");
     }
 
-    // When the form is closed before submit, 
+    // When the form is closed before submit,
     // the original content will remain instead of the edited one.
     setEditCategory(category);
     setStatus(status);
     setEditZipCode(address);
-    setEditDescription(description);  
+    setEditDescription(description);
   }
 
   return (
     <>
       <div className="problems-container notify-modal-problems">
         <div className="box">
-          <h3 onClick={sendToProf} className="user">
-            {" "}
+          <h3 onClick={sendToProf} className="all-req-content user">
+            <span className="all-req-lighter-text">Requester: </span>
             {username ? username : CurrentUser.username}
           </h3>
           {/* {console.log(author)} */}
@@ -142,16 +153,24 @@ const ProblemBox = ({
             </div>
           )}
 
-          <div className="status"> {editStatus}</div>
-          <p className="catgory">{editCategory}</p>
-          <p className="des-box">{editDescription}</p>
-          {problemImageUrl && <div className="image-problem-div">
-            <img
-              className="image-problem"
-              src={`${problemImageUrl}`}
-              alt=""
-            />
-          </div>}
+          <p className="all-req-content catgory">
+            <span className="all-req-lighter-text">Category: </span>{" "}
+            {editCategory}
+          </p>
+          <div className="all-req-content status">
+            <span className="all-req-lighter-text">Status: </span>
+            {editStatus[0].toUpperCase() + editStatus.substring(1)}
+          </div>
+          <p className="all-req-content des-box">{editDescription}</p>
+          {problemImageUrl && (
+            <div className="image-problem-div">
+              <img
+                className="image-problem"
+                src={`${problemImageUrl}`}
+                alt=""
+              />
+            </div>
+          )}
 
           <br />
 
@@ -176,10 +195,16 @@ const ProblemBox = ({
               placeholder="My Offer is ...."
               required
             />
+
+            {priceError && (
+              <div style={{ marginBottom: "0.3em" }}>{priceError}</div>
+            )}
+
             <input
               type="number"
               onChange={(e) => setPrice(e.target.value)}
-              className="signup-input"
+              onInput={(e) => eliminateNegativePrice(e)}
+              className="signup-input price-input"
               placeholder="Price"
               required
             />

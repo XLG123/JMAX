@@ -11,7 +11,7 @@ useEffect(()=>{
 
 },[dispatch,userId])
 const offers=useSelector(state=>state.offers.all)
-console.log(offers)
+// console.log(offers)
 if(Object.values(offers).length===0)return null
 
 return (
