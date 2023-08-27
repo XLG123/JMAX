@@ -19,7 +19,6 @@ import Modal from "../context/model";
 const Profile = () => {
   const currentUser = useSelector((state) => state.session.user);
 
-
   const history = useHistory();
   const userId = useParams().userId;
   const dispatch = useDispatch();
@@ -30,10 +29,14 @@ const Profile = () => {
   }
 
   const user = users[userId];
-  // debugger
-  const [image, setImage] = useState(user?.profileImageUrl || 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png');
- 
-const [showEditProfile,setShowEditProfile]=useState()
+  debugger;
+  const [image, setImage] = useState(
+    user?.profileImageUrl ||
+      "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+  );
+  const iscurrentUser = currentUser._id === userId;
+  debugger;
+  const [showEditProfile, setShowEditProfile] = useState();
   const allProblems = useSelector((state) => Object.values(state.problems.all));
   // console.log(allProblems);
   const userProblemIds = useSelector((state) => state.problems.userProblems);
@@ -48,7 +51,7 @@ const [showEditProfile,setShowEditProfile]=useState()
     updateImage(user?.profileImageUrl);
 
     return () => dispatch(clearProblemErrors());
-  }, [userId, dispatch, allProblems.length,user?.profileImageUrl]);
+  }, [userId, dispatch, allProblems.length, user?.profileImageUrl]);
 
   if (!userProblemIds) {
     return [];
@@ -74,7 +77,7 @@ const [showEditProfile,setShowEditProfile]=useState()
 
   const allOffers = (e) => {
     e.preventDefault();
-    history.push(`/pending/offers/${userId}`)
+    history.push(`/pending/offers/${userId}`);
   };
 
   const showAcceptedOffers = (e) => {
@@ -155,7 +158,7 @@ const [showEditProfile,setShowEditProfile]=useState()
                 className="helper-accepted-filter-btn"
                 onClick={showAcceptedOffers}
               >
-                Accepted Offers
+                Accepted
               </div>
 
               {/* <div className='helper-pending-filter-btn'
@@ -187,29 +190,30 @@ const [showEditProfile,setShowEditProfile]=useState()
                   src={`${image}`}
                   alt=""
                   className="user-profile"
-                  onClick={()=>setShowEditProfile(true)}
+                  onClick={() => setShowEditProfile(true)}
                 />
               </div>
             </div>
-            {showEditProfile&& <Modal>
-              <form onSubmit={handelEditImage}>
-             
-                <div className="edit-request-img-input-container">
-                <label className="img-input">
-                  <input
-                    type="file"
-                    id="file"
-                    className="signup-input"
-                    accept=".jpeg, .jpg, .png"
-                    onChange={(e) => setImage(e.target.value)}
-                  />
-                </label>
-              </div>
-             <button className="sign-up-btn" type="submit">
-              Save
-            </button>
-             </form>
-              </Modal>}
+            {showEditProfile && iscurrentUser && (
+              <Modal onClose={() => setShowEditProfile(false)}>
+                <form onSubmit={handelEditImage}>
+                  <div className="edit-request-img-input-container">
+                    <label className="img-input">
+                      <input
+                        type="file"
+                        id="file"
+                        className="signup-input"
+                        accept=".jpeg, .jpg, .png"
+                        onChange={(e) => setImage(e.target.value)}
+                      />
+                    </label>
+                  </div>
+                  <button className="sign-up-btn" type="submit">
+                    Save
+                  </button>
+                </form>
+              </Modal>
+            )}
 
             <div className="general-info user-info">
               <div className="pg-user-info-label">

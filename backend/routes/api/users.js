@@ -242,4 +242,38 @@ router.get("/:userId/offers/pending", async (req, res) => {
   );
   res.json(pendingOffers);
 });
+
+router.patch(
+  "/:userId/profile-image",
+  singleMulterUpload("image"),
+  async (req, res) => {
+    try {
+      const userId = req.params.userId;
+      const user = await User.findById(userId);
+
+   
+      let newProfileImageUrl = user.profileImageUrl;
+
+      // Update profile image if a new image was uploaded
+      if (req.file) {
+        newProfileImageUrl = await singleFileUpload({
+          file: req.file,
+          public: true,
+        });
+      }
+
+      user.profileImageUrl = newProfileImageUrl;
+      await user.save();
+
+      res.json({
+        message: "Profile image updated successfully",
+        profileImageUrl: newProfileImageUrl,
+      });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: "An error occurred" });
+    }
+  }
+);
+
 module.exports = router;
