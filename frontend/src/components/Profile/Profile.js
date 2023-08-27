@@ -15,6 +15,7 @@ import CommentIcon from "@mui/icons-material/Comment";
 import { useHistory } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import Modal from "../context/model";
+import { Tooltip } from "@mui/material";
 // All classnames are declared with the prefix pg which stands for profile page, instead of pp.
 const Profile = () => {
   const currentUser = useSelector((state) => state.session.user);
@@ -185,14 +186,16 @@ const Profile = () => {
         <div className="pg-right-side-bar">
           <div className="user-info-display">
             <div className="avatar-container">
-              <div className="pg-profile">
-                <img
-                  src={`${image}`}
-                  alt=""
-                  className="user-profile"
-                  onClick={() => setShowEditProfile(true)}
-                />
-              </div>
+              <Tooltip title="Edit Profile Image">
+                <div className="pg-profile">
+                  <img
+                    src={`${image}`}
+                    alt=""
+                    className="user-profile"
+                    onClick={() => setShowEditProfile(true)}
+                  />
+                </div>
+              </Tooltip>
             </div>
             {showEditProfile && iscurrentUser && (
               <Modal onClose={() => setShowEditProfile(false)}>
