@@ -11,6 +11,10 @@
   letter-spacing: 0.05em;
 }
 
+.random-dummy-css-container {
+  color: blue;
+}
+
 .one-req-offers-container {
   background-color: #9dbebb;
   padding-top: 0.1em;
