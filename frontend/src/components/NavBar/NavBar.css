@@ -342,6 +342,11 @@
   top: 0.05em;
 }
 
+.scrollable-chat-container {
+  max-height: 40vh;
+  overflow-y: auto;
+}
+
 @media screen and (width > 1440px) {
   .logout-btn, .notify-btn {
     top: 2.8vw;
