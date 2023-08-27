@@ -161,22 +161,24 @@ function NavBar() {
                       Click to enter chat
                     </div>
                   )}
-                  {chatHistory.map((user) => (
-                    <li key={user._id}>
-                      <NavLink
-                        to={`/chat/private/${currentUser._id}/${user._id}`}
-                        className="private-chat-link"
-                        onClick={showPrivateChat}
-                      >
-                        <span className="private-chat-other-username">
-                          {user.username}
-                        </span>
-                        <span className="enter-private-chat">
-                          <LoginIcon className="enter-chat-icon" />
-                        </span>
-                      </NavLink>
-                    </li>
-                  ))}
+                  <div className="scrollable-chat-container">
+                    {chatHistory.map((user) => (
+                      <li key={user._id}>
+                        <NavLink
+                          to={`/chat/private/${currentUser._id}/${user._id}`}
+                          className="private-chat-link"
+                          onClick={showPrivateChat}
+                        >
+                          <span className="private-chat-other-username">
+                            {user.username}
+                          </span>
+                          <span className="enter-private-chat">
+                            <LoginIcon className="enter-chat-icon" />
+                          </span>
+                        </NavLink>
+                      </li>
+                    ))}
+                  </div>
                 </ul>
               </div>
             )}
