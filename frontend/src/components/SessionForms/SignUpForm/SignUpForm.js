@@ -95,6 +95,9 @@ function SignupForm() {
     if (!username) {
       setUsernameError("Username is required");
       errors = true;
+    } else if (username.includes(" ")) {
+      setUsernameError("Username should not have a space");
+      errors = true;
     } else {
       setUsernameError(null);
     }
@@ -212,6 +215,7 @@ function SignupForm() {
             className="signup-input"
             value={username}
             onChange={update("username")}
+            // onInput={}
             placeholder="Username"
           />
 
