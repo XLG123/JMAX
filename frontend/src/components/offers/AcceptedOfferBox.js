@@ -157,6 +157,7 @@ const AcceptedOfferBox = ({
                   onClick={() => handelUser(ele.reviewer._id)}
                   className="user-review"
                 >
+                  
                   {ele.reviewer.username}:
                 </p>
                 <div className="space-review">{ele.description}</div>
@@ -194,13 +195,13 @@ const AcceptedOfferBox = ({
       )}
       {show && (
         <Modal onClose={handelClose}>
-          <h1 className="title">Add your Review</h1>
+          <h1 className="title">Add your Comment</h1>
           <form onSubmit={handleCreateReview}>
             <input
               type="text"
               onChange={(e) => setReview(e.target.value)}
               className="signup-input"
-              placeholder="My Review is ...."
+              placeholder="My Comment is ...."
               required
             />
             {/* {helperOrReqOwner&& */}
@@ -230,6 +231,10 @@ const AcceptedOfferBox = ({
 
             <div className="des-box">
               <span className="req-modal-dim">Category:</span> {reqForOffer?.category}
+            </div>
+
+            <div className="des-box">
+              <span className="req-modal-dim">Zipcode:</span> {reqForOffer?.address}
             </div>
 
             <img src={reqForOffer?.problemImageUrl} />
