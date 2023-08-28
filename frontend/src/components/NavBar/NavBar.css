@@ -5,6 +5,7 @@
   margin-left: 1vw;
   position: relative;
   color: inherit;
+  z-index: 10;
 }
 
 .logo-container {
@@ -146,7 +147,7 @@
 
 .notify-btn {
   position: relative;
-  left: 81vw;
+  right: -81vw;
   top: 2.5vw;
 }
 
@@ -156,7 +157,7 @@
 }
 
 .red {
-  color: red;
+  /* color: red; */
 }
 
 .white {
@@ -174,7 +175,7 @@
 
 @media screen and (width < 800px) {
   .user-profile-btn {
-    right: 3.5vw;
+    right: 4vw;
   }
 }
 
@@ -186,7 +187,7 @@
 
 .logout-btn {
   position: relative;
-  left: 94.5vw;
+  left: 94vw;
   top: 2.45vw;
 }
 
@@ -202,7 +203,7 @@
 
 .nav-chat-btn {
   position: relative;
-  left: 76vw;
+  right: -76vw;
 }
 
 .nav-chat-icon {
@@ -230,6 +231,7 @@
 @media screen and (width <= 1050px) {
   .nav-chat-btn {
     top: 2vw;
+    right: -74vw;
   }
 }
 
@@ -241,7 +243,8 @@
 
 @media screen and (width < 600px) {
   .nav-chat-btn {
-    top: 0.75vw;
+    top: 0.65vw;
+    right: -72vw;
   }
 }
 
@@ -249,8 +252,8 @@
   width: fit-content;
   height: fit-content;
   position: absolute;
-  color: #031926;
-  background-color: rgba(157, 190, 187, 0.9);
+  color: #F4E9CD;
+  background-color: rgba(70, 129, 137, 0.85);
   top: 4vw;
   font-size: 1.1vw;
   border-radius: 5px;
@@ -292,7 +295,7 @@
 
 .private-chat-history ul li {
   padding: 0.3em;
-  border-bottom: 1px solid #031926;
+  border-bottom: 1px solid #F4E9CD;
 }
 
 .private-chat-history ul li:last-child {
@@ -301,11 +304,11 @@
 
 .private-chat-history ul li:hover {
   background-color: rgba(5, 46, 70, 0.65);
-  color: #F4E9CD;
+  color: #FEFCFB;
 }
 
 .private-chat-history ul li:hover .private-chat-other-username {
-  color: #F4E9CD;
+  color: #FEFCFB;
 }
 
 .private-chat-link {
@@ -319,7 +322,7 @@
 .private-chat-title {
   font-weight: bold;
   margin-bottom: 0.1em;
-  border-bottom: 2px solid #031926;
+  border-bottom: 2px solid #F4E9CD;
 }
 
 .private-chat-link:active {
@@ -327,7 +330,7 @@
 }
 
 .private-chat-other-username {
-  color: rgba(3, 25, 38, 0.65);
+  color: #F4E9CD;
 }
 
 .private-chat-link .enter-private-chat {
@@ -337,6 +340,11 @@
 .enter-chat-icon {
   position: relative;
   top: 0.05em;
+}
+
+.scrollable-chat-container {
+  max-height: 40vh;
+  overflow-y: auto;
 }
 
 @media screen and (width > 1440px) {
@@ -349,17 +357,46 @@
   .logout-btn, .notify-btn {
     top: 1.9vw;
   }
+
+  .logout-btn {
+    left: 93vw;
+  }
 }
 
 @media screen and (width < 800px) {
   .logout-btn, .notify-btn {
     top: 1.5vw;
   }
+
+  .logout-btn {
+    left: 91vw;
+  }
+
+  .user-profile-btn {
+    right: 8vw;
+  }
+
+  .notify-btn {
+    right: -77vw;
+  }
+
 }
 
 @media screen and (width < 600px) {
   .logout-btn, .notify-btn {
     top: 0.5vw;
+  }
+
+  .logout-btn {
+    left: 87vw;
+  }
+
+  .user-profile-btn {
+    right: 7vw;
+  }
+  
+  .notify-btn {
+    right: -75vw;
   }
 }
 
@@ -432,6 +469,7 @@ textarea {
 
 .img-input {
   padding: 1rem;
+  color: #666;
   background-color: #9DBEBB;
   width: 15rem;
   border-radius: 5px;
@@ -440,6 +478,7 @@ textarea {
   font-weight: bold;
   font-family: 'Times New Roman', Times, serif;
   margin-bottom: 3rem;
+  cursor: pointer;
 }
 
 /* Specific rule for input[type="file"] */
@@ -452,9 +491,23 @@ input[type="file"] {
   width:100%;
   height: 100vh;
   overflow:auto;
-
 }
 
+.offerbox::-webkit-scrollbar {
+  display: none;
+}
+
+.zipcode-input::placeholder {
+  font-size: large;
+}
+
+.add-request-btn {
+  width: fit-content !important;
+}
+
+.add-request-description-box {
+  resize: horizontal;
+}
 
 /* #selected-requests-btn,
 #selected-profile-btn,
@@ -482,9 +535,22 @@ input[type="file"] {
 
 @keyframes changeColor {
   from {
-    color: red;
+    /* color: red; */
   }
   to {
     color: #F4E9CD; /* Change it to the original color or any other color */
   }
+}
+
+.request-preview-img-container {
+  max-width: 80%;
+  width: 70%;
+  height: 20%;
+  margin: 0 auto;
+}
+
+.request-preview-image {
+  width: inherit;
+  height: inherit;
+  object-fit: contain;
 }

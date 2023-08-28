@@ -29,14 +29,16 @@ if (Object.keys(requests).length === 0) {
     <>
     <div className='req-offer-container'>
       {reqIds?.map(reqId => (
-        <div key={reqId}>
+        <div key={reqId} className='one-req-offers-container'>
           {requests[reqId].status === "open" && (
-            <>
+            <div>
               <ProblemBox problem={requests[reqId]} />
-              {Object.values(reqOffers[reqId])?.map(offer => (
-                <OfferBox key={offer._id} offer={offer} />
-              ))}
-            </>
+              <div className='all-offers-scrollable-container'>
+                {Object.values(reqOffers[reqId])?.map(offer => (
+                  <OfferBox key={offer._id} offer={offer} />
+                ))}
+              </div>
+            </div>
           )}
         </div>
       ))}

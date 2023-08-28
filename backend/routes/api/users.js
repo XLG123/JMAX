@@ -11,14 +11,21 @@ const { isProduction } = require("../../config/keys");
 const validateRegisterInput = require("../../validations/register");
 const validateLoginInput = require("../../validations/login");
 const Message = require("../../models/Message");
+const DEFAULT_PROFILE_IMAGE_URL =
+  "https://my-jmax.s3.us-east-2.amazonaws.com/public/pfp.svg";
+const {
+  multipleFilesUpload,
+  multipleMulterUpload,
+  singleFileUpload,
+  singleMulterUpload,
+} = require("../../../backend/awsS3");
 
-// router.get("/", async (req, res)=>{
-//   const users = await User.find().populate("_id", "username email address");
-//   return res.json(users);
-// });
 router.get("/", async (req, res) => {
   try {
-    const users = await User.find({}, "username email address age");
+    const users = await User.find(
+      {},
+      "username email address age profileImageUrl"
+    );
     const userMap = {};
     users?.forEach((user) => {
       userMap[user._id] = {
@@ -26,6 +33,7 @@ router.get("/", async (req, res) => {
         email: user.email,
         address: user.address,
         age: user.age,
+        profileImageUrl: user.profileImageUrl,
       };
     });
     return res.json(userMap);
@@ -34,18 +42,6 @@ router.get("/", async (req, res) => {
     return res.status(500).json({ error: "An error occurred" });
   }
 });
-
-// router.get("/:userId", async (req, res, next) => {
-//   try {
-//     const user = await User.findById(req.params.userId)
-//     return res.json(user);
-//   } catch (err) {
-//     const error = new Error("User not found");
-//     error.statusCode = 404;
-//     error.errors = { message: "No user found with that id" };
-//     return next(error);
-//   }
-// });
 
 //All the user's problems
 router.get("/:userId/problems", async (req, res) => {
@@ -129,63 +125,78 @@ router.get("/:userId/problems/offers", async (req, res) => {
   }
 });
 
-router.post("/register", validateRegisterInput, async (req, res, next) => {
-  // Check to make sure no one has already registered with the proposed email or
-  // username.
-  const user = await User.findOne({
-    $or: [{ email: req.body.email }, { username: req.body.username }],
-  });
-
-  if (user) {
-    // Throw a 400 error if the email address and/or username already exists
-    const err = new Error("Validation Error");
-    err.statusCode = 400;
-    const errors = {};
-    if (user.email === req.body.email) {
-      errors.email = "A user has already registered with this email";
-    }
-    if (user.username === req.body.username) {
-      errors.username = "A user has already registered with this username";
-    }
-    err.errors = errors;
-    return next(err);
-  }
-
-  // Otherwise create a new user
-  const newUser = new User({
-    username: req.body.username,
-    email: req.body.email,
-    address: req.body.address,
-    age: req.body.age,
-  });
-
-  bcrypt.genSalt(10, (err, salt) => {
-    if (err) throw err;
-    bcrypt.hash(req.body.password, salt, async (err, hashedPassword) => {
-      if (err) throw err;
-      try {
-        newUser.hashedPassword = hashedPassword;
-        const user = await newUser.save();
-        return res.json(await loginUser(user));
-      } catch (err) {
-        next(err);
-      }
+router.post(
+  "/register",
+  singleMulterUpload("image"),
+  validateRegisterInput,
+  async (req, res, next) => {
+    // Check to make sure no one has already registered with the proposed email or
+    // username.
+    let imageUrls;
+    const user = await User.findOne({
+      $or: [{ email: req.body.email }, { username: req.body.username }],
     });
-  });
-});
 
-router.post("/login", validateLoginInput, async (req, res, next) => {
-  passport.authenticate("local", async function (err, user) {
-    if (err) return next(err);
-    if (!user) {
-      const err = new Error("Invalid credentials");
+    if (user) {
+      // Throw a 400 error if the email address and/or username already exists
+      const err = new Error("Validation Error");
       err.statusCode = 400;
-      err.errors = { email: "Invalid credentials" };
+      const errors = {};
+      if (user.email === req.body.email) {
+        errors.email = "A user has already registered with this email";
+      }
+      if (user.username === req.body.username) {
+        errors.username = "A user has already registered with this username";
+      }
+      err.errors = errors;
       return next(err);
     }
-    return res.json(await loginUser(user));
-  })(req, res, next);
-});
+
+    const profileImageUrl = req.file
+      ? await singleFileUpload({ file: req.file, public: true })
+      : DEFAULT_PROFILE_IMAGE_URL;
+
+    // Otherwise create a new user
+    const newUser = new User({
+      username: req.body.username,
+      email: req.body.email,
+      address: req.body.address,
+      age: req.body.age,
+      profileImageUrl,
+    });
+    bcrypt.genSalt(10, (err, salt) => {
+      if (err) throw err;
+      bcrypt.hash(req.body.password, salt, async (err, hashedPassword) => {
+        if (err) throw err;
+        try {
+          newUser.hashedPassword = hashedPassword;
+          const user = await newUser.save();
+          return res.json(await loginUser(user));
+        } catch (err) {
+          next(err);
+        }
+      });
+    });
+  }
+);
+
+router.post(
+  "/login",
+  singleMulterUpload(""),
+  validateLoginInput,
+  async (req, res, next) => {
+    passport.authenticate("local", async function (err, user) {
+      if (err) return next(err);
+      if (!user) {
+        const err = new Error("Invalid credentials");
+        err.statusCode = 400;
+        err.errors = { email: "Invalid credentials" };
+        return next(err);
+      }
+      return res.json(await loginUser(user));
+    })(req, res, next);
+  }
+);
 
 router.get("/current", restoreUser, async (req, res) => {
   if (!isProduction) {
@@ -202,6 +213,7 @@ router.get("/current", restoreUser, async (req, res) => {
     email: req.user.email,
     address: req.user.address,
     age: req.user.age,
+    profileImageUrl: req.user.profileImageUrl,
   });
 });
 
@@ -215,8 +227,8 @@ router.get("/:userId/offers/accepted", async (req, res) => {
   const acceptedOffers = Object.values(offers).filter(
     (offer) => offer.status === "accepted"
   );
-  res.json(acceptedOffers);}
-)
+  res.json(acceptedOffers);
+});
 
 router.get("/:userId/offers/pending", async (req, res) => {
   const userId = req.params.userId;
@@ -228,6 +240,40 @@ router.get("/:userId/offers/pending", async (req, res) => {
   const pendingOffers = Object.values(offers).filter(
     (offer) => offer.status === "pending"
   );
-  res.json(pendingOffers);}
-)
+  res.json(pendingOffers);
+});
+
+router.patch(
+  "/:userId/profile-image",
+  singleMulterUpload("image"),
+  async (req, res) => {
+    try {
+      const userId = req.params.userId;
+      const user = await User.findById(userId);
+
+   
+      let newProfileImageUrl = user.profileImageUrl;
+
+      // Update profile image if a new image was uploaded
+      if (req.file) {
+        newProfileImageUrl = await singleFileUpload({
+          file: req.file,
+          public: true,
+        });
+      }
+
+      user.profileImageUrl = newProfileImageUrl;
+      await user.save();
+
+      res.json({
+        message: "Profile image updated successfully",
+        profileImageUrl: newProfileImageUrl,
+      });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: "An error occurred" });
+    }
+  }
+);
+
 module.exports = router;

@@ -14,9 +14,12 @@ import { useParams } from "react-router-dom";
 import CommentIcon from "@mui/icons-material/Comment";
 import { useHistory } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
+import Modal from "../context/model";
+import { Tooltip } from "@mui/material";
 // All classnames are declared with the prefix pg which stands for profile page, instead of pp.
-
 const Profile = () => {
+  const currentUser = useSelector((state) => state.session.user);
+
   const history = useHistory();
   const userId = useParams().userId;
   const dispatch = useDispatch();
@@ -27,19 +30,48 @@ const Profile = () => {
   }
 
   const user = users[userId];
+  // debugger;
+  const [image, setImage] = useState(
+    user?.profileImageUrl ||
+      "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+  );
 
-  const currentUser = useSelector((state) => state.session.user);
-  const allProblems = useSelector((state) => Object.values(state.problems.all));
-  console.log(allProblems);
+  const [imageSrc, setImageSrc] = useState(image);
+  const iscurrentUser = currentUser._id === userId;
+  // debugger;
+  const [showEditProfile, setShowEditProfile] = useState();
+
+  const allProblems = useSelector((state) =>        
+  Object.values(state.problems.all));
+  // console.log(allProblems);
+
   const userProblemIds = useSelector((state) => state.problems.userProblems);
   // console.log(userProblemIds);
+
+  const updateImage = (newImageUrl) => {
+    setImage(newImageUrl);
+  };
+
+  const updateProfilePreview = (e) => {
+    if (e.target.files.length !== 0) {
+      setImageSrc(URL.createObjectURL(e.target.files[0]));
+    }
+  };
+
+  const closeProfileImgModal = (e) => {
+    setShowEditProfile(false);
+    setImage(user?.profileImageUrl);
+    setImageSrc(image);
+  }
 
   useEffect(() => {
     dispatch(sessionActions.fetchAllUsers());
     dispatch(fetchProblems());
     dispatch(fetchUserProblems(userId));
+    updateImage(user?.profileImageUrl);
+
     return () => dispatch(clearProblemErrors());
-  }, [userId, dispatch, allProblems.length]);
+  }, [userId, dispatch, allProblems.length, user?.profileImageUrl]);
 
   if (!userProblemIds) {
     return [];
@@ -65,14 +97,14 @@ const Profile = () => {
 
   const allOffers = (e) => {
     e.preventDefault();
+    history.push(`/pending/offers/${userId}`);
   };
 
   const showAcceptedOffers = (e) => {
     // e.preventDefault();
 
-    history.push(`/offers/${userId}`)
-  }
-
+    history.push(`/offers/${userId}`);
+  };
 
   const showPendingOffers = (e) => {
     e.preventDefault();
@@ -80,20 +112,25 @@ const Profile = () => {
   // debugger
   // if (allProblems.length === 0)return null
 
-  const noRequestsMsg = () => {
-    return (
-      <div className="no-requests-container">
-        <h1 className="no-requests-msg" style={{ color: "green" }}>
-          No requests yet.
-        </h1>
-      </div>
-    );
-  };
-
   function handelText() {
     history.push(`/chat/private/${currentUser._id}/${userId}`);
   }
 
+  function handelEditImage(e) {
+    e.preventDefault();
+    if (e.target.file.files[0]) {
+      const image = e.target.file.files[0];
+      // Create a new object with the updated image URL
+      const updatedUser = { ...currentUser, image: image };
+      // Dispatch the action with the updated user object
+      dispatch(sessionActions.fetchUpdareUser(updatedUser));
+      setShowEditProfile(false);
+    }
+  }
+  // useEffect(() => {
+  //   // This line should be placed inside the useEffect
+  //   updateImage(user?.profileImageUrl);
+  // }, [user?.profileImageUrl]);
   return (
     <>
       {/* pg stands for profile page */}
@@ -132,7 +169,7 @@ const Profile = () => {
                   allOffers(e);
                 }}
               >
-                Offers
+                Pending Offers
               </div>
 
               <div className="linebreak"></div>
@@ -141,7 +178,7 @@ const Profile = () => {
                 className="helper-accepted-filter-btn"
                 onClick={showAcceptedOffers}
               >
-                Accepted
+                Accepted Offers
               </div>
 
               {/* <div className='helper-pending-filter-btn'
@@ -168,44 +205,75 @@ const Profile = () => {
         <div className="pg-right-side-bar">
           <div className="user-info-display">
             <div className="avatar-container">
-              <div className="pg-profile">
-                <Avatar
-                  sx={{
-                    bgcolor: "#77ACA2",
-                    width: "7vw",
-                    height: "7vw",
-                    margin: "15% auto",
-                  }}
-                  className="avatar"
-                >
-                  <h1 className="avatar-letter">
-                    {user?.username[0].toUpperCase()}
-                  </h1>
-                </Avatar>
+              <Tooltip title="Edit Profile Image">
+                <div className="pg-profile">
+                  <img
+                    src={`${image}`}
+                    alt=""
+                    className="user-profile"
+                    onClick={() => setShowEditProfile(true)}
+                  />
+                </div>
+              </Tooltip>
+            </div>
+            {showEditProfile && iscurrentUser && (
+              <Modal onClose={() => closeProfileImgModal()}>
+                <form onSubmit={handelEditImage}>
+                  <div className="edit-request-img-input-container">
+                    <label className="img-input">
+                      Update Profile Image
+                      <input
+                        type="file"
+                        id="file"
+                        className="signup-input"
+                        accept=".jpeg, .jpg, .png"
+                        onChange={(e) => setImage(e.target.value)}
+                        onInput={(e) => updateProfilePreview(e)}
+                      />
+                    </label>
+                  </div>
+
+                  {imageSrc && (
+                    <div
+                      className="user-profile-preview-container 
+                      update-profile-preview"
+                    >
+                      <img
+                        src={imageSrc}
+                        className="user-profile-image"
+                        alt=""
+                      />
+                    </div>
+                  )}
+
+                  <button className="sign-up-btn" type="submit">
+                    Save
+                  </button>
+                </form>
+              </Modal>
+            )}
+
+            <div className="general-info user-info">
+              <div className="pg-user-info-label">
+                <span>Username: </span>
+                <span>{user?.username}</span>
               </div>
             </div>
 
             <div className="general-info user-info">
               <div className="pg-user-info-label">
-                <span>Username: </span>
-              </div>{" "}
-              {user?.username}
-            </div>
-
-            <div className="general-info user-info">
-              <div className="pg-user-info-label">
-                <span>Email: &nbsp;&nbsp;</span> {user?.email}
+                <span>Email: &nbsp;</span> {user?.email}
               </div>
             </div>
 
             <div className="general-info user-addr">
               <div className="pg-user-info-label">
-                <span>ZipCode: &nbsp;&nbsp;</span> {user?.address}
+                <span>ZipCode: </span> {user?.address}
               </div>
             </div>
 
             <div className="general-info user-age">
-              <div className="pg-user-age">Age: &nbsp;&nbsp;{user?.age}</div>
+              <div className="pg-user-age">Age: {user?.age}</div>
             </div>
             <CommentIcon
               sx={{ fontSize: "5rem", marginLeft: "4.5rem", width: "30%" }}

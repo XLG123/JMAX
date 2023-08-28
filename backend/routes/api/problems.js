@@ -15,7 +15,7 @@ const {
 
 router.get("/", async (req, res) => {
   try {
-    const problems = await Problem.find().populate(
+    const problems = await Problem.find().sort('-createdAt').populate(
       "author",
       "_id username email"
     );
@@ -36,7 +36,7 @@ router.get("/", async (req, res) => {
 
 router.get("/open", async (req, res) => {
   try {
-    const problems = await Problem.find().populate(
+    const problems = await Problem.find().sort('-createdAt').populate(
       "author",
       "_id username email"
     );
@@ -120,7 +120,7 @@ router.post(
 
     const problemImageUrl = req.file
       ? await singleFileUpload({ file: req.file, public: true })
-      : DEFAULT_PROBLEM_IMAGE_URL;
+      : null;
     const newProblem = new Problem({
       category: req.body.category,
       description: req.body.description,
@@ -305,7 +305,7 @@ router.get("/search/category/:category", async (req, res) => {
   try {
     const category = req.params.category;
 
-    const problems = await Problem.find({ category: category }).populate(
+    const problems = await Problem.find({ category: category }).sort('-createdAt').populate(
       "author",
       "_id username email"
     );
@@ -329,7 +329,7 @@ router.get("/search/address/:address", async (req, res) => {
   try {
     const address = req.params.address;
 
-    const problems = await Problem.find({ address: address }).populate(
+    const problems = await Problem.find({ address: address }).sort('-createdAt').populate(
       "author",
       "_id username email"
     );

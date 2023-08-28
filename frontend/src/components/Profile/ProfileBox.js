@@ -5,13 +5,14 @@ import { useDispatch, useSelector } from "react-redux";
 import * as offerActions from "../store/offers";
 import "../NavBar/NavBar.css";
 import "./Profile.css";
+import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import {
   deleteProblem,
   fetchUpdateProblem,
   fetchUserProblems,
 } from "../store/problems";
 
-// All classnames are declared with the prefix pg which stands for profile page, instead of pp.
+// All class names are declared with the prefix pg which stands for profile group, instead of pp(profile page).
 
 const ProfileBox = ({
   problem: {
@@ -22,22 +23,25 @@ const ProfileBox = ({
     status,
     _id: id,
     problemImageUrl,
+    createdAt,
   },
 }) => {
-  const CurrentUser = useSelector((state) => state.session.user);
+  const currentUser = useSelector((state) => state.session.user);
   const [editCategory, setEditCategory] = useState(category);
   const [editDescription, setEditDescription] = useState(description);
   const [editZipCode, setEditZipCode] = useState(address);
+  const [zipCodeError, setZipCodeError] = useState("");
+  const [imageSrc, setImageSrc] = useState(problemImageUrl);
   // const [show, setShow] = useState(false);
   // const [price, setPrice] = useState();
   // const [offer, setOffer] = useState("");
   const dispatch = useDispatch();
   const history = useHistory();
   const { username, _id: userId } = author;
-  console.log("userId:", userId);
-  console.log("CurrentUser._id:", CurrentUser._id);
+  // console.log("userId:", userId);
+  // console.log("CurrentUser._id:", CurrentUser._id);
   const [showRequestForm, setShowRequestForm] = useState(false);
-  const [editStatus,setStatus]=useState(status)
+  const [editStatus, setStatus] = useState(status);
 
   function sendToProf() {
     history.push(`/users/${userId}`);
@@ -55,29 +59,42 @@ const ProfileBox = ({
   // }
 
   // Check if the current user is not the problem creator
-  const isCurrentUserProblemCreator = userId === CurrentUser._id;
+  const isCurrentUserProblemCreator =
+    currentUser._id === author || currentUser._id === userId;
 
   const handleClose = (e) => {
     e.preventDefault();
     setShowRequestForm(false);
+    if (!problemImageUrl) {
+      setImageSrc("");
+    }
+
+    // When the form is closed before submit,
+    // the original content will remain instead of the edited one.
+    setEditCategory(category);
+    setStatus(status);
+    setEditZipCode(address);
+    setEditDescription(description);
   };
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   const updatedProblem = {
-  //     category: editCategory,
-  //     address: editZipCode,
-  //     description: editDescription
-  //   }
-  //   dispatch(fetchUpdateProblem(id, updatedProblem));
-  //   setShowRequestForm(false);
-  // }
+  const limitZipCodeMaxLength = (e) => {
+    e.target.value = e.target.value.slice(0, 5);
+    if (e.target.value.length === 5) {
+      setZipCodeError("");
+    }
+  };
+
+  const updateImagePreview = (e) => {
+    if (e.target.files.length !== 0) {
+      setImageSrc(URL.createObjectURL(e.target.files[0]));
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const updatedProblem = {
-      status:editStatus,
+      status: editStatus,
       category: editCategory,
       address: editZipCode,
       description: editDescription,
@@ -88,11 +105,15 @@ const ProfileBox = ({
       updatedProblem.image = image;
     }
 
-    try {
-      await dispatch(fetchUpdateProblem(id, updatedProblem));
-      setShowRequestForm(false);
-    } catch (error) {
-      // Handle error
+    if (editZipCode.length < 5) {
+      setZipCodeError("Zip Code length must be 5 digits");
+    } else {
+      try {
+        await dispatch(fetchUpdateProblem(id, updatedProblem));
+        setShowRequestForm(false);
+      } catch (error) {
+        // Handle error
+      }
     }
   };
 
@@ -105,40 +126,55 @@ const ProfileBox = ({
     dispatch(deleteProblem(id));
   };
 
-  const editAndDeleteButtonGroup = () => {
-    return (
-      <div className="edit-delete-btn-gp">
-        <div className="pg-edit-btn" onClick={editCurrentRequest}>
-          Edit
-        </div>
-
-        <div className="pg-delete-btn" onClick={() => deleteCurrentRequest(id)}>
-          Delete
-        </div>
-      </div>
-    );
-  };
-
-
-
   return (
     <>
       <div className="pg-problems-container">
         <div className="pg-box">
-          {isCurrentUserProblemCreator ? editAndDeleteButtonGroup() : <></>}
-          <h3 onClick={sendToProf} className="pg-user">
-            {username}
+        <span className="problem-created">
+            {formatDistanceToNow(new Date(createdAt))} ago
+          </span>
+          {isCurrentUserProblemCreator && (
+            <div className="edit-delete-btn-gp">
+              <div className="pg-edit-btn" onClick={editCurrentRequest}>
+                Edit
+              </div>
+
+              <div
+                className="pg-delete-btn"
+                onClick={() => deleteCurrentRequest(id)}
+              >
+                Delete
+              </div>
+            </div>
+          )}
+
+          <h3 onClick={sendToProf} className="pg-content pg-user">
+            <span className="pg-light">Requester:</span> {username}
           </h3>
-          <div className="pg-status"> {status}</div>
-          <p className="pg-catgory">{category}</p>
-          <p className="pg-des-box">{description}</p>
-          <div className="image-problem-div">
-            <img
-              className="imageProblem"
-              src={`${problemImageUrl}`}
-              alt="imageProblem"
-            />
+          <p className="pg-content pg-catgory">
+            <span className="pg-light">Category:</span> {category}
+          </p>
+          <p className="pg-content pg-catgory">
+            <span className="pg-light">Zipcode:</span> {address}
+          </p>
+          <div className="pg-content pg-status">
+            <span className="pg-light">Status:</span>{" "}
+            <span
+              className={status === "open" ? "open-status" : "closed-status"}
+            >
+              {status[0].toUpperCase() + status.substring(1)}
+            </span>
           </div>
+          <p className="pg-content pg-des-box">{description}</p>
+          {problemImageUrl && (
+            <div className="image-problem-div">
+              <img
+                className="image-problem"
+                src={`${problemImageUrl}`}
+                alt=""
+              />
+            </div>
+          )}
           {/* <div className="pg-offer">
             {!isCurrentUserProblemCreator &&
               <button className="pg-add-offer-btn"
@@ -153,57 +189,84 @@ const ProfileBox = ({
             <label htmlFor="category" className="title space">
               Select a Category:
             </label>
-            <select
-              id="category"
-              className="select signup-input selecr-font"
-              name="category"
-              value={editCategory}
-              onChange={(e) => setEditCategory(e.target.value)}
-            >
-              <option value="Home Repair">Home Repair</option>
-              <option value="Delivery">Delivery</option>
-              <option value="Driver">Driver</option>
-            </select>
 
+            <div className="edit-request-form-container">
+              <select
+                id="category"
+                className="select signup-input selecr-font"
+                name="category"
+                value={editCategory}
+                onChange={(e) => setEditCategory(e.target.value)}
+              >
+                <option value="Home Repair">Home Repair</option>
+                <option value="Delivery">Delivery</option>
+                <option value="Driver">Driver</option>
+              </select>
 
-            <select id="category" className="select signup-input selecr-font"
-              name="category" value={editStatus}
-              onChange={(e) => setStatus(e.target.value)}>
+              <select
+                id="category"
+                className="select signup-input selecr-font"
+                name="category"
+                value={editStatus}
+                onChange={(e) => setStatus(e.target.value)}
+              >
                 <option value="open">Open</option>
                 <option value="closed">Closed</option>
-            </select>
+              </select>
 
-          <input type="number"
-            className='signup-input'
-            value={editZipCode}
-            placeholder="1"
-            required
-            onChange={(e) => setEditZipCode(e.target.value)}
-          />
+              {zipCodeError && <div>{zipCodeError}</div>}
 
-          <textarea
-            className='signup-input'
-            value={editDescription}
-            placeholder="Description"
-            required
-            onChange={(e) => setEditDescription(e.target.value)}
-          />
-            <label className="img-input">
-              {" "}
-              Add image
               <input
-                type="file"
-                id="file"
-                className="signup-input"
-                placeholder="Add an image"
+                type="number"
+                className="signup-input edit-zipcode-input"
+                value={editZipCode}
+                min="0"
+                placeholder="1"
+                required
+                onChange={(e) => setEditZipCode(e.target.value)}
+                onInput={(e) => limitZipCodeMaxLength(e)}
               />
-            </label>
 
-            <button className="sign-up-btn ">Edit Request</button>
+              <textarea
+                className="signup-input edit-textarea-input"
+                value={editDescription}
+                placeholder="Description"
+                required
+                onChange={(e) => setEditDescription(e.target.value)}
+              />
+
+              <div className="edit-request-img-input-container">
+                <label className="img-input">
+                  {problemImageUrl ? "Update Image" : "Add Image"}
+                  <input
+                    type="file"
+                    accept=".jpeg, .jpg, .png"
+                    id="file"
+                    className="signup-input"
+                    onChange={(e) => updateImagePreview(e)}
+                  />
+                </label>
+              </div>
+
+              {imageSrc && (
+                <div
+                  className="request-preview-img-container
+                  update-image-preview"
+                >
+                  <img
+                    src={imageSrc}
+                    className="request-preview-image"
+                    alt=""
+                  />
+                </div>
+              )}
+
+              <button className="sign-up-btn edit-request-btn">
+                Update Request
+              </button>
+            </div>
           </form>
         </Modal>
-
-
       )}
     </>
   );

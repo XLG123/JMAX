@@ -1,14 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import SearchIcon from "@mui/icons-material/Search";
 import "./SearchBar.css";
 import Tooltip from "@mui/material/Tooltip";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchProblems } from "../store/problems";
 
 const SearchBar = () => {
   const history = useHistory();
   const [searchText, setSearchText] = useState("");
   const [dropdownItem, setDropdownItem] = useState("");
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchProblems());
+  }, [dispatch]);
 
   let allDropdownItems = [];
   allDropdownItems.push("Home Repair");
@@ -56,12 +62,18 @@ const SearchBar = () => {
         const words = searchText.split(" ");
         const firstWord = words[0];
         const secondWord = words[1];
-        caseInsensitive =
-          firstWord[0].toUpperCase() +
-          firstWord.substring(1).toLowerCase() +
-          " " +
-          secondWord[0].toUpperCase() +
-          secondWord.substring(1).toLowerCase();
+        if (secondWord !== "") {
+          caseInsensitive =
+            firstWord[0].toUpperCase() +
+            firstWord.substring(1).toLowerCase() +
+            " " +
+            secondWord[0].toUpperCase() +
+            secondWord.substring(1).toLowerCase();
+        } else {
+          caseInsensitive = "placeholder";
+        }
+      } else if (wordCount > 2) {
+        caseInsensitive = "placeholder";
       }
     }
 
@@ -83,6 +95,7 @@ const SearchBar = () => {
         });
     }
     setSearchText("");
+    setDropdownItem("");
   };
 
   return (
@@ -96,33 +109,39 @@ const SearchBar = () => {
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
             onInput={(e) => setDropdownItem(e.target.value)}
+            autoComplete="off"
           />
           <button className="search-bar-btn">
             <SearchIcon className="search-icon" sx={{ fontSize: "1.5vw" }} />
           </button>
         </form>
       </Tooltip>
-      {dropdownItem && (
-        <div className="search-dropdown-menu">
-          <ul>
-            {allDropdownItems
-              .filter((option) =>
-                option.toLowerCase().includes(dropdownItem.toLowerCase())
-              )
-              .map((item, idx) => (
-                <li
-                  className="dropdown-item"
-                  key={idx}
-                  onClick={(e) => {
-                    dropdownSearch(item, e);
-                  }}
-                >
-                  {item}
-                </li>
-              ))}
-          </ul>
-        </div>
-      )}
+      {dropdownItem &&
+        (allDropdownItems.filter((option) =>
+          option.toLowerCase().includes(dropdownItem.toLowerCase())
+        ).length > 0 ? (
+          <div className="search-dropdown-menu">
+            <ul>
+              {allDropdownItems
+                .filter((option) =>
+                  option.toLowerCase().includes(dropdownItem.toLowerCase())
+                )
+                .map((item, idx) => (
+                  <li
+                    className="dropdown-item"
+                    key={idx}
+                    onClick={(e) => {
+                      dropdownSearch(item, e);
+                    }}
+                  >
+                    {item}
+                  </li>
+                ))}
+            </ul>
+          </div>
+        ) : (
+          <></>
+        ))}
     </div>
   );
 };

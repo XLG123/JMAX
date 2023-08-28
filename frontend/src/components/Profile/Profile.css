@@ -7,7 +7,7 @@
   display: grid;
   grid-template-columns: 20vw 55vw 20vw;
   column-gap: 1%;
-  height: 45vw;
+  height: 80vh;
   color: inherit;
   letter-spacing: 0.05vw;
 }
@@ -15,7 +15,31 @@
 @media screen and (width > 1440px) {
   .pg-container {
     top: 6vw;
-    height: 38vw;
+    height: 80vh;
+  }
+}
+
+@media screen and (width <= 1300px) {
+  .pg-container {
+    height: 82vh;
+  }
+}
+
+@media screen and (width <= 1100px) {
+  .pg-container {
+    height: 84vh;
+  }
+}
+
+@media screen and (width <= 800px) {
+  .pg-container {
+    height: 86vh;
+  }
+}
+
+@media screen and (width <= 600px) {
+  .pg-container {
+    height: 90vh;
   }
 }
 
@@ -64,11 +88,22 @@
   margin-bottom: 3vw;
 }
 
-.pg-requester-open-status-btn,
+/* .pg-requester-open-status-btn,
 .pg-requester-resolved-status-btn,
 .helper-accepted-filter-btn,
 .helper-pending-filter-btn {
   padding-left: 2em;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  margin-top: 1vw;
+  border-radius: 5px;
+  transition: background-color 1s;
+  cursor: pointer;
+} */
+
+.helper-accepted-filter-btn,
+.helper-pending-filter-btn {
+  padding-left: 1em;
   padding-top: 0.5em;
   padding-bottom: 0.5em;
   margin-top: 1vw;
@@ -83,8 +118,7 @@
 .pg-requester-open-status-btn:hover,
 .pg-requester-resolved-status-btn:hover,
 .helper-accepted-filter-btn:hover,
-.helper-pending-filter-btn:hover
-{
+.helper-pending-filter-btn:hover {
   background-color: #468189;
 }
 
@@ -102,6 +136,7 @@
   border-radius: 10px;
   height: inherit;
   overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .pg-middle-section::-webkit-scrollbar {
@@ -110,8 +145,7 @@
 
 .pg-box {
   width: 95%;
-  background: 
-    linear-gradient(to bottom, #9dbebb 0%, #468189 50%, #9dbebb 100%);
+  background: linear-gradient(to bottom, #9dbebb 0%, #468189 50%, #9dbebb 100%);
   border-radius: 1rem;
   padding: 1rem;
   margin: 0px auto;
@@ -127,30 +161,7 @@
 
 .pg-box:hover,
 .box:hover {
-  animation-name: border-color-change;
-  box-shadow: 0px 0px 12px 5px #fff;
-}
-
-@keyframes border-color-change {
-  0% {
-    border: 5px solid #9dbebb;
-  }
-
-  25% {
-    border: 5px solid #8acaed;
-  }
-
-  50% {
-    border: 5px solid #96f1cd;
-  }
-
-  75% {
-    border: 5px solid #68b6a9;
-  }
-
-  100% {
-    border: 5px solid #52d3be;
-  }
+  box-shadow: 0px 0px 15px 3px #fff;
 }
 
 .no-request-container {
@@ -159,6 +170,7 @@
 
 .pg-user {
   font-size: 1.3vw;
+  text-align: center;
 }
 
 .pg-box:not(:nth-child(2)) {
@@ -168,15 +180,23 @@
 .pg-catgory {
   font-size: 1.2vw;
   color: #031926;
-  border-bottom: 3px #031926 solid;
   font-weight: 900;
-  padding-bottom: 1rem;
+  text-align: center;
 }
 
 .pg-status {
-  color: #1c6721;
   text-align: center;
   font-size: 1.3vw;
+  padding-bottom: 1rem;
+  border-bottom: 3px #031926 solid; 
+}
+
+.open-status {
+  color: green !important;
+}
+
+.closed-status {
+  color: rgb(74, 106, 74) !important;
 }
 
 .pg-des-box {
@@ -184,6 +204,17 @@
   margin-top: 0.6vw;
   text-align: center;
   padding: 1rem;
+  font-weight: bold;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+.pg-content {
+  color: #031926;
+  line-height: 1.3em;
+}
+
+.pg-light, .all-req-lighter-text {
+  color: rgba(3, 25, 38, 0.65);
 }
 
 .pg-right-side-bar {
@@ -198,10 +229,18 @@
   width: 10vw;
   height: 10vw;
   margin: 0px auto;
+  cursor: pointer;
 }
 
-.avatar-letter {
-  font-size: 3vw;
+.pg-profile {
+  width: inherit;
+  height: inherit;
+}
+
+.user-profile {
+  width: inherit;
+  height: inherit;
+  object-fit: cover;
 }
 
 .user-info-display {
@@ -245,23 +284,66 @@
     top: 0.75vw;
   }
 }
-.text-me{
+
+.text-me {
   font-size: 7rem;
 }
 
 .private-chat-room {
   position: absolute;
+  right: 4vw;
 }
 
-.imageProblem{
-  width: 70%;
-  max-height: 100%;
-  
+@media screen and (width > 1440px) {
+  .private-chat-room {
+    right: 4.5vw;
+  }
 }
 
-.image-problem-div{
+.edit-textarea-input {
+  resize: horizontal;
+}
+
+.image-problem-div {
+  width: 60%;
+  height: 28vh;
+  margin: 0 auto;
   display: flex;
   justify-content: center;
-  align-items: center;
-  
+}
+
+.image-problem {
+  width: inherit;
+  height: inherit;
+  object-fit: contain;
+}
+
+.edit-request-img-input-container {
+  margin-top: 1.7vh;
+}
+
+.update-image-preview {
+  width: 60%;
+  height: 21vh;
+  margin-top: 2vh;
+}
+
+.edit-request-form-container:not(:has(.update-image-preview))
+  .edit-request-btn {
+  margin-top: 4vh;
+}
+
+.edit-request-img-input-container {
+  margin-bottom: 2em;
+}
+
+.user-profile-preview-container {
+  width: 60%;
+  max-height: 20%;
+  margin-bottom: 1em;
+}
+
+.user-profile-image {
+  width: inherit;
+  height: inherit;
 }

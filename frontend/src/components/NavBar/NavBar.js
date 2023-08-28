@@ -28,8 +28,10 @@ function NavBar() {
   const [category, setCategory] = useState("Home Repair");
   const [description, setDescription] = useState("");
   const [zipCode, setZipCode] = useState("");
+  const [zipCodeError, setZipCodeError] = useState("");
   const [showOffers, setShowOffer] = useState(false);
   const [image, setImage] = useState(null);
+  const [imageSrc, setImageSrc] = useState(null);
   const currentUrl = useLocation().pathname;
   const chatHistory = useSelector((state) =>
     Object.values(state.messages.users)
@@ -101,7 +103,12 @@ function NavBar() {
   }, [currentUser, dispatch]);
   // [ user,reqOffers]
 
-  const updateFile = e => setImage(e.target.files[0]);
+  const updateFile = (e) => {
+    setImage(e.target.files[0]);
+    if (e.target.files.length !== 0) {
+      setImageSrc(URL.createObjectURL(e.target.files[0]));
+    }
+  };
 
   const getLinks = () => {
     if (loggedIn) {
@@ -154,22 +161,24 @@ function NavBar() {
                       Click to enter chat
                     </div>
                   )}
-                  {chatHistory.map((user) => (
-                    <li key={user._id}>
-                      <NavLink
-                        to={`/chat/private/${currentUser._id}/${user._id}`}
-                        className="private-chat-link"
-                        onClick={showPrivateChat}
-                      >
-                        <span className="private-chat-other-username">
-                          {user.username}
-                        </span>
-                        <span className="enter-private-chat">
-                          <LoginIcon className="enter-chat-icon" />
-                        </span>
-                      </NavLink>
-                    </li>
-                  ))}
+                  <div className="scrollable-chat-container">
+                    {chatHistory.map((user) => (
+                      <li key={user._id}>
+                        <NavLink
+                          to={`/chat/private/${currentUser._id}/${user._id}`}
+                          className="private-chat-link"
+                          onClick={showPrivateChat}
+                        >
+                          <span className="private-chat-other-username">
+                            {user.username}
+                          </span>
+                          <span className="enter-private-chat">
+                            <LoginIcon className="enter-chat-icon" />
+                          </span>
+                        </NavLink>
+                      </li>
+                    ))}
+                  </div>
                 </ul>
               </div>
             )}
@@ -199,7 +208,8 @@ function NavBar() {
                   <NotificationsActiveIcon
                     className="notify-icon"
                     sx={{
-                      color: "red",
+                      // color: "red",
+                      color: "#F4E9CD",
                       fontSize: "2.5vw",
                       position: "absolute",
                       bottom: "0.2vw",
@@ -351,15 +361,37 @@ function NavBar() {
     e.preventDefault();
     setShowReqForm(false);
     setShowOffer(false);
+    setImageSrc(null);
+    setZipCodeError("");
   }
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    dispatch(
-      problemActions.composeProblem({ category, description, address: zipCode, image })
-    );
-    setShowReqForm(false);
+  const limitZipCodeMaxLength = (e) => {
+    e.target.value = e.target.value.slice(0, 5);
+    if (e.target.value.length === 5) {
+      setZipCodeError("");
+    }
   };
+
+  const handleSubmit = (e) => {
+    setImage(null);
+    e.preventDefault();
+    if (zipCode.length < 5) {
+      setZipCodeError("Zip Code length must be 5 digits");
+    } else {
+      dispatch(
+        problemActions.composeProblem({
+          category,
+          description,
+          address: zipCode,
+          image,
+        })
+      );
+      setShowReqForm(false);
+      setImageSrc(null);
+      setZipCodeError("");
+    }
+  };
+
   function handleShowOffer(e) {
     e.preventDefault();
     // debugger
@@ -406,21 +438,22 @@ function NavBar() {
               <option value="Driver">Driver</option>
             </select>
 
+            {zipCodeError && <div>{zipCodeError}</div>}
             <input
               type="number"
               onChange={(e) => setZipCode(e.target.value)}
-              className="signup-input"
+              onInput={(e) => limitZipCodeMaxLength(e)}
+              min="0"
+              className="signup-input zipcode-input"
               placeholder="Zip Code"
               required
             />
 
-            {/* <br></br>
-<br></br>  */}
             <br />
             <div className="errors"></div>
 
             <textarea
-              className="signup-input"
+              className="signup-input add-request-description-box"
               placeholder="Description"
               onChange={(e) => setDescription(e.target.value)}
               required
@@ -433,18 +466,24 @@ function NavBar() {
               Add image
               <input
                 type="file"
+                accept=".jpeg, .jpg, .png"
                 id="file"
-                // onChange={(e)=> setZipCode(e.target.value)}
                 onChange={updateFile}
                 className="signup-input"
-                placeholder="Add an image"
               />
             </label>
             <br></br>
             <br></br>
             <br></br>
 
-            <button className="sign-up-btn ">Add Request</button>
+            {imageSrc && (
+              <div className="request-preview-img-container">
+                <img src={imageSrc} className="request-preview-image" alt="" />
+              </div>
+            )}
+
+            <button className="sign-up-btn add-request-btn">
+              Add Request</button>
           </form>
         </Modal>
       )}

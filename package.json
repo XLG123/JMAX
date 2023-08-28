@@ -17,6 +17,7 @@
   "author": "jmax",
   "license": "ISC",
   "dependencies": {
+    "date-fns": "^2.30.0",
     "socket.io": "^4.7.2"
   }
 }

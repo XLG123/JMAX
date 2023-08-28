@@ -16,7 +16,7 @@ import AcceptedOffers from "./components/offers/AcceptedOffers";
 import Profile from "./components/Profile/Profile";
 // import ProblemCompose from './components/Problems/ProblemCompose';
 import SearchResults from "./components/SearchBar/searchResults";
-
+import PendingOffers from "./components/offers/PendingOffers";
 function App() {
   const [loaded, setLoaded] = useState(false);
   const dispatch = useDispatch();
@@ -35,6 +35,7 @@ function App() {
           <AuthRoute exact path="/signup" component={SignupForm} />
           <AuthRoute path="/about" component={AboutPage} />
           <ProtectedRoute exact  path="/offers/:userId" component={AcceptedOffers} />
+          <ProtectedRoute exact  path="/pending/offers/:userId" component={PendingOffers} />
 
 
           {/* <ProtectedRoute exact path="/problems" component={Problems} /> */}
