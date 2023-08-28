@@ -158,6 +158,11 @@ const ProblemBox = ({
             <span className="all-req-lighter-text">Category: </span>{" "}
             {editCategory}
           </p>
+
+          <p className="pg-content pg-catgory">
+            <span className="pg-light">Zipcode:</span> {editZipCode}
+          </p>
+
           <div className="all-req-content status">
             <span className="all-req-lighter-text">Status: </span>
             {editStatus[0].toUpperCase() + editStatus.substring(1)}

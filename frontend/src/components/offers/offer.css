@@ -15,7 +15,7 @@
   color: blue;
 }
 
-.one-req-offers-container {
+.one-req-offers-container:has(*) {
   background-color: #9dbebb;
   padding-top: 0.1em;
   padding-bottom: 0.1em;

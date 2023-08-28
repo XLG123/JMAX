@@ -149,6 +149,9 @@ const ProfileBox = ({
           <p className="pg-content pg-catgory">
             <span className="pg-light">Category:</span> {category}
           </p>
+          <p className="pg-content pg-catgory">
+            <span className="pg-light">Zipcode:</span> {address}
+          </p>
           <div className="pg-content pg-status">
             <span className="pg-light">Status:</span>{" "}
             <span
