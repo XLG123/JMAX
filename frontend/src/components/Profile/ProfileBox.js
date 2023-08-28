@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import * as offerActions from "../store/offers";
 import "../NavBar/NavBar.css";
 import "./Profile.css";
+import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import {
   deleteProblem,
   fetchUpdateProblem,
@@ -22,6 +23,7 @@ const ProfileBox = ({
     status,
     _id: id,
     problemImageUrl,
+    createdAt,
   },
 }) => {
   const currentUser = useSelector((state) => state.session.user);
@@ -128,6 +130,9 @@ const ProfileBox = ({
     <>
       <div className="pg-problems-container">
         <div className="pg-box">
+        <span className="problem-created">
+            {formatDistanceToNow(new Date(createdAt))} ago
+          </span>
           {isCurrentUserProblemCreator && (
             <div className="edit-delete-btn-gp">
               <div className="pg-edit-btn" onClick={editCurrentRequest}>
@@ -245,7 +250,7 @@ const ProfileBox = ({
 
               {imageSrc && (
                 <div
-                  className="request-preview-img-container 
+                  className="request-preview-img-container
                   update-image-preview"
                 >
                   <img
