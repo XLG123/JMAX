@@ -111,8 +111,8 @@ export const deleteProblem = (id) => async (dispatch, getState) => {
     type: REMOVE_PROBLEM,
     problemId: id,
   });
-
-
+  
+  dispatch(fetchProblems());
   dispatch(fetchUserProblems(user._id));
 };
 

@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import * as offerActions from "../store/offers";
 import {
   deleteProblem,
+  fetchProblems,
   fetchUpdateProblem,
   fetchUserProblems,
 } from "../store/problems";
