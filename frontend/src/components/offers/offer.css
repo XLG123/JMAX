@@ -317,3 +317,20 @@ cursor: pointer;
   margin-left: 0.5em;
   color: rgba(28, 45, 57, 0.8);
 }
+
+.no-pending-offers-container,
+.no-accepted-offers-container {
+  width: fit-content;
+  margin: 15vw auto;
+  font-size: 1.5vw;
+  color: #F4E9CD;
+}
+
+.request-modal-img-container {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.request-modal-img {
+  width: inherit;
+}
