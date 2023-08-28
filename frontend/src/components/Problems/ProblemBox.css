@@ -115,3 +115,8 @@
 .edit-description-input {
     resize: horizontal;
 }
+
+.problem-created {
+    font-size: 0.9vw;
+    color: #031926;
+}
