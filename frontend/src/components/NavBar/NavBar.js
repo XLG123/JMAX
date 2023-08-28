@@ -208,7 +208,8 @@ function NavBar() {
                   <NotificationsActiveIcon
                     className="notify-icon"
                     sx={{
-                      color: "red",
+                      // color: "red",
+                      color: "#F4E9CD",
                       fontSize: "2.5vw",
                       position: "absolute",
                       bottom: "0.2vw",

@@ -30,21 +30,40 @@ const Profile = () => {
   }
 
   const user = users[userId];
-  debugger;
+  // debugger;
   const [image, setImage] = useState(
     user?.profileImageUrl ||
       "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
   );
+
+  const [imageSrc, setImageSrc] = useState(image);
   const iscurrentUser = currentUser._id === userId;
-  debugger;
+  // debugger;
   const [showEditProfile, setShowEditProfile] = useState();
-  const allProblems = useSelector((state) => Object.values(state.problems.all));
+
+  const allProblems = useSelector((state) =>        
+  Object.values(state.problems.all));
   // console.log(allProblems);
+
   const userProblemIds = useSelector((state) => state.problems.userProblems);
   // console.log(userProblemIds);
+
   const updateImage = (newImageUrl) => {
     setImage(newImageUrl);
   };
+
+  const updateProfilePreview = (e) => {
+    if (e.target.files.length !== 0) {
+      setImageSrc(URL.createObjectURL(e.target.files[0]));
+    }
+  };
+
+  const closeProfileImgModal = (e) => {
+    setShowEditProfile(false);
+    setImage(user?.profileImageUrl);
+    setImageSrc(image);
+  }
+
   useEffect(() => {
     dispatch(sessionActions.fetchAllUsers());
     dispatch(fetchProblems());
@@ -159,7 +178,7 @@ const Profile = () => {
                 className="helper-accepted-filter-btn"
                 onClick={showAcceptedOffers}
               >
-                Accepted
+                Accepted Offers
               </div>
 
               {/* <div className='helper-pending-filter-btn'
@@ -198,19 +217,35 @@ const Profile = () => {
               </Tooltip>
             </div>
             {showEditProfile && iscurrentUser && (
-              <Modal onClose={() => setShowEditProfile(false)}>
+              <Modal onClose={() => closeProfileImgModal()}>
                 <form onSubmit={handelEditImage}>
                   <div className="edit-request-img-input-container">
                     <label className="img-input">
+                      Update Profile Image
                       <input
                         type="file"
                         id="file"
                         className="signup-input"
                         accept=".jpeg, .jpg, .png"
                         onChange={(e) => setImage(e.target.value)}
+                        onInput={(e) => updateProfilePreview(e)}
                       />
                     </label>
                   </div>
+
+                  {imageSrc && (
+                    <div
+                      className="user-profile-preview-container 
+                      update-profile-preview"
+                    >
+                      <img
+                        src={imageSrc}
+                        className="user-profile-image"
+                        alt=""
+                      />
+                    </div>
+                  )}
+
                   <button className="sign-up-btn" type="submit">
                     Save
                   </button>

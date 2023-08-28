@@ -148,6 +148,11 @@ function PendingOfferBox({
             {offerProblem?.category}{" "}
           </p>
 
+          <p className="open-req-modal-content">
+            <span className="open-req-dim">Zipcode: </span>
+            {offerProblem?.address}{" "}
+          </p>
+
           <p className="open-req-modal-content status">
             <span className="open-req-dim">Status:</span>{" "}
             <span className="open-req-modal-status">
