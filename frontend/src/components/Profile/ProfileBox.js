@@ -24,7 +24,7 @@ const ProfileBox = ({
     problemImageUrl,
   },
 }) => {
-  const CurrentUser = useSelector((state) => state.session.user);
+  const currentUser = useSelector((state) => state.session.user);
   const [editCategory, setEditCategory] = useState(category);
   const [editDescription, setEditDescription] = useState(description);
   const [editZipCode, setEditZipCode] = useState(address);
@@ -57,7 +57,8 @@ const ProfileBox = ({
   // }
 
   // Check if the current user is not the problem creator
-  const isCurrentUserProblemCreator = userId === CurrentUser._id;
+  const isCurrentUserProblemCreator =
+    currentUser._id === author || currentUser._id === userId;
 
   const handleClose = (e) => {
     e.preventDefault();

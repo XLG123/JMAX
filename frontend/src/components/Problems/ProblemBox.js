@@ -22,7 +22,7 @@ const ProblemBox = ({
   },
 }) => {
   const [showRequestForm, setShowRequestForm] = useState(false);
-  const CurrentUser = useSelector((state) => state.session.user);
+  const currentUser = useSelector((state) => state.session.user);
 
   const [show, setShow] = useState(false);
   const [price, setPrice] = useState();
@@ -39,7 +39,8 @@ const ProblemBox = ({
   const [imageSrc, setImageSrc] = useState(problemImageUrl);
   // console.log("userId:", userId);
   // console.log("CurrentUser._id:", CurrentUser._id);
-  const isCurrentUserProblemCreator = userId === CurrentUser._id;
+  const isCurrentUserProblemCreator =
+    currentUser._id === author || currentUser._id === userId;
 
   function sendToProf() {
     history.push(`/users/${userId}`);
@@ -83,7 +84,7 @@ const ProblemBox = ({
     } else {
       setPriceError("");
     }
-  }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -135,7 +136,7 @@ const ProblemBox = ({
         <div className="box">
           <h3 onClick={sendToProf} className="all-req-content user">
             <span className="all-req-lighter-text">Requester: </span>
-            {username ? username : CurrentUser.username}
+            {username ? username : currentUser.username}
           </h3>
           {/* {console.log(author)} */}
           {isCurrentUserProblemCreator && (

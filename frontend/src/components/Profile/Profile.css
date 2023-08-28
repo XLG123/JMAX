@@ -229,6 +229,7 @@
   width: 10vw;
   height: 10vw;
   margin: 0px auto;
+  cursor: pointer;
 }
 
 .pg-profile {
