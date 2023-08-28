@@ -332,3 +332,18 @@
   .edit-request-btn {
   margin-top: 4vh;
 }
+
+.edit-request-img-input-container {
+  margin-bottom: 2em;
+}
+
+.user-profile-preview-container {
+  width: 60%;
+  max-height: 20%;
+  margin-bottom: 1em;
+}
+
+.user-profile-image {
+  width: inherit;
+  height: inherit;
+}

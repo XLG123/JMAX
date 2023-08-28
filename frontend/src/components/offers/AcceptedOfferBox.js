@@ -16,6 +16,7 @@ import { faMoneyCheck } from "@fortawesome/free-solid-svg-icons";
 import "./offer.css";
 import { NavLink } from "react-router-dom";
 import { useParams } from "react-router-dom";
+import Avatar from "@mui/material/Avatar";
 const AcceptedOfferBox = ({
   offer: { description, price, status, helper, _id, problem },
 }) => {
@@ -121,7 +122,7 @@ const AcceptedOfferBox = ({
           <h3
             onClick={redirectToHelper}
             className="user bigger"
-            style={{ margin: "0.2em 0"}}
+            style={{ margin: "0.2em 0" }}
           >
             {offerOwner[helper]?.username}
           </h3>
@@ -157,9 +158,16 @@ const AcceptedOfferBox = ({
                   onClick={() => handelUser(ele.reviewer._id)}
                   className="user-review"
                 >
-                  
-                  {ele.reviewer.username}:
+                  <span className="reviewer-image-username">
+                    <Avatar
+                      alt="reviewer"
+                      src={ele.reviewer?.profileImageUrl}
+                      sx={{ width: "2vw", height: "2vw", cursor: "pointer" }}
+                    />
+                  </span>
+                  <span className="reviewer-image-username">{ele.reviewer.username}:</span>
                 </p>
+
                 <div className="space-review">{ele.description}</div>
                 {ele.reviewer._id == user._id && (
                   <div className="edit-delete">
@@ -219,22 +227,25 @@ const AcceptedOfferBox = ({
               <span className="req-modal-dim">Requester:</span>{" "}
               <NavLink
                 to={`/users/${reqForOffer?.author?._id}`}
-                style={{ color: "#031926"}}
+                style={{ color: "#031926" }}
                 className="req-modal-requester-link"
               >
                 {reqForOffer?.author?.username}
               </NavLink>{" "}
             </div>
             <div className="des-box">
-              <span className="req-modal-dim">Request:</span> {reqForOffer?.description}
+              <span className="req-modal-dim">Request:</span>{" "}
+              {reqForOffer?.description}
             </div>
 
             <div className="des-box">
-              <span className="req-modal-dim">Category:</span> {reqForOffer?.category}
+              <span className="req-modal-dim">Category:</span>{" "}
+              {reqForOffer?.category}
             </div>
 
             <div className="des-box">
-              <span className="req-modal-dim">Zipcode:</span> {reqForOffer?.address}
+              <span className="req-modal-dim">Zipcode:</span>{" "}
+              {reqForOffer?.address}
             </div>
 
             <img src={reqForOffer?.problemImageUrl} />

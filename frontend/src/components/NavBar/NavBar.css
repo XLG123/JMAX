@@ -157,7 +157,7 @@
 }
 
 .red {
-  color: red;
+  /* color: red; */
 }
 
 .white {
@@ -535,7 +535,7 @@ input[type="file"] {
 
 @keyframes changeColor {
   from {
-    color: red;
+    /* color: red; */
   }
   to {
     color: #F4E9CD; /* Change it to the original color or any other color */

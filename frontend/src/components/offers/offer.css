@@ -246,16 +246,20 @@ cursor: pointer;
 }
 
 .user-review{
-  display: block;
+  display: flex;
   color: #1c2d39;
   width: 100%;
-  text-align: start;
+  text-align: center;
+  align-items: center;
 }
 
 .space-review{
-  display: flex;
-  justify-content: space-between;
+  /* display: flex; */
+  /* justify-content: space-between; */
   /* background-color: #031926; */
+  text-align: left;
+  padding: 0 2.2em;
+  margin-bottom: 0.5em;
 }
 
 .pending-offer-edit-delete{
@@ -304,3 +308,12 @@ cursor: pointer;
 /* .price-input {
   outline: none;
 } */
+
+.reviewer-image-username {
+  display: inline-block;
+}
+
+.reviewer-image-username:nth-child(2) {
+  margin-left: 0.5em;
+  color: rgba(28, 45, 57, 0.8);
+}
