@@ -21,6 +21,7 @@ const ProblemBox = ({
     _id: id,
     problemImageUrl,
     address,
+    createdAt,
   },
 }) => {
   const [showRequestForm, setShowRequestForm] = useState(false);
@@ -136,6 +137,9 @@ const ProblemBox = ({
     <>
       <div className="problems-container notify-modal-problems">
         <div className="box">
+          <span className="problem-created">
+            {formatDistanceToNow(new Date(createdAt))} ago
+          </span>
           <h3 onClick={sendToProf} className="all-req-content user">
             <span className="all-req-lighter-text">Requester: </span>
             {username ? username : currentUser.username}
