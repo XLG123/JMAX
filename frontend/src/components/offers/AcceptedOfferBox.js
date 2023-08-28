@@ -165,9 +165,10 @@ const AcceptedOfferBox = ({
                       sx={{ width: "2vw", height: "2vw", cursor: "pointer" }}
                     />
                   </span>
-                  <span className="reviewer-image-username">{ele.reviewer.username}:</span>
+                  <span className="reviewer-image-username">
+                    {ele.reviewer.username}:
+                  </span>
                 </p>
-
                 <div className="space-review">{ele.description}</div>
                 {ele.reviewer._id == user._id && (
                   <div className="edit-delete">
@@ -248,7 +249,12 @@ const AcceptedOfferBox = ({
               {reqForOffer?.address}
             </div>
 
-            <img src={reqForOffer?.problemImageUrl} />
+            <div className="request-modal-img-container">
+              <img
+                className="request-modal-img"
+                src={reqForOffer?.problemImageUrl}
+              />
+            </div>
           </div>
         </Modal>
       )}
