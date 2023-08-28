@@ -4,6 +4,7 @@ import Modal from "../context/model";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import * as offerActions from "../store/offers";
+import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import {
   deleteProblem,
   fetchProblems,
@@ -289,7 +290,7 @@ const ProblemBox = ({
 
               {imageSrc && (
                 <div
-                  className="request-preview-img-container 
+                  className="request-preview-img-container
                   update-image-preview"
                 >
                   <img
