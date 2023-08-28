@@ -4,6 +4,7 @@ import Modal from "../context/model";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import * as offerActions from "../store/offers";
+import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import {
   deleteProblem,
   fetchProblems,
@@ -20,6 +21,7 @@ const ProblemBox = ({
     _id: id,
     problemImageUrl,
     address,
+    createdAt,
   },
 }) => {
   const [showRequestForm, setShowRequestForm] = useState(false);
@@ -135,6 +137,9 @@ const ProblemBox = ({
     <>
       <div className="problems-container notify-modal-problems">
         <div className="box">
+          <span className="problem-created">
+            {formatDistanceToNow(new Date(createdAt))} ago
+          </span>
           <h3 onClick={sendToProf} className="all-req-content user">
             <span className="all-req-lighter-text">Requester: </span>
             {username ? username : currentUser.username}
@@ -289,7 +294,7 @@ const ProblemBox = ({
 
               {imageSrc && (
                 <div
-                  className="request-preview-img-container 
+                  className="request-preview-img-container
                   update-image-preview"
                 >
                   <img
